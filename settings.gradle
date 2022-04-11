@@ -1,0 +1,20 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+rootProject.name = "My Application"
+include ':app'
+include ':prayer'
+include ':quran'
+include ':book'
+include ':home'
+include ':data'
+include ':domain'
+include ':navigation'
+include ':libraries'
+include ':resource'
+include ':abstract'
