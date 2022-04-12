@@ -18,12 +18,26 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        flavorDimensions "dev"
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants.all{
+            variant ->
+                variant.outputs.each{
+                    output->
+                        project.ext { appName = "MuslimApp ${variant.versionName} (${variant.versionCode})" }
+                        def formattedDate = new Date().format('yyyy-MM-dd-HH-mm-ss')
+                        def newName = output.outputFile.name
+                        newName = newName.replace("app-", "$project.ext.appName-")
+                        newName = newName.replace("-debug", " - debug - " + formattedDate)
+                        newName = newName.replace("-release", " - release - " + formattedDate)
+                        output.outputFileName  = newName
+                }
         }
     }
     compileOptions {
@@ -33,9 +47,27 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    productFlavors {
+        dev {
+            applicationId = "com.raydev.muslim_app.dev"
+            buildConfigField('String', 'BASE_URL', '"base_url_dev"')
+        }
+        stage {
+            applicationId = "com.raydev.muslim_app.stage"
+            buildConfigField('String', 'BASE_URL', '"base_url_stage"')
+        }
+        prod {
+            applicationId = "com.raydev.muslim_app"
+            buildConfigField('String', 'BASE_URL', "base_url_prod")
+        }
+    }
 }
 
 dependencies {
+    implementation project(path: ':libraries:network')
+    implementation project(path: ':data')
+    implementation project(path: ':domain')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
