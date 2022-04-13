@@ -1,4 +1,4 @@
-package com.raydev.domain.model
+package com.raydev.shared.model
 
 import com.google.gson.annotations.SerializedName
 

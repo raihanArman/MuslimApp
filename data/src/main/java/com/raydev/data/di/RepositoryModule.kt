@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 object RepositoryModule {
     var repositortModule = module {
-        single<QuranRepository> {
+        factory<QuranRepository> {
             QuranRepositoryImpl(
                 get()
             )

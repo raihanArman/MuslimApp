@@ -1,9 +1,9 @@
 package com.raydev.data.datasource.remote
 
-import com.raydev.domain.model.Ayat
-import com.raydev.domain.model.Surah
+import com.raydev.shared.model.Ayat
+import com.raydev.shared.model.Surah
 import com.raydev.data.network.QuranService
-import com.raydev.domain.util.ResponseState
+import com.raydev.anabstract.state.ResponseState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

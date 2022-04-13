@@ -40,7 +40,7 @@ object NetworkModule {
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create()
         }
-        factory {
+        single {
             (baseUrl: String) -> Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(get()))

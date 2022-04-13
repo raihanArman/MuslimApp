@@ -1,7 +1,7 @@
 package com.raydev.data.network
 
-import com.raydev.domain.model.Ayat
-import com.raydev.domain.model.Surah
+import com.raydev.shared.model.Ayat
+import com.raydev.shared.model.Surah
 import retrofit2.http.GET
 import retrofit2.http.Path
 

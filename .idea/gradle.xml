@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/libraries/network" />
             <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/resource" />
+            <option value="$PROJECT_DIR$/shared" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

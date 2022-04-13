@@ -5,7 +5,7 @@ import org.koin.dsl.module
 
 object RemoteDataSourceModule {
     var remoteDataSourceModule = module {
-        single {
+        factory {
             QuranRemoteDataSource(get())
         }
     }

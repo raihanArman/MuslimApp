@@ -1,4 +1,4 @@
-package com.raydev.domain.util
+package com.raydev.anabstract.state
 
 sealed class ResponseState<out R> {
     data class Success<out T>(val data: T) : ResponseState<T>()
