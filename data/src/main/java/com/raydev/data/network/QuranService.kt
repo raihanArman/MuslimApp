@@ -9,7 +9,7 @@ interface QuranService {
     @GET("99c279bb173a6e28359c/data")
     suspend fun getListSurah(): List<Surah>
 
-    @GET("9c279bb173a6e28359c/surat/{nomor}")
+    @GET("99c279bb173a6e28359c/surat/{nomor}")
     suspend fun getListAyat(
         @Path("nomor") nomor: String
     ): List<Ayat>

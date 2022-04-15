@@ -1,5 +1,6 @@
 package com.raydev.quran.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,11 @@ import org.koin.core.context.loadKoinModules
 @DeepLink(AppLink.QuranFeature.QURAN_LINK)
 class QuranActivity : BaseActivity<ActivityQuranBinding>() {
     private val viewModel: SurahViewModel by viewModel()
-    private val adapter: SurahAdapter by lazy { SurahAdapter() }
+    private val adapter: SurahAdapter by lazy {
+        SurahAdapter{
+            goToDetail(it)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +66,11 @@ class QuranActivity : BaseActivity<ActivityQuranBinding>() {
                 }
             }
         })
+    }
+    private fun goToDetail(number: String){
+        val intent = Intent(this, DetailSurahActivity::class.java)
+        intent.putExtra("number",number)
+        startActivity(intent)
     }
 
 }

@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.raydev.quran.databinding.ItemSurahBinding
 import com.raydev.shared.model.Surah
 
-class SurahAdapter: RecyclerView.Adapter<SurahAdapter.ViewHolder>() {
+class SurahAdapter(
+    val goToDetail: (String) -> Unit
+): RecyclerView.Adapter<SurahAdapter.ViewHolder>() {
 
     private val surahList = ArrayList<Surah>()
 
@@ -34,6 +36,9 @@ class SurahAdapter: RecyclerView.Adapter<SurahAdapter.ViewHolder>() {
         fun bind(surah: Surah){
             itemBinding.tvSurahName.text = surah.nama
             (surah.type + " - " + surah.ayat + " Ayat ").also { itemBinding.tvSumAyat.text = it }
+            itemView.setOnClickListener {
+                goToDetail(surah.nomor)
+            }
         }
     }
 

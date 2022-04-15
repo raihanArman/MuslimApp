@@ -4,6 +4,9 @@
 
     <application>
         <activity
+            android:name=".ui.DetailSurahActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.QuranActivity"
             android:exported="false" />
     </application>

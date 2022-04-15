@@ -11,11 +11,11 @@ class QuranRepositoryImpl(
     private val remoteDataSource: QuranRemoteDataSource
 ): QuranRepository {
 
-    override fun getSurah(): Flow<com.raydev.anabstract.state.ResponseState<List<Surah>>> {
+    override fun getSurah(): Flow<ResponseState<List<Surah>>> {
         return remoteDataSource.getListSurah()
     }
 
-    override fun getAyat(number: String): Flow<com.raydev.anabstract.state.ResponseState<List<Ayat>>> {
+    override fun getAyat(number: String): Flow<ResponseState<List<Ayat>>> {
         return remoteDataSource.getListAyat(number)
     }
 }
