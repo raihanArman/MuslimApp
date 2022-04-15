@@ -1,0 +1,6 @@
+ext.conf = [
+        webBaseUrlFromConfig  :  'https://example.com',
+        webBaseStagingUrlFromConfig  :  'https://staging.example.com',
+        versionCodeFromConfig             : 1,
+        versionNameFromConfig             : '1.0.0',
+]

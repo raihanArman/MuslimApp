@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.raydev.muslim_app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".MuslimApplication"
@@ -17,6 +20,20 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".deeplink.DeepLinkRouterActivity"
+            android:exported="false"
+            tools:ignore="AppLinkUrlError">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="muslim"/>
+                <data android:host="quran"/>
+                <data android:host="main"/>
             </intent-filter>
         </activity>
     </application>

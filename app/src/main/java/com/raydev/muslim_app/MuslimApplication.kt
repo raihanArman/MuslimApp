@@ -20,8 +20,6 @@ class MuslimApplication: Application() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-//        val environment = get<Retrofit>(parameters = { parametersOf(BuildConfig.BASE_URL) })
-
         startKoin {
             androidLogger(Level.NONE)
             androidContext(this@MuslimApplication)
@@ -33,7 +31,5 @@ class MuslimApplication: Application() {
                 useCaseModule
             ))
         }
-
-
     }
 }

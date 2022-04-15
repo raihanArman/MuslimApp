@@ -41,8 +41,8 @@ object NetworkModule {
                 .create()
         }
         single {
-            (baseUrl: String) -> Retrofit.Builder()
-                .baseUrl(baseUrl)
+            Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(get()))
                 .client(get())
                 .build()

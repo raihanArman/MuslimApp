@@ -17,6 +17,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        flavorDimensions "dev"
     }
 
     buildTypes {
@@ -25,20 +26,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-//    productFlavors {
-//        dev {
-//            applicationId = "com.raydev.muslim_app.dev"
-//            buildConfigField('String', 'BASE_URL', '"haha"')
-//        }
-//        stage {
-//            applicationId = "com.raydev.muslim_app.stage"
-//            buildConfigField('String', 'BASE_URL', '"hihi"')
-//        }
-//        prod {
-//            applicationId = "com.raydev.muslim_app"
-//            buildConfigField('String', 'BASE_URL', "huhu")
-//        }
-//    }
+    productFlavors {
+        dev {
+            buildConfigField('String', 'BASE_URL',  "\"https://api.npoint.io/\"")
+            dimension "dev"
+        }
+        stage {
+            buildConfigField('String', 'BASE_URL', '"base_url_stage"')
+            dimension "dev"
+        }
+        prod {
+            buildConfigField('String', 'BASE_URL', "base_url_prod")
+            dimension "dev"
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".QuranActivity"
+            android:name=".ui.QuranActivity"
             android:exported="false" />
     </application>
 
