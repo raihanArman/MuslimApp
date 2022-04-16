@@ -1,4 +1,4 @@
-package com.raydev.quran.ui
+package com.raydev.quran.ui.list_surah
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import com.raydev.anabstract.base.BaseActivity
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.quran.databinding.ActivityQuranBinding
 import com.raydev.quran.di.QuranModule.quranModule
+import com.raydev.quran.ui.list_ayat.DetailSurahActivity
 import com.raydev.quran.viewmodel.SurahViewModel
 import com.raydev.shared.deeplink.AppLink
 import com.raydev.shared.model.Surah
@@ -69,7 +70,8 @@ class QuranActivity : BaseActivity<ActivityQuranBinding>() {
     }
     private fun goToDetail(number: String){
         val intent = Intent(this, DetailSurahActivity::class.java)
-        intent.putExtra("number",number)
+        intent.putExtra("number",number.toInt())
+        intent.putParcelableArrayListExtra("surah_list", adapter.getSurahList())
         startActivity(intent)
     }
 

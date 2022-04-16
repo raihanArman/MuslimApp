@@ -4,10 +4,10 @@
 
     <application>
         <activity
-            android:name=".ui.DetailSurahActivity"
+            android:name=".ui.list_ayat.DetailSurahActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.QuranActivity"
+            android:name=".ui.list_surah.QuranActivity"
             android:exported="false" />
     </application>
 

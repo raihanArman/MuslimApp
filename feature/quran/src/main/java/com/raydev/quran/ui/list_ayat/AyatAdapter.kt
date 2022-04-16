@@ -1,4 +1,4 @@
-package com.raydev.quran.ui
+package com.raydev.quran.ui.list_ayat
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -21,12 +21,12 @@ class AyatAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AyatAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemBinding = ItemAyatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(itemBinding)
     }
 
-    override fun onBindViewHolder(holder: AyatAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ayat = ayatList[position]
         holder.bind(ayat)
     }

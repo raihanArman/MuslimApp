@@ -1,4 +1,4 @@
-package com.raydev.quran.ui
+package com.raydev.quran.ui.list_surah
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,6 +16,10 @@ class SurahAdapter(
         this.surahList.clear()
         this.surahList.addAll(surahList)
         notifyDataSetChanged()
+    }
+
+    fun getSurahList(): ArrayList<Surah>{
+        return surahList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
