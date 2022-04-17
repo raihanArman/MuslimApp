@@ -1,83 +1,66 @@
 package com.raydev.quran.ui.list_ayat
 
 import android.os.Bundle
+import android.util.Log
+import androidx.viewpager2.widget.ViewPager2
 import com.raydev.anabstract.base.BaseActivity
 import com.raydev.quran.databinding.ActivityDetailSurahBinding
 import com.raydev.quran.di.QuranModule.quranModule
 import org.koin.core.context.loadKoinModules
 
 import com.google.android.material.tabs.TabLayoutMediator
+import com.raydev.quran.viewmodel.AyatViewModel
 import com.raydev.shared.model.Surah
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
-//    private val viewModel: AyatViewModel by viewModel()
-//    private val adapter: AyatAdapter by lazy {
-//        AyatAdapter(this)
-//    }
-    var surahList = ArrayList<Surah>()
-    var number: Int = 0
+    val viewModel: AyatViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadKoinModules(quranModule)
 
-        surahList = intent.getParcelableArrayListExtra<Surah>("surah_list") as ArrayList<Surah>
-        number = intent.getIntExtra("number", 0)
-
-//        setupAdapter()
-//        setupAyat()
-//        observeAyat()
-        val adapter = ViewPagerAdapter(this)
-        adapter.setSurahTabsList(surahList)
-        binding.viewpager.adapter = adapter
-
-        TabLayoutMediator(
-            binding.tabs, binding.viewpager
-        ) { tab, position -> tab.text = "${surahList[position].nama}" }.attach()
-
+        getSurahListFromIntent()
+        setupViewPager()
         setCurrentSurah()
 
     }
 
-    private fun setCurrentSurah(){
+    private fun getSurahListFromIntent() {
+        val surahList = intent.getParcelableArrayListExtra<Surah>("surah_list") as ArrayList<Surah>
+        val number = intent.getIntExtra("number", 0)
+
+        Log.d("DetailSurah", "getSurahListFromIntent: $number")
+//        viewModel.setCurrentSurah(number)
+        viewModel.setSurahList(surahList)
         if(number != 0)
-            binding.viewpager.currentItem = number-1
+            viewModel.setCurrentSurahPagerIndex(number - 1)
         else
-            binding.viewpager.currentItem = number
+            viewModel.setCurrentSurahPagerIndex(number)
     }
 
-//    private fun observeAyat() {
-//        viewModel.observableAyat.observe(this,{response ->
-//            when(response){
-//                is ResponseState.Success ->{
-//                    binding.progressBar.visibility = View.INVISIBLE
-//                    setupDataAyat(response.data)
-//                }
-//                is ResponseState.Error ->{
-//                    binding.progressBar.visibility = View.INVISIBLE
-//                    onMessage(response.errorMessage)
-//                }
-//                is ResponseState.Loading ->{
-//                    binding.progressBar.visibility = View.VISIBLE
-//                }
-//            }
-//        })
-//    }
-//
-//    private fun setupDataAyat(data: List<Ayat>) {
-//        adapter.setAyatList(data)
-//    }
-//
-//    private fun setupAyat() {
-//        val number = intent.getStringExtra("number")
-//        viewModel.loadAyat(number!!)
-//    }
-//
+    private fun setupViewPager(){
+        val adapter = ViewPagerAdapter(this)
+        adapter.setSurahTabsList(viewModel.surahList)
+        binding.viewpager.adapter = adapter
+
+        TabLayoutMediator(
+            binding.tabs, binding.viewpager
+        ) { tab, position -> tab.text = viewModel.surahList[position].nama }.attach()
+        binding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.loadAyat((position+1).toString())
+            }
+        })
+    }
+
+    private fun setCurrentSurah(){
+        binding.viewpager.currentItem = viewModel.currentIndexSurahPager
+    }
+
+
     override fun getViewBinding() = ActivityDetailSurahBinding.inflate(layoutInflater)
-//
-//    private fun setupAdapter(){
-//        binding.rvAyat.layoutManager = LinearLayoutManager(this)
-//        binding.rvAyat.adapter = adapter
-//    }
+
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.domain.usecase.QuranUseCase
 import com.raydev.shared.model.Ayat
+import com.raydev.shared.model.Surah
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,6 +23,15 @@ class AyatViewModel(
         get() = _observableAyat
     private val _observableAyat = MutableLiveData<ResponseState<List<Ayat>>>()
 
+
+//    val observableCurrentSurah: LiveData<Int>
+//        get() = _observableCurrentSurah
+//    private val _observableCurrentSurah = MutableLiveData<Int>()
+
+
+    val surahList = ArrayList<Surah>()
+    var currentIndexSurahPager = 0
+
     fun loadAyat(number: String){
         uiScope.launch {
             val contentAyat = useCase.getAyat(number)
@@ -30,5 +40,18 @@ class AyatViewModel(
             }
         }
     }
+
+    fun setSurahList(surahList: List<Surah>){
+        this.surahList.clear()
+        this.surahList.addAll(surahList)
+    }
+
+    fun setCurrentSurahPagerIndex(index: Int){
+        currentIndexSurahPager = index
+    }
+
+//    fun setCurrentSurah(number: Int){
+//        _observableCurrentSurah.value = number
+//    }
 
 }
