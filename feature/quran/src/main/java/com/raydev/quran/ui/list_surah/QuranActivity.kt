@@ -56,7 +56,7 @@ class QuranActivity : BaseActivity<ActivityQuranBinding>() {
             when(response){
                 is ResponseState.Success ->{
                     binding.progressBar.visibility = View.INVISIBLE
-                    setupDataSurah(response.data)
+                    response.data?.let { setupDataSurah(it) }
                 }
                 is ResponseState.Error ->{
                     binding.progressBar.visibility = View.INVISIBLE

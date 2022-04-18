@@ -88,4 +88,9 @@ dependencies {
     // Idling Resource
     implementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'
 
+    //Mockito
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+
 }

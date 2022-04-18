@@ -1,16 +1,16 @@
-package com.raydev.data.repository
+package com.raydev.muslim_app
 
+import com.raydev.anabstract.state.ResponseState
 import com.raydev.data.datasource.remote.QuranRemoteDataSource
+import com.raydev.domain.repository.QuranRepository
 import com.raydev.shared.model.Ayat
 import com.raydev.shared.model.Surah
-import com.raydev.anabstract.state.ResponseState
-import com.raydev.domain.repository.QuranRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class QuranRepositoryImpl(
+class FakeQuranRepositoryTest(
     private val remoteDataSource: QuranRemoteDataSource
 ): QuranRepository {
 
@@ -21,7 +21,7 @@ class QuranRepositoryImpl(
                 val response = remoteDataSource.getListSurah()
                 emit(ResponseState.Success(response))
             }catch (e: Exception){
-                emit(ResponseState.Error(errorMessage = e.toString()))
+                emit(ResponseState.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }

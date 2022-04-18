@@ -41,7 +41,7 @@ class AyatBySurahFragment : BaseFragment<FragmentAyatBySurahBinding>() {
             when(response){
                 is ResponseState.Success ->{
                     binding.progressBar.visibility = View.INVISIBLE
-                    setupDataAyat(response.data)
+                    response.data?.let { setupDataAyat(it) }
                 }
                 is ResponseState.Error ->{
                     binding.progressBar.visibility = View.INVISIBLE

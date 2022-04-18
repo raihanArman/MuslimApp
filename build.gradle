@@ -31,6 +31,9 @@ buildscript {
     ext.deeplink ="4.1.0"
     ext.nav_version="2.3.5"
     ext.circle_image="3.1.0"
+    ext.mockitoVersion = '3.6.0'
+    ext.mockitoKotlinVersion = '2.2.0'
+    ext.mockitoKotlinVersion = '2.2.0'
     repositories {
         google()
         mavenCentral()
