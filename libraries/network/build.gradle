@@ -32,11 +32,11 @@ android {
             dimension "dev"
         }
         stage {
-            buildConfigField('String', 'BASE_URL', '"base_url_stage"')
+            buildConfigField('String', 'BASE_URL', "\"https://api.npoint.io/\"")
             dimension "dev"
         }
         prod {
-            buildConfigField('String', 'BASE_URL', "base_url_prod")
+            buildConfigField('String', 'BASE_URL', "\"https://api.npoint.io/\"")
             dimension "dev"
         }
     }
