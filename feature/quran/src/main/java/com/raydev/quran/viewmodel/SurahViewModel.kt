@@ -3,15 +3,14 @@ package com.raydev.quran.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import com.raydev.anabstract.state.ResponseState
-import com.raydev.domain.usecase.QuranUseCase
+import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.shared.model.Surah
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 
 class SurahViewModel(
-    private val quranUseCase: QuranUseCase
+    private val quranUseCase: GetSurahUseCase
 ): ViewModel() {
 
     private val viewModelJob = SupervisorJob()
@@ -23,7 +22,7 @@ class SurahViewModel(
 
     fun loadSurah() {
         uiScope.launch {
-            val contentSurah = quranUseCase.getSurah()
+            val contentSurah = quranUseCase()
             contentSurah.collect {
                 _observableSurah.value = it
             }

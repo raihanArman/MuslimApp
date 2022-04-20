@@ -75,6 +75,7 @@ dependencies {
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
 
     // Coroutine Lifecycle Scopes
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
@@ -93,4 +94,6 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
 
+
+    testImplementation "androidx.arch.core:core-testing:$androidCoreTestVersion"
 }

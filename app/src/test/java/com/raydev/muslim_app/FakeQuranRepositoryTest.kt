@@ -12,29 +12,15 @@ import kotlinx.coroutines.flow.flowOn
 
 class FakeQuranRepositoryTest(
     private val remoteDataSource: QuranRemoteDataSource
-): QuranRepository {
+) {
 
-    override fun getSurah(): Flow<ResponseState<List<Surah>>> {
-        return flow{
-            emit(ResponseState.Loading())
-            try{
-                val response = remoteDataSource.getListSurah()
-                emit(ResponseState.Success(response))
-            }catch (e: Exception){
-                emit(ResponseState.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
+    suspend fun getSurah(): List<Surah> {
+        val response = remoteDataSource.getListSurah()
+        return response
     }
 
-    override fun getAyat(number: String): Flow<ResponseState<List<Ayat>>> {
-        return flow{
-            emit(ResponseState.Loading())
-            try{
-                val response = remoteDataSource.getListAyat(number)
-                emit(ResponseState.Success(response))
-            }catch (e: Exception){
-                emit(ResponseState.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
+    suspend fun getAyat(number: String): List<Ayat> {
+        val response = remoteDataSource.getListAyat(number)
+        return response
     }
 }

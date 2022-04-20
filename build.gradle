@@ -34,6 +34,7 @@ buildscript {
     ext.mockitoVersion = '3.6.0'
     ext.mockitoKotlinVersion = '2.2.0'
     ext.mockitoKotlinVersion = '2.2.0'
+    ext.androidCoreTestVersion = '2.1.0'
     repositories {
         google()
         mavenCentral()

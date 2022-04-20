@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.raydev.anabstract.state.ResponseState
-import com.raydev.domain.usecase.QuranUseCase
+import com.raydev.domain.usecase.quran.GetAyatUseCase
 import com.raydev.shared.model.Ayat
 import com.raydev.shared.model.Surah
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class AyatViewModel(
-    private val useCase: QuranUseCase
+    private val useCase: GetAyatUseCase
 ): ViewModel() {
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -34,7 +34,7 @@ class AyatViewModel(
 
     fun loadAyat(number: String){
         uiScope.launch {
-            val contentAyat = useCase.getAyat(number)
+            val contentAyat = useCase(number)
             contentAyat.collect {
                 _observableAyat.value = it
             }

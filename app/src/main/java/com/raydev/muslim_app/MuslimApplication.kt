@@ -2,6 +2,7 @@ package com.raydev.muslim_app
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.raydev.cache.CacheModule.cacheModule
 import com.raydev.data.di.ApiModule.apiModule
 import com.raydev.data.di.RemoteDataSourceModule.remoteDataSourceModule
 import com.raydev.data.di.RepositoryModule.repositortModule
@@ -25,6 +26,7 @@ class MuslimApplication: Application() {
             androidContext(this@MuslimApplication)
             modules(listOf(
                 networkModule,
+                cacheModule,
                 apiModule,
                 remoteDataSourceModule,
                 repositortModule,

@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/cache" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature" />
@@ -20,6 +21,7 @@
             <option value="$PROJECT_DIR$/feature/quran" />
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/abstract" />
+            <option value="$PROJECT_DIR$/libraries/cache" />
             <option value="$PROJECT_DIR$/libraries/network" />
             <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/resource" />

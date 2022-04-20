@@ -1,21 +1,13 @@
 package com.raydev.quran.ui.list_ayat
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raydev.anabstract.base.BaseFragment
 import com.raydev.anabstract.state.ResponseState
-import com.raydev.domain.usecase.QuranUseCase
-import com.raydev.quran.R
 import com.raydev.quran.databinding.FragmentAyatBySurahBinding
 import com.raydev.quran.viewmodel.AyatViewModel
 import com.raydev.shared.model.Ayat
-import org.koin.android.ext.android.inject
-import org.koin.java.KoinJavaComponent
 
 class AyatBySurahFragment : BaseFragment<FragmentAyatBySurahBinding>() {
 
