@@ -94,12 +94,17 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
 
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+
 
     // Notify [https://github.com/Karn/notify]
     implementation "io.karn:notify:1.4.0"
 
     // Downloader [https://github.com/alirezat775/downloader]
     implementation 'com.github.alirezat775:downloader:1.0.2'
+
+    implementation "androidx.activity:activity-ktx:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.0"
 
 
     testImplementation "androidx.arch.core:core-testing:$androidCoreTestVersion"

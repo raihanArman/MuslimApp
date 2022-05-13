@@ -37,6 +37,7 @@ class AyatViewModel(
 
 
     val surahList = ArrayList<Surah>()
+    var surahCurrentSelected : Surah? = null
     var currentIndexSurahPager = 0
 
     fun loadAyat(number: String){
@@ -63,8 +64,8 @@ class AyatViewModel(
         currentIndexSurahPager = index
     }
 
-//    fun setCurrentSurah(number: Int){
-//        _observableCurrentSurah.value = number
-//    }
+    fun setCurrentSurah(number: Int){
+        surahCurrentSelected = surahList[number]
+    }
 
 }
