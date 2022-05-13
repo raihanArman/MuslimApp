@@ -2,6 +2,7 @@ package com.raydev.quran.ui.list_ayat
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raydev.anabstract.base.BaseFragment
 import com.raydev.anabstract.state.ResponseState
@@ -19,10 +20,9 @@ class AyatBySurahFragment : BaseFragment<FragmentAyatBySurahBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as DetailSurahActivity).viewModel
+        viewModel = ViewModelProvider(requireActivity()).get(AyatViewModel::class.java)
 
         setupAdapter()
-//        setupAyat()
         observeAyat()
     }
 
@@ -49,12 +49,6 @@ class AyatBySurahFragment : BaseFragment<FragmentAyatBySurahBinding>() {
     private fun setupDataAyat(data: List<Ayat>) {
         adapter.setAyatList(data)
     }
-
-//    private fun setupAyat() {
-//        viewModel.observableCurrentSurah.observe(requireActivity(), {
-//            viewModel.loadAyat(it.toString())
-//        })
-//    }
 
     private fun setupAdapter(){
         binding.rvAyat.layoutManager = LinearLayoutManager(requireActivity())

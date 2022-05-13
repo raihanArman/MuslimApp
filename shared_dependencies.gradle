@@ -95,5 +95,12 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
 
 
+    // Notify [https://github.com/Karn/notify]
+    implementation "io.karn:notify:1.4.0"
+
+    // Downloader [https://github.com/alirezat775/downloader]
+    implementation 'com.github.alirezat775:downloader:1.0.2'
+
+
     testImplementation "androidx.arch.core:core-testing:$androidCoreTestVersion"
 }

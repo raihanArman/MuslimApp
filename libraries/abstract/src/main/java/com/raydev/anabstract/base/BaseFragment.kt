@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.raydev.anabstract.extention.toast
 
-abstract class BaseFragment<B : ViewBinding>(): Fragment(), BaseView {
+abstract class BaseFragment<B : ViewBinding>: Fragment(), BaseView {
     private var _binding: B? = null
     val binding get() = _binding!!
 

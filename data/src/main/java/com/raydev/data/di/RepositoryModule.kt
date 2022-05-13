@@ -8,7 +8,7 @@ object RepositoryModule {
     var repositortModule = module {
         factory<QuranRepository> {
             QuranRepositoryImpl(
-                get()
+                get(),get()
             )
         }
     }

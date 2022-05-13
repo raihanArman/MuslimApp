@@ -2,6 +2,8 @@ package com.raydev.quran.ui.list_ayat
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.raydev.anabstract.base.BaseActivity
 import com.raydev.quran.databinding.ActivityDetailSurahBinding
@@ -21,18 +23,36 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
         super.onCreate(savedInstanceState)
         loadKoinModules(quranModule)
 
+        supportActionBar?.hide()
+
         getSurahListFromIntent()
         setupViewPager()
+        setupObserveDownload()
         setCurrentSurah()
 
+        binding.ivDownload.setOnClickListener {
+            downloadProcess()
+        }
+
+    }
+
+    private fun downloadProcess(){
+        // Show Dialog
+    }
+
+    private fun setupObserveDownload(){
+        viewModel.observableDownload.observe(this, {isExists ->
+            if(isExists)
+                binding.ivDownload.visibility = View.INVISIBLE
+            else
+                binding.ivDownload.visibility = View.VISIBLE
+        })
     }
 
     private fun getSurahListFromIntent() {
         val surahList = intent.getParcelableArrayListExtra<Surah>("surah_list") as ArrayList<Surah>
         val number = intent.getIntExtra("number", 0)
 
-        Log.d("DetailSurah", "getSurahListFromIntent: $number")
-//        viewModel.setCurrentSurah(number)
         viewModel.setSurahList(surahList)
         if(number != 0)
             viewModel.setCurrentSurahPagerIndex(number - 1)
@@ -52,6 +72,7 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 viewModel.loadAyat((position+1).toString())
+                viewModel.checkFile((position+1), this@DetailSurahActivity)
             }
         })
     }

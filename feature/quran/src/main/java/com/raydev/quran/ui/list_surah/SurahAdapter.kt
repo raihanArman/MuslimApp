@@ -7,7 +7,8 @@ import com.raydev.quran.databinding.ItemSurahBinding
 import com.raydev.shared.model.Surah
 
 class SurahAdapter(
-    val goToDetail: (String) -> Unit
+    val goToDetail: (String) -> Unit,
+//    val downloadSurah: (Surah) -> Unit
 ): RecyclerView.Adapter<SurahAdapter.ViewHolder>() {
 
     private val surahList = ArrayList<Surah>()
