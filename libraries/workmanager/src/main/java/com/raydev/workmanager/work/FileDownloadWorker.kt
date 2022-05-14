@@ -1,5 +1,6 @@
 package com.raydev.workmanager.work
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ContentValues
@@ -13,11 +14,13 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
 import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.raydev.workmanager.R
 import com.raydev.workmanager.util.FileParams
 import com.raydev.workmanager.util.NotificationConstants
+import kotlinx.coroutines.delay
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -26,14 +29,17 @@ class FileDownloadWorker(
     private val context: Context,
     workerParameters: WorkerParameters
 ): CoroutineWorker(context, workerParameters) {
+    private val TAG = "FileDownloadWorker"
+
+    val builder = NotificationCompat.Builder(context,NotificationConstants.CHANNEL_ID).setSmallIcon(R.drawable.download)
 
     override suspend fun doWork(): Result {
         val fileUrl = inputData.getString(FileParams.KEY_FILE_URL) ?: ""
         val fileName = inputData.getString(FileParams.KEY_FILE_NAME) ?: ""
         val fileType = inputData.getString(FileParams.KEY_FILE_TYPE) ?: ""
 
-        Log.d("TAG", "doWork: $fileUrl | $fileName | $fileType")
 
+        Log.d("TAG", "doWork: $fileUrl | $fileName | $fileType")
 
         if (fileName.isEmpty()
             || fileType.isEmpty()
@@ -56,13 +62,14 @@ class FileDownloadWorker(
 
         }
 
-        val builder = NotificationCompat.Builder(context,NotificationConstants.CHANNEL_ID)
-            .setSmallIcon(R.drawable.download)
-            .setContentTitle("Downloading your file...")
+
+        builder.setContentTitle("Downloading your file...")
             .setOngoing(true)
             .setProgress(0,0,true)
 
         NotificationManagerCompat.from(context).notify(NotificationConstants.NOTIFICATION_ID,builder.build())
+
+        setupForegroundWork(builder.build())
 
         val uri = getSavedFileUri(
             fileName = fileName,
@@ -77,6 +84,19 @@ class FileDownloadWorker(
         }else{
             Result.failure()
         }
+    }
+
+    private suspend fun setupForegroundWork(build: Notification) {
+        val foregroundInfo = ForegroundInfo(NotificationConstants.NOTIFICATION_ID, build)
+        setForeground(foregroundInfo)
+    }
+
+    private suspend fun showProgress(progress: Int) {
+        val notification = builder
+            .setContentText("Download selesai")
+            .setProgress(100, progress, false)
+            .build()
+        setupForegroundWork(notification)
     }
 
     private fun getSavedFileUri(
@@ -95,10 +115,11 @@ class FileDownloadWorker(
         if (mimeType.isEmpty()) return null
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            Log.d(TAG, "getSavedFileUri: process convert ${Build.VERSION.SDK_INT}")
             val contentValues = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
                 put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
-                put(MediaStore.MediaColumns.RELATIVE_PATH, "Download/DownloaderDemo")
+                put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
             }
 
             val resolver = context.contentResolver
@@ -111,13 +132,14 @@ class FileDownloadWorker(
                         input.copyTo(output!!, DEFAULT_BUFFER_SIZE)
                     }
                 }
+                val file = File(uri.path)
+                Log.d(TAG, "getSavedFileUri: ${file.path}")
                 uri
             }else{
                 null
             }
 
         }else{
-
             val target = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                 fileName

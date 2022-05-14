@@ -1,6 +1,7 @@
 package com.raydev.quran.viewmodel
 
 import android.content.Context
+import android.os.Environment
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +20,7 @@ import java.io.File
 class AyatViewModel(
     private val useCase: GetAyatUseCase
 ): ViewModel() {
+    private val TAG = "AyatViewModel"
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
@@ -39,6 +41,7 @@ class AyatViewModel(
     val surahList = ArrayList<Surah>()
     var surahCurrentSelected : Surah? = null
     var currentIndexSurahPager = 0
+    var surahCurrentPosition = 0
 
     fun loadAyat(number: String){
         uiScope.launch {
@@ -49,9 +52,9 @@ class AyatViewModel(
         }
     }
 
-    fun checkFile(position: Int, context: Context) {
-        val filePath = context.getExternalFilesDir(null)?.absolutePath?.plus("/sample-").plus(surahList[position].nama).plus(".mp3")
-        val file = File(filePath)
+    fun checkFileCurrentSurah() {
+        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "${surahList[surahCurrentPosition].nama}.mp3")
+        Log.d(TAG, "checkFile: ${file.path}")
         _observableDownload.postValue(file.exists())
     }
 
@@ -66,6 +69,7 @@ class AyatViewModel(
 
     fun setCurrentSurah(number: Int){
         surahCurrentSelected = surahList[number]
+        surahCurrentPosition = number
     }
 
 }

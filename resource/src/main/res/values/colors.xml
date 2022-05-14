@@ -10,4 +10,8 @@
     <color name="grey_line">#EDEDED</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bg_ayat">#EAD8C0</color>
+    <color name="alert_primary">#084298</color>
+    <color name="alert_success">#0f5132</color>
+    <color name="alert_danger">#842029</color>
+    <color name="alert_warning">#664d03</color>
 </resources>

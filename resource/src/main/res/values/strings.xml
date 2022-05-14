@@ -1,0 +1,8 @@
+<resources>
+    <string name="notif_success_title">Berhasil disiapkan...</string>
+    <string name="notif_success_text">Selamat mendengarkan</string>
+    <string name="notif_failed_title">Terjadi Kesalahan...</string>
+    <string name="notif_failed_text">File tidak dapat di unduh</string>
+    <string name="notif_running_title">Mempersiapkan Audio...</string>
+    <string name="notif_running_value">Mohon menunggu kami sedang mempersiapkan audio yang anda butuhkan</string>
+</resources>

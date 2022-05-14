@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,9 +18,12 @@ import com.raydev.quran.di.QuranModule.quranModule
 import org.koin.core.context.loadKoinModules
 
 import com.google.android.material.tabs.TabLayoutMediator
+import com.raydev.quran.R
 import com.raydev.quran.viewmodel.AyatViewModel
 import com.raydev.shared.model.Surah
 import com.raydev.workmanager.work.FileDownloadHelper
+import com.tapadoo.alerter.Alerter
+import io.karn.notify.Notify
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -66,15 +70,45 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
             dialog.setMessage("Audio murottal ${viewModel.surahCurrentSelected?.nama}, unduh terlebih dahulu")
             dialog.setPositiveButton("Iya") { p0, p1 ->
                 //Download
+                val downloadNotificationBuilder = Notify.with(this)
+                    .header {
+                        icon = R.drawable.ic_app_icon
+                    }
+                    .content {
+                        title = "Downloading..."
+                        text = "Mohon tunggu, file sedang di persiapkan"
+                    }
+                    .progress {
+                        showProgress = true
+                        enablePercentage = true
+                        progressPercent = 0
+                    }
+                    .asBuilder()
+
+                downloadNotificationBuilder.setOngoing(true)
                 fileDownloadHelper.startDownloadingFile(viewModel.surahCurrentSelected!!,
                     success = {
-                        Log.d(TAG, "downloadProcess: success -> $it")
+                        downloadNotificationBuilder.setProgress(0, 0, false)
+                        showCustomNotification(
+                            R.string.notif_success_title,
+                            R.string.notif_success_text,
+                            R.color.alert_success
+                        )
+                        viewModel.checkFileCurrentSurah()
                     },
                     failed = {
-                        Log.d(TAG, "downloadProcess: failed -> $it")
+                        showCustomNotification(
+                            R.string.notif_failed_title,
+                            R.string.notif_failed_text,
+                            R.color.alert_danger
+                        )
                     },
                     running = {
-                        Log.d(TAG, "downloadProcess: running")
+                        showCustomNotification(
+                            R.string.notif_running_title,
+                            R.string.notif_running_value,
+                            R.color.alert_primary,
+                        )
                     }, this
                 )
             }
@@ -87,10 +121,14 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
 
     private fun setupObserveDownload(){
         viewModel.observableDownload.observe(this, {isExists ->
-            if(isExists)
-                binding.ivDownload.visibility = View.INVISIBLE
-            else
+            if(isExists) {
+                binding.ivDownload.visibility = View.GONE
+                binding.ivPlay.visibility = View.VISIBLE
+            }
+            else{
                 binding.ivDownload.visibility = View.VISIBLE
+                binding.ivPlay.visibility = View.GONE
+            }
         })
     }
 
@@ -118,9 +156,10 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
                 super.onPageSelected(position)
                 viewModel.setCurrentSurah(position)
                 viewModel.loadAyat((position+1).toString())
-                viewModel.checkFile((position+1), this@DetailSurahActivity)
+                viewModel.checkFileCurrentSurah()
             }
         })
+        binding.viewpager
     }
 
     private fun setCurrentSurah(){
