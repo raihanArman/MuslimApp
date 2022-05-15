@@ -2,10 +2,14 @@ package com.raydev.quran.ui.list_ayat
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -19,6 +23,7 @@ import org.koin.core.context.loadKoinModules
 
 import com.google.android.material.tabs.TabLayoutMediator
 import com.raydev.quran.R
+import com.raydev.quran.util.StatusFile
 import com.raydev.quran.viewmodel.AyatViewModel
 import com.raydev.shared.model.Surah
 import com.raydev.workmanager.work.FileDownloadHelper
@@ -26,26 +31,25 @@ import com.tapadoo.alerter.Alerter
 import io.karn.notify.Notify
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.io.File
 
 
 class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
     private  val TAG = "DetailSurahActivity"
     val viewModel: AyatViewModel by viewModel()
     val fileDownloadHelper: FileDownloadHelper by inject()
+    var mediaPlayer: MediaPlayer? = null
 
     private val PERMISSIONS_STORAGE = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
-
     private val requestMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
         permissions.entries.forEach {
             Log.e("DEBUG", "${it.key} = ${it.value}")
         }
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +59,59 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
 
         getSurahListFromIntent()
         setupViewPager()
-        setupObserveDownload()
+        setupObserveCurrentSurahPlay()
         setCurrentSurah()
 
         binding.ivDownload.setOnClickListener {
             downloadProcess()
         }
 
+        binding.ivPlay.setOnClickListener {
+            playAudio()
+        }
+
+        binding.ivPlaying.setOnClickListener {
+            pauseAudio()
+        }
+
+        binding.ivPause.setOnClickListener {
+            continueAudio()
+        }
+
+    }
+
+    private fun pauseAudio(){
+        if(mediaPlayer != null){
+            mediaPlayer?.pause()
+            viewModel.playAudioCurrentSurah(StatusFile.PAUSE)
+            viewModel.mediaIsPause = true
+        }
+    }
+
+    private fun continueAudio(){
+        if(mediaPlayer != null){
+            mediaPlayer?.start()
+            viewModel.playAudioCurrentSurah(StatusFile.PLAYING)
+            viewModel.mediaIsPause = false
+        }
+    }
+
+    private fun playAudio(){
+        if(checkPermission()) {
+            val file = viewModel.getCurrentSurahAudioAtLocalStorage()
+            if (mediaPlayer == null) {
+                Log.d("DetailSurah", "playAudio: init")
+                mediaPlayer = MediaPlayer.create(
+                    this, Uri.parse(
+                        file.path
+                    )
+                )
+                mediaPlayer?.setOnPreparedListener { mp -> mp.start() }
+            }
+            mediaPlayer?.start()
+            viewModel.playAudioCurrentSurah(StatusFile.PLAYING)
+            viewModel.mediaIsPlay = true
+        }
     }
 
     private fun downloadProcess(){
@@ -119,15 +169,33 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
         }
     }
 
-    private fun setupObserveDownload(){
-        viewModel.observableDownload.observe(this, {isExists ->
-            if(isExists) {
-                binding.ivDownload.visibility = View.GONE
-                binding.ivPlay.visibility = View.VISIBLE
-            }
-            else{
-                binding.ivDownload.visibility = View.VISIBLE
-                binding.ivPlay.visibility = View.GONE
+    private fun setupObserveCurrentSurahPlay(){
+        viewModel.observableStatusPlayAudioCurrentSurah.observe(this, {status ->
+            when(status){
+                StatusFile.NOT_DOWNLOADED ->{
+                    binding.ivDownload.visibility = View.VISIBLE
+                    binding.ivPlay.visibility = View.GONE
+                    binding.ivPlaying.visibility = View.GONE
+                    binding.ivPause.visibility = View.GONE
+                }
+                StatusFile.NOT_PLAY -> {
+                    binding.ivDownload.visibility = View.GONE
+                    binding.ivPlay.visibility = View.VISIBLE
+                    binding.ivPlaying.visibility = View.GONE
+                    binding.ivPause.visibility = View.GONE
+                }
+                StatusFile.PLAYING ->{
+                    binding.ivDownload.visibility = View.GONE
+                    binding.ivPlay.visibility = View.GONE
+                    binding.ivPlaying.visibility = View.VISIBLE
+                    binding.ivPause.visibility = View.GONE
+                }
+                StatusFile.PAUSE ->{
+                    binding.ivDownload.visibility = View.GONE
+                    binding.ivPlay.visibility = View.GONE
+                    binding.ivPlaying.visibility = View.GONE
+                    binding.ivPause.visibility = View.VISIBLE
+                }
             }
         })
     }
@@ -157,6 +225,7 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
                 viewModel.setCurrentSurah(position)
                 viewModel.loadAyat((position+1).toString())
                 viewModel.checkFileCurrentSurah()
+                viewModel.setInitPlayAudioCurrentSurah()
             }
         })
         binding.viewpager
