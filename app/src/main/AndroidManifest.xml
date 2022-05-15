@@ -37,6 +37,7 @@
 
                 <data android:scheme="muslim"/>
                 <data android:host="quran"/>
+                <data android:host="prayer"/>
                 <data android:host="main"/>
             </intent-filter>
         </activity>

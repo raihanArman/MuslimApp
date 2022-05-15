@@ -40,9 +40,17 @@ object NetworkModule {
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create()
         }
-        single {
+        single(named("quran")) {
             Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL_QURAN)
+                .addConverterFactory(GsonConverterFactory.create(get()))
+                .client(get())
+                .build()
+        }
+
+        single(named("prayer")) {
+            Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL_PRAYER)
                 .addConverterFactory(GsonConverterFactory.create(get()))
                 .client(get())
                 .build()

@@ -28,15 +28,18 @@ android {
     }
     productFlavors {
         dev {
-            buildConfigField('String', 'BASE_URL',  "\"https://api.npoint.io/\"")
+            buildConfigField('String', 'BASE_URL_QURAN',  "\"https://api.npoint.io/\"")
+            buildConfigField('String', 'BASE_URL_PRAYER',  "\"https://api.myquran.com/v1/\"")
             dimension "dev"
         }
         stage {
-            buildConfigField('String', 'BASE_URL', "\"https://api.npoint.io/\"")
+            buildConfigField('String', 'BASE_URL_QURAN', "\"https://api.npoint.io/\"")
+            buildConfigField('String', 'BASE_URL_PRAYER',  "\"https://api.myquran.com/v1/\"")
             dimension "dev"
         }
         prod {
-            buildConfigField('String', 'BASE_URL', "\"https://api.npoint.io/\"")
+            buildConfigField('String', 'BASE_URL_QURAN', "\"https://api.npoint.io/\"")
+            buildConfigField('String', 'BASE_URL_PRAYER',  "\"https://api.myquran.com/v1/\"")
             dimension "dev"
         }
     }
