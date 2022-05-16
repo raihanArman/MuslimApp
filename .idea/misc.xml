@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="feature/prayer/src/main/res/layout/activity_prayer.xml" value="0.25" />
         <entry key="feature/quran/src/main/res/layout/activity_detail_surah.xml" value="0.25" />
         <entry key="feature/quran/src/main/res/layout/activity_quran.xml" value="0.1" />
         <entry key="feature/quran/src/main/res/layout/fragment_ayat_by_surah.xml" value="0.13196555217831812" />
         <entry key="feature/quran/src/main/res/layout/item_ayat.xml" value="0.25" />
         <entry key="feature/quran/src/main/res/layout/item_surah.xml" value="0.1" />
+        <entry key="resource/src/main/res/drawable/bg_prayer_info.xml" value="0.2875" />
+        <entry key="resource/src/main/res/drawable/bg_prayer_item.xml" value="0.2875" />
         <entry key="resource/src/main/res/layout/item_surah.xml" value="0.14336372847011145" />
         <entry key="resource/src/main/res/layout/line.xml" value="0.13196555217831812" />
       </map>

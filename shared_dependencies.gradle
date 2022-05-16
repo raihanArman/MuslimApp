@@ -109,6 +109,15 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.4.0"
     implementation "androidx.fragment:fragment-ktx:1.4.0"
 
+    // Maps
+
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.android.gms:play-services-base:18.0.1'
+    implementation 'com.google.android.libraries.places:places:2.6.0'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
+
 
     testImplementation "androidx.arch.core:core-testing:$androidCoreTestVersion"
 }

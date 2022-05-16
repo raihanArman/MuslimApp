@@ -1,5 +1,6 @@
 package com.raydev.domain.di
 
+import com.raydev.domain.usecase.prayer.GetSholatTimeUseCase
 import com.raydev.domain.usecase.prayer.SearchCityUseCase
 import com.raydev.domain.usecase.quran.GetAyatUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
@@ -17,6 +18,10 @@ object UseCaseModule {
 
         factory {
             SearchCityUseCase(get())
+        }
+
+        factory {
+            GetSholatTimeUseCase(get())
         }
     }
 }

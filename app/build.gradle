@@ -69,10 +69,15 @@ android {
             applicationId = "com.raydev.muslim_app"
         }
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 apply from: '../shared_dependencies.gradle'
 dependencies {
+    implementation project(path: ':libraries:shared_preference')
+    implementation project(path: ':libraries:abstract')
     implementation project(path: ':libraries:network')
     implementation project(path: ':libraries:cache')
     implementation project(path: ':libraries:workmanager')

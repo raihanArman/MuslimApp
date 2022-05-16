@@ -1,6 +1,7 @@
 package com.raydev.anabstract.extention
 
 import android.os.Build
+import android.text.format.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -24,4 +25,12 @@ fun String.toDate() : String {
 fun String.toNumberPhoneFormat(): String{
     val phoneFull = this.substring(0)
     return "+62$phoneFull"
+}
+
+fun Date.toDateFormatDaysFullname(): String{
+    return DateFormat.format("EEEE, dd MMMM yyyy", this).toString()
+}
+
+fun Date.toDateFormatApiParameter(): String{
+    return DateFormat.format("yyyy/MM/dd", this).toString()
 }
