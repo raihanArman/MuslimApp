@@ -1,10 +1,9 @@
-package com.raydev.workmanager.work
+package com.raydev.quran.work
 
-import android.content.Context
 import androidx.lifecycle.LifecycleOwner
 import androidx.work.*
+import com.raydev.quran.util.FileParams
 import com.raydev.shared.model.Surah
-import com.raydev.workmanager.util.FileParams
 
 class FileDownloadHelper(
     private val workManager: WorkManager

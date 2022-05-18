@@ -1,4 +1,4 @@
-package com.raydev.workmanager.work
+package com.raydev.quran.work
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -17,10 +17,9 @@ import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import com.raydev.quran.util.FileParams
+import com.raydev.quran.util.NotificationConstants
 import com.raydev.workmanager.R
-import com.raydev.workmanager.util.FileParams
-import com.raydev.workmanager.util.NotificationConstants
-import kotlinx.coroutines.delay
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -31,7 +30,7 @@ class FileDownloadWorker(
 ): CoroutineWorker(context, workerParameters) {
     private val TAG = "FileDownloadWorker"
 
-    val builder = NotificationCompat.Builder(context,NotificationConstants.CHANNEL_ID).setSmallIcon(R.drawable.download)
+    val builder = NotificationCompat.Builder(context, NotificationConstants.CHANNEL_ID).setSmallIcon(R.drawable.download)
 
     override suspend fun doWork(): Result {
         val fileUrl = inputData.getString(FileParams.KEY_FILE_URL) ?: ""

@@ -2,17 +2,12 @@ package com.raydev.quran.ui.list_ayat
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -26,12 +21,10 @@ import com.raydev.quran.R
 import com.raydev.quran.util.StatusFile
 import com.raydev.quran.viewmodel.AyatViewModel
 import com.raydev.shared.model.Surah
-import com.raydev.workmanager.work.FileDownloadHelper
-import com.tapadoo.alerter.Alerter
+import com.raydev.quran.work.FileDownloadHelper
 import io.karn.notify.Notify
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.io.File
 
 
 class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {

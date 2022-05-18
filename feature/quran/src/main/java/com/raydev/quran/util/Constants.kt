@@ -1,4 +1,4 @@
-package com.raydev.workmanager.util
+package com.raydev.quran.util
 
 object FileParams{
     const val KEY_FILE_URL = "key_file_url"

@@ -1,4 +1,4 @@
-package com.raydev.prayer
+package com.raydev.prayer.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
