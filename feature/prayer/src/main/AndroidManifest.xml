@@ -2,10 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.raydev.prayer">
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application>
         <activity
             android:name=".ui.PrayerActivity"
             android:exported="false" />
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+        <service android:name=".service.AlarmService"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

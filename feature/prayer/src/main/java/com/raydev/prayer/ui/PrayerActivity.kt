@@ -13,6 +13,7 @@ import com.raydev.shared.deeplink.AppLink
 import com.raydev.shared.model.SholatTime
 import com.raydev.shared.util.Util
 import com.raydev.prayer.work.ReminderHelper
+import com.raydev.shared.model.Jadwal
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
@@ -24,6 +25,7 @@ class PrayerActivity : BaseActivity<ActivityPrayerBinding>() {
     private val TAG = "PrayerActivity"
     private val viewModel: PrayerViewModel by viewModel()
     private val reminderHelper: ReminderHelper by inject()
+    private var dataSholahTime: Jadwal? = null
     var cityId: String = ""
 
 
@@ -37,6 +39,22 @@ class PrayerActivity : BaseActivity<ActivityPrayerBinding>() {
         setupObserveSearchCity()
         setupObserveGetSholatTime()
         searchCity()
+
+        onClickSwitch()
+
+    }
+
+    private fun onClickSwitch() {
+        dataSholahTime.let {
+            binding.switchImsak.setOnCheckedChangeListener { compoundButton, checked ->
+                Log.d(TAG, "onClickSwitch: ")
+//                    val data = it!!.imsak.split(":")
+//                    val hour = data[0].toInt()
+//                    val minute = data[1].toInt()
+                    reminderHelper.enableReminder(18, 21, 0, checked)
+            }
+        }
+
     }
 
     private fun getSholatTime() {
@@ -63,6 +81,7 @@ class PrayerActivity : BaseActivity<ActivityPrayerBinding>() {
     }
 
     private fun setSholatTime(data: SholatTime?) {
+        dataSholahTime = data?.schedule
         binding.tvTimeImsak.text = data?.schedule?.let {
             it.imsak
         }

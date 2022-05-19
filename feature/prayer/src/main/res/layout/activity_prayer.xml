@@ -126,7 +126,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/imageView2"
+                android:id="@+id/switch_imsak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/purple_200"
@@ -144,7 +144,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/switch_imsak"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -175,7 +175,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/imageView3"
+                android:id="@+id/switch_subuh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/purple_200"
@@ -193,7 +193,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintEnd_toStartOf="@+id/switch_subuh"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -224,7 +224,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/imageView4"
+                android:id="@+id/switch_dhuhur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/purple_200"
@@ -242,7 +242,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                app:layout_constraintEnd_toStartOf="@+id/switch_dhuhur"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -274,7 +274,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/imageView5"
+                android:id="@+id/switch_ashar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/purple_200"
@@ -292,7 +292,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                app:layout_constraintEnd_toStartOf="@+id/switch_ashar"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -323,7 +323,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/imageView6"
+                android:id="@+id/switch_maghrib"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/purple_200"
@@ -341,7 +341,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView6"
+                app:layout_constraintEnd_toStartOf="@+id/switch_maghrib"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -372,7 +372,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/imageView7"
+                android:id="@+id/switch_isya"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/purple_200"
@@ -390,7 +390,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                app:layout_constraintEnd_toStartOf="@+id/switch_isya"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

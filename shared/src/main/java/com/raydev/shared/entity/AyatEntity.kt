@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
 
-@Entity(tableName = "ayat")
+@Entity(tableName = "tb_ayat")
 data class AyatEntity(
     @PrimaryKey
     @NotNull

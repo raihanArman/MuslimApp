@@ -6,16 +6,19 @@ import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.raydev.prayer.ReminderParams
-import com.raydev.prayer.service.AlarmReceiver
+import com.raydev.prayer.receiver.AlarmReceiver
+import com.raydev.prayer.service.AlarmService
 import java.util.*
 
 class ReminderWorker(
     private val context: Context,
     workerParameters: WorkerParameters
 ): CoroutineWorker(context, workerParameters) {
+    private val TAG = "ReminderWorker"
     override suspend fun doWork(): Result {
         val hours = inputData.getInt(ReminderParams.KEY_HOURS, 0)
         val minutes = inputData.getInt(ReminderParams.KEY_MINUTE, 0)
@@ -25,12 +28,13 @@ class ReminderWorker(
         if (enable)
             triggerAlarm(hours, minutes, reqCode)
         else
-            stopAlarm(hours, minutes, reqCode)
+            stopAlarm(reqCode)
 
         return Result.success()
     }
 
     fun triggerAlarm(hours: Int, minutes: Int, reqCode: Int){
+        Log.d(TAG, "triggerAlarm: $hours, $minutes")
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hours)
         calendar.set(Calendar.MINUTE, minutes)
@@ -39,7 +43,7 @@ class ReminderWorker(
         val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            alarm.setAndAllowWhileIdle(
+            alarm.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
                 PendingIntent.getBroadcast(
@@ -49,8 +53,9 @@ class ReminderWorker(
                     FLAG_UPDATE_CURRENT
                 )
             )
+            Log.d(TAG, "triggerAlarm: set alarm")
         }else {
-            alarm.set(
+            alarm.setExact(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
                 PendingIntent.getBroadcast(
@@ -64,7 +69,7 @@ class ReminderWorker(
 
     }
 
-    fun stopAlarm(hours: Int, minutes: Int, reqCode: Int) {
+    fun stopAlarm( reqCode: Int) {
         val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarm.cancel(
             PendingIntent.getBroadcast(
@@ -74,7 +79,7 @@ class ReminderWorker(
                 FLAG_UPDATE_CURRENT
             ))
 
-//        applicationContext.stopService(Intent(applicationContext, AlarmSoundService::class.java))
+        applicationContext.stopService(Intent(applicationContext, AlarmService::class.java))
     }
 
 }

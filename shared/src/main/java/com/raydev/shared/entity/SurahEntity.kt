@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import org.jetbrains.annotations.NotNull
 
-@Entity(tableName = "surah")
+@Entity(tableName = "tb_surah")
 data class SurahEntity(
     @PrimaryKey
     @NotNull

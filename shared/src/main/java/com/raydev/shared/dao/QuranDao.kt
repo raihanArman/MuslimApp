@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuranDao {
-    @Query("SELECT * FROM surah")
+    @Query("SELECT * FROM tb_surah")
     fun getSurahLocal(): Flow<List<SurahEntity>>
 
-    @Query("SELECT * FROM ayat WHERE nomor = :number")
+    @Query("SELECT * FROM tb_ayat WHERE nomor = :number")
     fun getAyatLocal(number: String): Flow<List<AyatEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
