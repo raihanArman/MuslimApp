@@ -51,7 +51,7 @@ class PrayerActivity : BaseActivity<ActivityPrayerBinding>() {
 //                    val data = it!!.imsak.split(":")
 //                    val hour = data[0].toInt()
 //                    val minute = data[1].toInt()
-                    reminderHelper.enableReminder(18, 21, 0, checked)
+                    reminderHelper.enableReminder(17, 37, 0, checked)
             }
         }
 

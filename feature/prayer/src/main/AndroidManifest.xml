@@ -13,6 +13,10 @@
             android:name=".receiver.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
+        <receiver
+            android:name=".receiver.CancelServiceReceiver"
+            android:enabled="true"
+            android:exported="true" />
         <service android:name=".service.AlarmService"
             android:enabled="true"
             android:exported="true"/>

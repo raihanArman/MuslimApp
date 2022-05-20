@@ -1,12 +1,12 @@
 package com.raydev.prayer.receiver
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -30,15 +30,7 @@ class AlarmReceiver: BroadcastReceiver() {
     }
 
     fun sendNotification(context: Context?){
-        val uriSound: Uri =
-            Uri.parse("android.resource://" + context!!.packageName.toString() + "/" + R.raw.adzan_fajr)
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-
-            val att = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                .build()
-
             val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
             val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
             val importance = NotificationManager.IMPORTANCE_HIGH
@@ -46,7 +38,7 @@ class AlarmReceiver: BroadcastReceiver() {
             channel.description = description
             channel.vibrationPattern = longArrayOf(0, 1000, 500, 1000)
             channel.enableVibration(true)
-            channel.setSound(uriSound, att)
+            channel.lockscreenVisibility = Notification.FLAG_FOREGROUND_SERVICE;
 
             // Add the channel
             val notificationManager =
@@ -55,14 +47,23 @@ class AlarmReceiver: BroadcastReceiver() {
             notificationManager?.createNotificationChannel(channel)
         }
 
+
+        val intent = Intent(context, CancelServiceReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context,1,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val answerAction: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(R.drawable.ic_app_icon, "Matikan", pendingIntent)
+                .build()
+
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_app_icon)
             .setContentTitle(NOTIFICATION_TITLE)
             .setContentText("Waktu shalat telah tiba!")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
-            .setSound(uriSound)
-            .setAutoCancel(true)
+            .setOngoing(true)
+            .addAction(answerAction)
+            .setAutoCancel(false)
 
         // Show the notification
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build())

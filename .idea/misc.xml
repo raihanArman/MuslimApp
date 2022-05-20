@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="feature/prayer/src/main/res/drawable/bg_notif_action.xml" value="0.275" />
         <entry key="feature/prayer/src/main/res/layout/activity_prayer.xml" value="0.25" />
         <entry key="feature/quran/src/main/res/layout/activity_detail_surah.xml" value="0.25" />
         <entry key="feature/quran/src/main/res/layout/activity_quran.xml" value="0.1" />
