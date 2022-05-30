@@ -8,7 +8,23 @@ import org.koin.dsl.module
 object PrayerModule {
     val prayerModule = module {
         viewModel {
-            PrayerViewModel(get(), get())
+            PrayerViewModel(
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get()
+            )
         }
         single {
             ReminderHelper(get())

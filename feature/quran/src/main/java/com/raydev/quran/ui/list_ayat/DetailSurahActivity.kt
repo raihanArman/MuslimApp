@@ -163,9 +163,9 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
     }
 
     private fun setupObserveCurrentSurahPlay(){
-        viewModel.observableStatusPlayAudioCurrentSurah.observe(this, {status ->
-            when(status){
-                StatusFile.NOT_DOWNLOADED ->{
+        viewModel.observableStatusPlayAudioCurrentSurah.observe(this) { status ->
+            when (status) {
+                StatusFile.NOT_DOWNLOADED -> {
                     binding.ivDownload.visibility = View.VISIBLE
                     binding.ivPlay.visibility = View.GONE
                     binding.ivPlaying.visibility = View.GONE
@@ -177,20 +177,20 @@ class DetailSurahActivity : BaseActivity<ActivityDetailSurahBinding>() {
                     binding.ivPlaying.visibility = View.GONE
                     binding.ivPause.visibility = View.GONE
                 }
-                StatusFile.PLAYING ->{
+                StatusFile.PLAYING -> {
                     binding.ivDownload.visibility = View.GONE
                     binding.ivPlay.visibility = View.GONE
                     binding.ivPlaying.visibility = View.VISIBLE
                     binding.ivPause.visibility = View.GONE
                 }
-                StatusFile.PAUSE ->{
+                StatusFile.PAUSE -> {
                     binding.ivDownload.visibility = View.GONE
                     binding.ivPlay.visibility = View.GONE
                     binding.ivPlaying.visibility = View.GONE
                     binding.ivPause.visibility = View.VISIBLE
                 }
             }
-        })
+        }
     }
 
     private fun getSurahListFromIntent() {

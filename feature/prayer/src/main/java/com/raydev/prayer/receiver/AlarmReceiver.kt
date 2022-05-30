@@ -27,6 +27,7 @@ class AlarmReceiver: BroadcastReceiver() {
 
         context?.startService(Intent(context, AlarmService::class.java))
         sendNotification(context)
+
     }
 
     fun sendNotification(context: Context?){

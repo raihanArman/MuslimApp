@@ -6,9 +6,11 @@ import com.raydev.cache.CacheModule.cacheModule
 import com.raydev.data.di.ApiModule.apiModule
 import com.raydev.data.di.DataSourceModule.localDataSourceModule
 import com.raydev.data.di.DataSourceModule.remoteDataSourceModule
+import com.raydev.data.di.DataSourceModule.sharedPreferenceSourceModule
 import com.raydev.data.di.RepositoryModule.repositortModule
 import com.raydev.domain.di.UseCaseModule.useCaseModule
 import com.raydev.network.di.NetworkModule.networkModule
+import com.raydev.shared_preference.SharedPrefModule.sharedPrefModule
 import com.raydev.workmanager.di.WorkerModule.workerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -27,9 +29,11 @@ class MuslimApplication: Application() {
                 networkModule,
                 cacheModule,
                 workerModule,
+                sharedPrefModule,
                 apiModule,
                 remoteDataSourceModule,
                 localDataSourceModule,
+                sharedPreferenceSourceModule,
                 repositortModule,
                 useCaseModule
             ))

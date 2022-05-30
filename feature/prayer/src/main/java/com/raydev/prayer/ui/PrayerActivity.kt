@@ -6,6 +6,7 @@ import com.airbnb.deeplinkdispatch.DeepLink
 import com.raydev.anabstract.base.BaseActivity
 import com.raydev.anabstract.extention.toDateFormatApiParameter
 import com.raydev.anabstract.extention.toDateFormatDaysFullname
+import com.raydev.anabstract.extention.toast
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.prayer.databinding.ActivityPrayerBinding
 import com.raydev.prayer.di.PrayerModule.prayerModule
@@ -24,10 +25,8 @@ import java.util.*
 class PrayerActivity : BaseActivity<ActivityPrayerBinding>() {
     private val TAG = "PrayerActivity"
     private val viewModel: PrayerViewModel by viewModel()
-    private val reminderHelper: ReminderHelper by inject()
     private var dataSholahTime: Jadwal? = null
     var cityId: String = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +39,50 @@ class PrayerActivity : BaseActivity<ActivityPrayerBinding>() {
         setupObserveGetSholatTime()
         searchCity()
 
-        onClickSwitch()
+        setDataFromLocal()
+    }
 
+    private fun setDataFromLocal() {
+        binding.apply {
+            switchImsak.isChecked = viewModel.getImsakData.checked
+            switchSubuh.isChecked = viewModel.getSubuhData.checked
+            switchDhuhur.isChecked = viewModel.getDhuhurData.checked
+            switchAshar.isChecked = viewModel.getAsharData.checked
+            switchMaghrib.isChecked = viewModel.getMaghribData.checked
+            switchIsya.isChecked = viewModel.getIsyaData.checked
+        }
     }
 
     private fun onClickSwitch() {
         dataSholahTime.let {
             binding.switchImsak.setOnCheckedChangeListener { compoundButton, checked ->
                 Log.d(TAG, "onClickSwitch: ")
-//                    val data = it!!.imsak.split(":")
-//                    val hour = data[0].toInt()
-//                    val minute = data[1].toInt()
-                    reminderHelper.enableReminder(17, 37, 0, checked)
+                viewModel.setImsakData(it!!.imsak, checked)
+            }
+
+            binding.switchSubuh.setOnCheckedChangeListener { compoundButton, checked ->
+                Log.d(TAG, "onClickSwitch: ")
+                viewModel.setSubuhData(it!!.subuh, checked)
+            }
+
+            binding.switchDhuhur.setOnCheckedChangeListener { compoundButton, checked ->
+                Log.d(TAG, "onClickSwitch: ")
+                viewModel.setDhuhurData(it!!.dzuhur, checked)
+            }
+
+            binding.switchAshar.setOnCheckedChangeListener { compoundButton, checked ->
+                Log.d(TAG, "onClickSwitch: ")
+                viewModel.setAsharData(it!!.ashar, checked)
+            }
+
+            binding.switchMaghrib.setOnCheckedChangeListener { compoundButton, checked ->
+                Log.d(TAG, "onClickSwitch: ")
+                viewModel.setMaghribData(it!!.maghrib, checked)
+            }
+
+            binding.switchIsya.setOnCheckedChangeListener { compoundButton, checked ->
+                Log.d(TAG, "onClickSwitch: ")
+                viewModel.setIsyaData(it!!.isya, checked)
             }
         }
 
@@ -69,6 +100,7 @@ class PrayerActivity : BaseActivity<ActivityPrayerBinding>() {
             when (response) {
                 is ResponseState.Success -> {
                     setSholatTime(response.data)
+                    onClickSwitch()
                 }
                 is ResponseState.Error -> {
                     onMessage(response.errorMessage)

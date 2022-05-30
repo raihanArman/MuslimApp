@@ -79,7 +79,7 @@ class AyatViewModel(
         return file.exists()
     }
 
-    fun statusPlayAudioCurrentSurah(statusPlay: StatusFile) {
+    private fun statusPlayAudioCurrentSurah(statusPlay: StatusFile) {
         if (checkFileCurrentSurah()) {
             if (currentSurahPlayAudio == surahList[surahCurrentPosition].nomor) {
                 _observableStatusPlayAudioCurrentSurah.postValue(statusPlay)
@@ -91,6 +91,7 @@ class AyatViewModel(
         if(checkFileCurrentSurah()){
             if(!mediaIsPlay){
                 _observableStatusPlayAudioCurrentSurah.postValue(StatusFile.NOT_PLAY)
+                Log.d(TAG, "setInitPlayAudioCurrentSurah: frafrafra")
             }else{
                 if(mediaIsPause){
                     _observableStatusPlayAudioCurrentSurah.postValue(StatusFile.PAUSE)
@@ -102,9 +103,10 @@ class AyatViewModel(
             _observableStatusPlayAudioCurrentSurah.postValue(StatusFile.NOT_DOWNLOADED)
         }
 
-        if(_observableStatusPlayAudioCurrentSurah.value == StatusFile.NOT_PLAY){
-            _observableStatusPlayAudioCurrentSurah.postValue(StatusFile.NOT_DOWNLOADED)
-        }
+//        if(_observableStatusPlayAudioCurrentSurah.value == StatusFile.NOT_PLAY){
+//            Log.d(TAG, "setInitPlayAudioCurrentSurah: skeskeske")
+//            _observableStatusPlayAudioCurrentSurah.postValue(StatusFile.NOT_DOWNLOADED)
+//        }
     }
 
     fun setSurahList(surahList: List<Surah>){

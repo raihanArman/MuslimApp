@@ -41,31 +41,23 @@ class ReminderWorker(
         calendar.set(Calendar.SECOND, 0)
 
         val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            alarm.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                PendingIntent.getBroadcast(
-                    context,
-                    reqCode,
-                    Intent(context, AlarmReceiver::class.java),
-                    FLAG_UPDATE_CURRENT
-                )
-            )
-            Log.d(TAG, "triggerAlarm: set alarm")
-        }else {
-            alarm.setExact(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                PendingIntent.getBroadcast(
-                    applicationContext,
-                    reqCode,
-                    Intent(applicationContext, AlarmReceiver::class.java),
-                    FLAG_UPDATE_CURRENT
-                )
-            )
+        if(Calendar.getInstance().after(calendar)){
+            // Move to tomorrow
+            calendar.add(Calendar.DATE, 1);
         }
+
+        alarm.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            PendingIntent.getBroadcast(
+                context,
+                reqCode,
+                Intent(context, AlarmReceiver::class.java),
+                FLAG_UPDATE_CURRENT
+            ),
+        )
+        Log.d(TAG, "triggerAlarm: set alarm")
 
     }
 
