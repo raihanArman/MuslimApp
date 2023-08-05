@@ -23,6 +23,8 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                         onFetchFailed()
                         emit(ResponseState.Error(response.errorMessage))
                     }
+
+                    else -> {}
                 }
             }
 

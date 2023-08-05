@@ -1,7 +1,6 @@
 package com.raydev.network.di
 
 import com.google.gson.GsonBuilder
-import com.raydev.network.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -16,7 +15,7 @@ object NetworkModule {
         single {
             val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
             val clientBuilder = OkHttpClient.Builder()
-            if (BuildConfig.DEBUG) {
+            if (true) {
                 httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
                 clientBuilder.addInterceptor(httpLoggingInterceptor)
             }
@@ -42,7 +41,7 @@ object NetworkModule {
         }
         single(named("quran")) {
             Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL_QURAN)
+                .baseUrl("https://api.npoint.io/")
                 .addConverterFactory(GsonConverterFactory.create(get()))
                 .client(get())
                 .build()
@@ -50,7 +49,7 @@ object NetworkModule {
 
         single(named("prayer")) {
             Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL_PRAYER)
+                .baseUrl("https://api.myquran.com/v1/")
                 .addConverterFactory(GsonConverterFactory.create(get()))
                 .client(get())
                 .build()

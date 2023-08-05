@@ -1,0 +1,135 @@
+[versions]
+kotlin = "1.7.0"
+android = "7.4.1"
+accompanist = "0.27.0"
+accompanist-indicator = "0.23.0"
+koin = "3.4.0"
+koin-viewmodel = "2.1.6"
+koin-androidx-compose = "3.2.2"
+coil = "2.2.2"
+lifecycle = "2.7.0-alpha01"
+paging = "3.2.0"
+work-manager = "2.8.1"
+compose-ui = "1.4.3"
+constraintlayout-compose = "1.0.1"
+compose-material3 = "1.1.1"
+activity-compose = "1.7.2"
+joda-time = "2.12.2"
+androidx-startup = "1.1.1"
+retrofit = "2.9.0"
+okhttp_logging = "4.10.0"
+room = "2.5.2"
+sqlcipher = "4.5.3"
+sqlite-ktx = "2.3.1"
+androidx-core = "1.10.1"
+androidx-appcompat = "1.6.1"
+android-material = "1.9.0"
+
+
+[libraries]
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-androidx-compose" }
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist-indicator" }
+accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
+accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist-indicator" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+androidx-work-manager = { module = "androidx.work:work-runtime-ktx", version.ref = "work-manager" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "sqlite-ktx" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+android-material = { module = "com.google.android.material:material", version.ref = "android-material" }
+
+
+sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "sqlcipher" }
+
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
+compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose-ui" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-ui" }
+compose-material = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-ui" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-ui" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
+joda-time = { module = "joda-time:joda-time", version.ref = "joda-time" }
+koin_android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin_core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin_viewmodel = { module = "org.koin:koin-android-viewmodel", version.ref = "koin-viewmodel"}
+koin_jUnit_test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+koin_test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit2_adapter = { module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "retrofit" }
+retrofit2_converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+okhttp3-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp_logging" }
+
+[bundles]
+androidx = [
+    "androidx-startup",
+    "androidx-lifecycle-viewmodel",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-paging-compose",
+    "androidx-work-manager"
+]
+accompanist = [
+    "accompanist-pager",
+    "accompanist-flowlayout",
+    "accompanist-swiperefresh",
+    "accompanist-navigation-animation",
+    "accompanist-pager-indicators",
+]
+coil = [
+    "coil",
+    "coil-gif",
+]
+compose = [
+    "compose-ui",
+    "compose-ui-tooling",
+    "compose-ui-util",
+    "compose-ui-tooling-preview",
+    "compose-foundation",
+    "compose-material",
+    "compose-ui-test",
+    "compose-ui-test-manifest",
+    "activity-compose",
+    "constraintlayout-compose"
+]
+koin_compose = [
+    "koin-compose"
+]
+koin = [
+    "koin_android",
+#    "koin_core",
+#    "koin_viewmodel"
+]
+koin_test = [
+    "koin_jUnit_test",
+    "koin_test",
+]
+retrofit = [
+    "retrofit2",
+    "retrofit2_adapter",
+    "retrofit2_converter",
+    "okhttp3-logging"
+]
+room = [
+    "androidx-room-runtime",
+    "androidx-room-ktx",
+    "androidx-room-compiler",
+]
+
+[plugins]
+android_application = { id = "com.android.application", version.ref = "android" }
+android_library = { id = "com.android.library", version.ref = "android" }
+kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

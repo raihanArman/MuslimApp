@@ -53,11 +53,11 @@ class AlarmReceiver: BroadcastReceiver() {
         val pendingIntent = PendingIntent.getBroadcast(context,1,intent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         val answerAction: NotificationCompat.Action =
-            NotificationCompat.Action.Builder(R.drawable.ic_app_icon, "Matikan", pendingIntent)
+            NotificationCompat.Action.Builder(R.drawable.download, "Matikan", pendingIntent)
                 .build()
 
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_app_icon)
+//            .setSmallIcon(R.drawable.ic_app_icon)
             .setContentTitle(NOTIFICATION_TITLE)
             .setContentText("Waktu shalat telah tiba!")
             .setPriority(NotificationCompat.PRIORITY_HIGH)

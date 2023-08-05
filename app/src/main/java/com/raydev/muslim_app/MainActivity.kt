@@ -12,11 +12,11 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.*
-import com.google.android.gms.tasks.CancellationToken
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.OnTokenCanceledListener
-import com.google.android.gms.tasks.Task
+//import com.google.android.gms.location.*
+//import com.google.android.gms.tasks.CancellationToken
+//import com.google.android.gms.tasks.CancellationTokenSource
+//import com.google.android.gms.tasks.OnTokenCanceledListener
+//import com.google.android.gms.tasks.Task
 import com.raydev.anabstract.base.BaseActivity
 import com.raydev.muslim_app.databinding.ActivityMainBinding
 import com.raydev.shared.deeplink.AppLink
@@ -26,7 +26,7 @@ import java.util.*
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private var currentLocation: Location? = null
-    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
+//    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
 
     companion object{
         const val REQUEST_CODE = 123
@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getLocationUpdates()
 
 
@@ -64,17 +64,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun getLocationUpdates() {
         if(checkPermission()) {
-            fusedLocationProviderClient?.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-                override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
-
-                override fun isCancellationRequested() = false
-            })?.addOnSuccessListener { location: Location? ->
-                    if (location != null){
-                        currentLocation = location
-                        getCityLocation()
-                        gointToNextScreen()
-                    }
-                }
+//            fusedLocationProviderClient?.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
+//                override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+//
+//                override fun isCancellationRequested() = false
+//            })?.addOnSuccessListener { location: Location? ->
+//                    if (location != null){
+//                        currentLocation = location
+//                        getCityLocation()
+//                        gointToNextScreen()
+//                    }
+//                }
 
         }
     }
@@ -97,16 +97,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun getCityLocation() {
-        try{
-            val addresses: List<Address>
-            val geocoder: Geocoder = Geocoder(this, Locale.getDefault())
-            addresses = geocoder.getFromLocation(currentLocation!!.latitude, currentLocation!!.longitude, 1)
-            Util.currentLocation = addresses[0].subAdminArea
-        }catch (e: Exception){
-            Util.currentLocation = ""
-        }
-    }
+//    private fun getCityLocation() {
+//        try{
+//            val addresses: List<Address>
+//            val geocoder: Geocoder = Geocoder(this, Locale.getDefault())
+//            addresses = geocoder.getFromLocation(currentLocation!!.latitude, currentLocation!!.longitude, 1)
+//            Util.currentLocation = addresses[0].subAdminArea
+//        }catch (e: Exception){
+//            Util.currentLocation = ""
+//        }
+//    }
 
     override fun getViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 }

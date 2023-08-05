@@ -7,10 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.raydev.anabstract.extention.toast
-import com.tapadoo.alerter.Alerter
-import com.tapadoo.alerter.OnHideAlertListener
-import org.koin.core.context.loadKoinModules
-import org.koin.android.viewmodel.ext.android.viewModel
 
 abstract class BaseActivity<B : ViewBinding>(
 ): AppCompatActivity(), BaseView {
@@ -41,14 +37,14 @@ abstract class BaseActivity<B : ViewBinding>(
         return true //TODO(make a utilities class for this)
     }
 
-    fun showCustomNotification(title: Int, text: Int, color: Int, listener: OnHideAlertListener? = null){
-        val alert = Alerter.create(this)
-            .setTitle(title)
-            .setText(text)
-            .setBackgroundColorRes(color)
-        if (listener != null) alert.setOnHideListener(listener)
-        alert.show()
-    }
+//    fun showCustomNotification(title: Int, text: Int, color: Int, listener: OnHideAlertListener? = null){
+//        val alert = Alerter.create(this)
+//            .setTitle(title)
+//            .setText(text)
+//            .setBackgroundColorRes(color)
+//        if (listener != null) alert.setOnHideListener(listener)
+//        alert.show()
+//    }
 
 
 }

@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.raydev.anabstract.state.ResponseState
-import com.raydev.domain.usecase.quran.GetAyatUseCase
+//import com.raydev.domain.usecase.quran.GetAyatUseCase
 import com.raydev.shared.model.Ayat
 import com.raydev.shared.model.Surah
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +27,7 @@ import com.raydev.quran.util.StatusFile
 
 
 class AyatViewModel(
-    private val useCase: GetAyatUseCase
+//    private val useCase: GetAyatUseCase
 ): ViewModel() {
     private val TAG = "AyatViewModel"
 
@@ -61,12 +61,12 @@ class AyatViewModel(
     }
 
     fun loadAyat(number: String){
-        uiScope.launch {
-            val contentAyat = useCase(number)
-            contentAyat.collect {
-                _observableAyat.value = it
-            }
-        }
+//        uiScope.launch {
+//            val contentAyat = useCase(number)
+//            contentAyat.collect {
+//                _observableAyat.value = it
+//            }
+//        }
     }
 
     fun getCurrentSurahAudioAtLocalStorage(): File{
