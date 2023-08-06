@@ -32,21 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".deeplink.DeepLinkRouterActivity"
-            android:exported="false"
-            tools:ignore="AppLinkUrlError">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
-                <data android:scheme="muslim"/>
-                <data android:host="quran"/>
-                <data android:host="prayer"/>
-                <data android:host="main"/>
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

@@ -3,27 +3,23 @@ package com.raydev.muslim_app
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.core.app.ActivityCompat
+import com.raihanarman.splash.SplashScreen
 //import com.google.android.gms.location.*
 //import com.google.android.gms.tasks.CancellationToken
 //import com.google.android.gms.tasks.CancellationTokenSource
 //import com.google.android.gms.tasks.OnTokenCanceledListener
 //import com.google.android.gms.tasks.Task
 import com.raydev.anabstract.base.BaseActivity
-import com.raydev.muslim_app.databinding.ActivityMainBinding
 import com.raydev.shared.deeplink.AppLink
-import com.raydev.shared.util.Util
 import java.util.*
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : ComponentActivity() {
 
     private var currentLocation: Location? = null
 //    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
@@ -32,13 +28,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         const val REQUEST_CODE = 123
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 //        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        getLocationUpdates()
+//        getLocationUpdates()
 
-
+//        val intent = Intent(this, SplashActivity::class.java)
+//        startActivity(intent)
+        setContent {
+            MainScreen()
+        }
     }
 
     private fun checkPermission(): Boolean{
@@ -107,6 +109,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //            Util.currentLocation = ""
 //        }
 //    }
-
-    override fun getViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 }

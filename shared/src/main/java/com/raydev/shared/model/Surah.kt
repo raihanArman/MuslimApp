@@ -7,26 +7,26 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Surah(
     @SerializedName("arti")
-    var arti: String,
+    var arti: String = "",
 
     @SerializedName("asma")
-    var asma: String,
+    var asma: String = "",
 
     @SerializedName("ayat")
-    var ayat: String,
+    var ayat: String = "",
 
     @SerializedName("nama")
-    var nama: String,
+    var nama: String = "",
 
     @SerializedName("type")
-    var type: String,
+    var type: String = "",
 
     @SerializedName("audio")
-    var audio: String,
+    var audio: String = "",
 
     @SerializedName("nomor")
-    var nomor: String,
+    var nomor: String = "",
 
     @SerializedName("keterangan")
-    var keterangan: String
+    var keterangan: String = ""
 ): Parcelable

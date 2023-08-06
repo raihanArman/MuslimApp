@@ -1,6 +1,8 @@
 package com.raydev.data.di
 
-import com.raydev.data.datasource.local.QuranLocalDataSource
+import com.raydev.data.datasource.local.AyatLineLocalDataSource
+import com.raydev.data.datasource.local.AyatLocalDataSource
+import com.raydev.data.datasource.local.SurahLocalDataSource
 import com.raydev.data.datasource.pref.SharedPreferenceSource
 import com.raydev.data.datasource.remote.PrayerRemoteDataSource
 import com.raydev.data.datasource.remote.QuranRemoteDataSource
@@ -19,7 +21,13 @@ object DataSourceModule {
 
     var localDataSourceModule = module {
         factory {
-            QuranLocalDataSource(get())
+            AyatLocalDataSource(get())
+        }
+        factory {
+            AyatLineLocalDataSource(get())
+        }
+        factory {
+            SurahLocalDataSource(get())
         }
     }
 

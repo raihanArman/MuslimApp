@@ -46,3 +46,5 @@ include(
     ":libraries:workmanager",
     ":libraries:shared_preference"
 )
+include(":feature:splash")
+include(":feature:dashboard")

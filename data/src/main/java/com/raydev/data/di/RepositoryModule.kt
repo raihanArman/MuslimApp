@@ -4,6 +4,7 @@ import com.raydev.data.repository.PrayerRepositoryImpl
 import com.raydev.data.repository.QuranRepositoryImpl
 import com.raydev.domain.repository.PrayerRepository
 import com.raydev.domain.repository.QuranRepository
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 object RepositoryModule {
@@ -11,7 +12,7 @@ object RepositoryModule {
 
         factory<QuranRepository> {
             QuranRepositoryImpl(
-                get(),get()
+                get(),get(), get(), get(), androidContext()
             )
         }
 

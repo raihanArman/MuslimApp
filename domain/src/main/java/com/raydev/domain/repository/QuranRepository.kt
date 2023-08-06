@@ -6,6 +6,7 @@ import com.raydev.anabstract.state.ResponseState
 import kotlinx.coroutines.flow.Flow
 
 interface QuranRepository {
-    fun getSurah(): Flow<ResponseState<List<Surah>>>
+    fun getSurah(): Flow<List<Surah>>
     fun getAyat(number: String): Flow<ResponseState<List<Ayat>>>
+    fun setupQuran(): Flow<ResponseState<Unit>>
 }

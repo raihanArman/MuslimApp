@@ -4,47 +4,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.OnReceiveContentListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.raydev.anabstract.extention.toast
+import com.raydev.anabstract.util.ViewDataBindingOwner
+import kotlin.system.exitProcess
 
-abstract class BaseActivity<B : ViewBinding>(
-): AppCompatActivity(), BaseView {
-    private var _binding: B? = null
-    val binding get() = _binding!!
+abstract class BaseActivity<VM: BaseViewModel?, B: ViewDataBinding> : FragmentActivity(),
+    ViewDataBindingOwner<B> {
 
+    abstract val layoutResourceId: Int
+    abstract val viewModel: VM?
+    var dialogIsShown = false
+
+    override var binding: B? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = getViewBinding()
-        setContentView(binding.root)
+        setLayoutIfDefined()
     }
 
-    abstract fun getViewBinding(): B
-
-    override fun onMessage(message: String?) {
-        toast(message)
+    private fun setLayoutIfDefined() {
+        setContentViewBinding(
+            activity = this,
+            layoutResId = layoutResourceId
+        )
+        binding?.lifecycleOwner = this
     }
 
-    override fun onMessage(stringResId: Int) {
-        onMessage(getString(stringResId))
+    override fun onDestroy() {
+        super.onDestroy()
+        clearDataBinding()
     }
-
-    /**
-     * check internet connection
-     */
-    override fun isNetworkConnect(): Boolean {
-        return true //TODO(make a utilities class for this)
-    }
-
-//    fun showCustomNotification(title: Int, text: Int, color: Int, listener: OnHideAlertListener? = null){
-//        val alert = Alerter.create(this)
-//            .setTitle(title)
-//            .setText(text)
-//            .setBackgroundColorRes(color)
-//        if (listener != null) alert.setOnHideListener(listener)
-//        alert.show()
-//    }
-
-
 }

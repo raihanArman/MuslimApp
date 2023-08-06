@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class GetSurahUseCase(
     private val quranRepository: QuranRepository
 ) {
-    operator fun invoke(): Flow<ResponseState<List<Surah>>> {
+    operator fun invoke(): Flow<List<Surah>> {
         return quranRepository.getSurah()
     }
 }

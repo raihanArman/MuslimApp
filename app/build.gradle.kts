@@ -77,6 +77,11 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
 }
 
@@ -87,13 +92,19 @@ dependencies {
     implementation(project(":libraries:network"))
     implementation(project(":libraries:cache"))
     implementation(project(":libraries:workmanager"))
+    implementation(project(":navigation"))
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":feature:quran"))
     implementation(project(":feature:prayer"))
+    implementation(project(":feature:dashboard"))
+    implementation(project(":feature:splash"))
 
     implementation(libs.bundles.koin)
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation(libs.bundles.compose)
+    implementation(libs.bundles.accompanist)
+    implementation(libs.bundles.koin.compose)
+//    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")

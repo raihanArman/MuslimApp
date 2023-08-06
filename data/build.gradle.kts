@@ -17,8 +17,13 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":shared"))
+    implementation(project(":libraries:cache"))
     implementation(project(":libraries:abstract"))
 
     implementation(libs.bundles.koin)
     implementation(libs.bundles.retrofit)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 }

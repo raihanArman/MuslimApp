@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SplashScreenApp" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#CA3E3E</item>
+
+    </style>
+
+    <style name="SplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#CA3E3E</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_android_black_24dp</item>
+        <item name="windowSplashScreenAnimationDuration">800</item>
+        <item name="postSplashScreenTheme">@style/Theme.SplashScreenApp</item>
+    </style>
+</resources>
