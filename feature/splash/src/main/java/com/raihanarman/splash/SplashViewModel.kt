@@ -33,13 +33,17 @@ class SplashViewModel(
     private val _observeEvent = MutableSharedFlow<SplashEvent>()
     val observeEvent = _observeEvent.asSharedFlow()
 
+    init {
+        setupQuran()
+    }
+
     fun setupQuran() {
         viewModelScope.launch {
             setupQuranUseCase.invoke().collect {
                 _observeSetupQuran.value = it
                 when(it) {
                     is ResponseState.Success -> {
-                        getSurah()
+//                        getSurah()
                     }
 
                     else -> {}

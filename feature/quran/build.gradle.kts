@@ -12,18 +12,13 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-//    buildFeatures {
-//        compose = true
-//    }
-//    kotlinOptions {
-//        jvmTarget = "1.8"
-//
-//        freeCompilerArgs += listOf(
-//            "-P",
-//            "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
-//        )
-//
-//    }
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
+    }
 }
 
 dependencies {
@@ -34,7 +29,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.manager)
     kapt(libs.androidx.room.compiler)
-//    implementation project(path: ':domain')
+    implementation(project(":domain"))
     implementation(project(":shared"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))

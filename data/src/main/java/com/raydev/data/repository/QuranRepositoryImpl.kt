@@ -30,7 +30,15 @@ class QuranRepositoryImpl(
 ): QuranRepository {
 
     override fun getSurah(): Flow<List<Surah>> = surahDataSource.getSurah().map {
-        it.map { Surah(nama = it.name) }
+        it.map { surah ->
+            Surah(
+                id = surah.id,
+                name = surah.name,
+                revelation = surah.revelation,
+                verses = surah.verses,
+                page = surah.page
+            )
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package com.raydev.quran.di
 
+import com.raydev.quran.ui.fragment.QuranMainViewModel
 import com.raydev.quran.viewmodel.AyatViewModel
 import com.raydev.quran.viewmodel.SurahViewModel
 import com.raydev.quran.work.FileDownloadHelper
@@ -14,6 +15,10 @@ object QuranModule {
 
         viewModel {
             AyatViewModel()
+        }
+
+        viewModel {
+            QuranMainViewModel(get())
         }
 
         single {

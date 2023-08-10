@@ -13,6 +13,7 @@ import com.raydev.domain.di.UseCaseModule.useCaseModule
 import com.raydev.muslim_app.MainModule.mainModule
 import com.raydev.navigation.NavigationModule.navigatorModule
 import com.raydev.network.di.NetworkModule.networkModule
+import com.raydev.quran.di.QuranModule.quranModule
 import com.raydev.shared_preference.SharedPrefModule.sharedPrefModule
 import com.raydev.workmanager.di.WorkerModule.workerModule
 import org.koin.android.ext.koin.androidContext
@@ -41,7 +42,8 @@ class MuslimApplication: Application() {
                 useCaseModule,
                 navigatorModule,
                 mainModule,
-                splashModule
+                splashModule,
+                quranModule
             ))
         }
     }

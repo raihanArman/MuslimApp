@@ -1,4 +1,4 @@
-package com.raihanarman.dashboard.model
+package com.raydev.muslim_app.dashboard.model
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
