@@ -56,15 +56,15 @@ fun SurahItem(
 @Preview
 @Composable
 fun PreviewSurahItem() {
-    SurahItem(
-        modifier = Modifier,
-        surah = Surah(
-            1,
-            "",
-            0,
-            "Al-fatihah",
-            1
-        ),
-        onClick = {}
-    )
+//    SurahItem(
+//        modifier = Modifier,
+//        surah = Surah(
+//            1,
+//            "",
+//            0,
+//            "Al-fatihah",
+//            1
+//        ),
+//        onClick = {}
+//    )
 }

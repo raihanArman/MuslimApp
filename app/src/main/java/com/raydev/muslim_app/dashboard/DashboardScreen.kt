@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.raihanarman.dashboard.components.DashboardBottomNavigation
 import com.raihanarman.dashboard.util.Screen
+import com.raydev.home.ui.homeMainNavigation
 import com.raydev.navigation.Destination
 import com.raydev.navigation.composable
 import com.raydev.quran.ui.quranMainNavigation
@@ -71,11 +72,7 @@ fun NavGraphBuilder.setupDashboardBottomNavScreens(){
         startDestination = Screen.Home.route,
         route = "dashboardBottomNav"
     ){
-        composable(Screen.Home.route){
-            Box {
-                Text("Ini home")
-            }
-        }
+        homeMainNavigation()
         quranMainNavigation()
     }
 }

@@ -11,10 +11,12 @@ import com.raydev.data.di.DataSourceModule.sharedPreferenceSourceModule
 import com.raydev.data.di.DatabaseModule.databaseModule
 import com.raydev.data.di.RepositoryModule.repositortModule
 import com.raydev.domain.di.UseCaseModule.useCaseModule
+import com.raydev.home.di.HomeModule.homeModule
 import com.raydev.muslim_app.MainModule.mainModule
 import com.raydev.navigation.NavigationModule.navigatorModule
 import com.raydev.network.di.NetworkModule.networkModule
 import com.raydev.quran.di.QuranModule.quranModule
+import com.raydev.shared.di.SharedModule.sharedModule
 import com.raydev.shared_preference.SharedPrefModule.sharedPrefModule
 import com.raydev.workmanager.di.WorkerModule.workerModule
 import org.koin.android.ext.koin.androidContext
@@ -35,6 +37,7 @@ class MuslimApplication: Application() {
                 databaseModule,
                 workerModule,
                 sharedPrefModule,
+                sharedModule,
                 apiModule,
                 remoteDataSourceModule,
                 localDataSourceModule,
@@ -44,6 +47,7 @@ class MuslimApplication: Application() {
                 navigatorModule,
                 mainModule,
                 splashModule,
+                homeModule,
                 quranModule,
                 readQuranModule
             ))

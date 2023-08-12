@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.raydev.muslim_app"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 32
         versionCode = 1
         versionName = "1.0"
@@ -100,6 +100,7 @@ dependencies {
     implementation(project(":feature:dashboard"))
     implementation(project(":feature:splash"))
     implementation(project(":feature:read-quran"))
+    implementation(project(":feature:home"))
 
     implementation(libs.bundles.koin)
     implementation(libs.bundles.compose)

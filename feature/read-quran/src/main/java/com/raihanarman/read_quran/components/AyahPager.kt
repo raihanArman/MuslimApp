@@ -46,6 +46,9 @@ fun AyahPager(
             itemsIndexed(
                 items = listAyah,
             ) { index, item ->
+                if (index == 0) {
+                    SurahDescription(surah = listSurah[pagerState.currentPage])
+                }
                 if (item.useBismillah == true) {
                     BissmillahItem()
                 }

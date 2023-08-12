@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import com.raihanarman.read_quran.components.AyahItem
 import com.raihanarman.read_quran.components.AyahPager
+import com.raihanarman.read_quran.components.SurahDescription
 import com.raihanarman.read_quran.components.SurahItemCard
 import com.raihanarman.read_quran.components.SurahTabLayout
 import com.raydev.navigation.Destination

@@ -1,5 +1,6 @@
 package com.raydev.data.mapper
 
+import com.raydev.shared.database.entity.LanguageString
 import com.raydev.shared.database.entity.SurahEntity
 import com.raydev.shared.model.Surah
 
@@ -13,5 +14,11 @@ fun SurahEntity.mapToModel() = Surah(
     name = name,
     revelation = revelation,
     verses = verses,
-    page = page
+    page = page,
+    translation = ArrayList(translation.map {
+        LanguageString(
+            text = it.text ?: "",
+            language = it.language ?: ""
+        )
+    }),
 )
