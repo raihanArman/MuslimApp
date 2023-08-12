@@ -1,5 +1,8 @@
-package com.raydev.quran.ui.fragment
+package com.raydev.quran.ui
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,6 +32,7 @@ fun NavGraphBuilder.quranMainNavigation() = run {
         )
     }
 }
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SurahScreen(
     onEvent: (QuranMainEvent) -> Unit,
@@ -43,8 +47,16 @@ fun SurahScreen(
             println("Ampas kuda -> SurahScreen | $it")
             LazyColumn {
                 items(it) {
-                    SurahItem(surah = it) {
-
+                    SurahItem(
+                        surah = it,
+                        modifier = Modifier.animateItemPlacement(
+                            animationSpec = tween(
+                                durationMillis = 500,
+                                easing = FastOutSlowInEasing,
+                            )
+                        )
+                    ) {
+                        onEvent(QuranMainEvent.OnClickSurah(it))
                     }
                 }
             }

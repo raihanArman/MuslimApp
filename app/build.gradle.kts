@@ -99,6 +99,7 @@ dependencies {
     implementation(project(":feature:prayer"))
     implementation(project(":feature:dashboard"))
     implementation(project(":feature:splash"))
+    implementation(project(":feature:read-quran"))
 
     implementation(libs.bundles.koin)
     implementation(libs.bundles.compose)

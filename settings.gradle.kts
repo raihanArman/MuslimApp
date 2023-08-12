@@ -48,3 +48,4 @@ include(
 )
 include(":feature:splash")
 include(":feature:dashboard")
+include(":feature:read-quran")

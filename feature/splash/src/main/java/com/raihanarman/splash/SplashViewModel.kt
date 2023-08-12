@@ -34,7 +34,7 @@ class SplashViewModel(
     val observeEvent = _observeEvent.asSharedFlow()
 
     init {
-        setupQuran()
+//        setupQuran()
     }
 
     fun setupQuran() {

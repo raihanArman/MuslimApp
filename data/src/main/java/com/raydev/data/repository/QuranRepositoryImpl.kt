@@ -4,18 +4,17 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.raydev.data.datasource.remote.QuranRemoteDataSource
-import com.raydev.shared.model.Ayat
+import com.raydev.shared.model.Ayah
 import com.raydev.shared.model.Surah
 import com.raydev.anabstract.state.ResponseState
-import com.raydev.anabstract.util.NetworkBoundResource
 import com.raydev.data.datasource.local.AyatLineLocalDataSource
 import com.raydev.data.datasource.local.AyatLocalDataSource
 import com.raydev.data.datasource.local.SurahLocalDataSource
+import com.raydev.data.mapper.mapToModel
 import com.raydev.domain.repository.QuranRepository
 import com.raydev.shared.database.entity.AyahLine
 import com.raydev.shared.database.entity.AyatEntity
 import com.raydev.shared.database.entity.SurahEntity
-import com.raydev.shared.mapper.SurahMapper
 import com.raydev.shared.util.FileUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -31,19 +30,17 @@ class QuranRepositoryImpl(
 
     override fun getSurah(): Flow<List<Surah>> = surahDataSource.getSurah().map {
         it.map { surah ->
-            Surah(
-                id = surah.id,
-                name = surah.name,
-                revelation = surah.revelation,
-                verses = surah.verses,
-                page = surah.page
-            )
+            surah.mapToModel()
         }
     }
 
 
-    override fun getAyat(number: String): Flow<ResponseState<List<Ayat>>> {
-        return remoteDataSource.getListAyat(number)
+    override fun getAyahBySurahId(surahId: Int): Flow<List<Ayah>> {
+        return ayahDataSource.getAyahBySurahId(surahId).map {
+            it.map { ayah ->
+                ayah.mapToModel()
+            }
+        }
     }
 
     override fun setupQuran(): Flow<ResponseState<Unit>> {

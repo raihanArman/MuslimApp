@@ -1,14 +1,13 @@
-package com.raydev.quran.ui.fragment
+package com.raydev.quran.ui
 
-import androidx.compose.runtime.Composable
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.usecase.quran.GetSurahUseCase
+import com.raydev.navigation.AppNavigator
+import com.raydev.navigation.Destination
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -17,7 +16,8 @@ import kotlinx.coroutines.launch
  * @date 10/08/23
  */
 class QuranMainViewModel(
-    private val useCase: GetSurahUseCase
+    private val useCase: GetSurahUseCase,
+    private val navigator: AppNavigator
 ): BaseViewModel() {
 
     private val _uiState: MutableStateFlow<QuranMainState> = MutableStateFlow(QuranMainState())
@@ -43,6 +43,16 @@ class QuranMainViewModel(
     fun onEvent(event: QuranMainEvent) {
         launch {
             _uiEvent.emit(event)
+            when(event) {
+                QuranMainEvent.Initial -> {}
+                is QuranMainEvent.OnClickSurah -> {
+                    navigator.tryNavigateTo(
+                        Destination.ReadQuranScreen(
+                            id = event.surah.id
+                        )
+                    )
+                }
+            }
         }
     }
 

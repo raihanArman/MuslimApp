@@ -18,10 +18,10 @@ sealed class Destination(protected val route: String, vararg params: String) {
     object SplashScreen : NoArgumentsDestination("Splash")
     object DashboardScreen : NoArgumentsDestination("dashboard")
 
-    object AnimeDetailScreen : Destination("anime_detail", "anime_id") {
-        const val ANIME_ID_KEY = "anime_id"
-        operator fun invoke(id: String): String = route.appendParams(
-            ANIME_ID_KEY to id
+    object ReadQuranScreen : Destination("read_quran", "surah_id") {
+        const val SURAH_ID_KEY = "surah_id"
+        operator fun invoke(id: Int): String = route.appendParams(
+            SURAH_ID_KEY to "$id"
         )
     }
 

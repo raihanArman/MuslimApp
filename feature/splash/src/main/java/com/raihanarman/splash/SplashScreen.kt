@@ -44,7 +44,7 @@ fun SplashScreen(
     onNavigate: () -> Unit
 ) {
     LaunchedEffect(key1 = "splash") {
-        delay(5000)
+        delay(2000)
         onEvent(SplashEvent.OnNavigateToMain)
 
         event?.collect {

@@ -77,6 +77,7 @@ retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofi
 retrofit2_adapter = { module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "retrofit" }
 retrofit2_converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 okhttp3-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp_logging" }
+androidx-ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", version = "1.5.0" }
 
 [bundles]
 androidx = [

@@ -2,6 +2,7 @@ package com.raydev.muslim_app
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.raihanarman.read_quran.di.ReadQuranModule.readQuranModule
 import com.raihanarman.splash.SplashModule.splashModule
 import com.raydev.data.di.ApiModule.apiModule
 import com.raydev.data.di.DataSourceModule.localDataSourceModule
@@ -43,7 +44,8 @@ class MuslimApplication: Application() {
                 navigatorModule,
                 mainModule,
                 splashModule,
-                quranModule
+                quranModule,
+                readQuranModule
             ))
         }
     }

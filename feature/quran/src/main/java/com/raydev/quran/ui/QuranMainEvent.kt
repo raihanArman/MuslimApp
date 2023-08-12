@@ -1,4 +1,4 @@
-package com.raydev.quran.ui.fragment
+package com.raydev.quran.ui
 
 import com.raydev.shared.model.Surah
 

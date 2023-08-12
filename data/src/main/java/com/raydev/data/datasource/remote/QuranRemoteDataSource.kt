@@ -1,6 +1,6 @@
 package com.raydev.data.datasource.remote
 
-import com.raydev.shared.model.Ayat
+import com.raydev.shared.model.Ayah
 import com.raydev.shared.model.Surah
 import com.raydev.data.network.QuranService
 import com.raydev.anabstract.state.ResponseState
@@ -29,7 +29,7 @@ class QuranRemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getListAyat(number: String): Flow<ResponseState<List<Ayat>>>  {
+    fun getListAyat(number: String): Flow<ResponseState<List<Ayah>>>  {
         return flow {
             emit(ResponseState.Loading())
             try {
