@@ -11,4 +11,6 @@ class MainViewModel(
     private val appNavigator: AppNavigator
 ): BaseViewModel() {
     val navigationChannel = appNavigator.navigationChannel
+
+
 }

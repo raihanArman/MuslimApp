@@ -3,6 +3,7 @@ package com.raihanarman.read_quran.ui
 import androidx.lifecycle.SavedStateHandle
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.usecase.quran.GetAyahBySurahIdUseCase
+import com.raydev.domain.usecase.quran.GetSurahAyahUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.navigation.Destination
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
  */
 class ReadQuranViewModel(
     private val ayahBySurah: GetAyahBySurahIdUseCase,
-    private val surahUseCase: GetSurahUseCase,
+    private val surahUseCase: GetSurahAyahUseCase,
     private val stateHandle: SavedStateHandle,
 ): BaseViewModel() {
 
@@ -33,7 +34,6 @@ class ReadQuranViewModel(
         getSurah()
         val surahId = stateHandle.get<String>(Destination.ReadQuranScreen.SURAH_ID_KEY) ?: ""
         setTabSelected(surahId.toInt())
-        getAyah(surahId.toInt())
     }
 
     private val _state: MutableStateFlow<ReadQuranState> = MutableStateFlow(ReadQuranState())

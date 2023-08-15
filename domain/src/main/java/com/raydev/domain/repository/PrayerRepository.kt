@@ -1,5 +1,7 @@
 package com.raydev.domain.repository
 
+import com.google.android.gms.maps.model.LatLng
+import com.raihanarman.prayer.PrayerTime
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.shared.model.City
 import com.raydev.shared.model.PrayerData
@@ -23,5 +25,7 @@ interface PrayerRepository {
     fun getAsharData(): PrayerData
     fun getMaghribData(): PrayerData
     fun getIsyaData(): PrayerData
+
+    fun getCurrentPrayerTime(latLng: LatLng): PrayerTime
 
 }

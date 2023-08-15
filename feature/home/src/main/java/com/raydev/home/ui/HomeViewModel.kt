@@ -1,11 +1,14 @@
 package com.raydev.home.ui
 
+import com.google.android.gms.maps.model.LatLng
 import com.raydev.anabstract.base.BaseViewModel
-import com.raydev.shared.LocationManager
+import com.raihanarman.location.LocationManager
+import com.raydev.domain.usecase.prayer.GetPrayerTimeUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -13,7 +16,9 @@ import kotlinx.coroutines.launch
  * @author Raihan Arman
  * @date 12/08/23
  */
-class HomeViewModel: BaseViewModel() {
+class HomeViewModel(
+    private val useCase: GetPrayerTimeUseCase
+): BaseViewModel() {
 
     private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
@@ -28,16 +33,12 @@ class HomeViewModel: BaseViewModel() {
     private fun getLocation() {
         launch {
             LocationManager.instance.apply {
-                getLastLocation {
-                    getCityLocation(it) { address ->
-                        println("AMPPPPPP -> $address")
-                        address?.let {
-                            _state.update {
-                                it.copy(
-                                    location = address.subAdminArea
-                                )
-                            }
-                        }
+                getLocationFlowEvent().collect { location ->
+                    val prayerTime = useCase.invoke(LatLng(location.latitude, location.longitude))
+                    _state.update {
+                        it.copy(
+                            location = prayerTime.address
+                        )
                     }
                 }
             }

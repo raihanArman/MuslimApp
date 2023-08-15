@@ -27,7 +27,9 @@
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/abstract" />
             <option value="$PROJECT_DIR$/libraries/cache" />
+            <option value="$PROJECT_DIR$/libraries/location" />
             <option value="$PROJECT_DIR$/libraries/network" />
+            <option value="$PROJECT_DIR$/libraries/prayer" />
             <option value="$PROJECT_DIR$/libraries/shared_preference" />
             <option value="$PROJECT_DIR$/libraries/workmanager" />
             <option value="$PROJECT_DIR$/navigation" />

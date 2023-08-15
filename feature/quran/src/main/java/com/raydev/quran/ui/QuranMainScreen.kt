@@ -48,7 +48,8 @@ fun SurahScreen(
             println("Ampas kuda -> SurahScreen | $it")
             LazyColumn {
                 itemsIndexed(
-                    items = it
+                    items = it,
+                    key = { _, item -> item.id }
                 ) { index, item ->
                     SurahItem(
                         surah = item,

@@ -13,5 +13,6 @@ data class Surah(
     val verses: Int,
     val name: String,
     val page:Int,
-    val translation: ArrayList<LanguageString>
+    val translation: ArrayList<LanguageString>,
+    var listAyah: List<Ayah>?= null
 )

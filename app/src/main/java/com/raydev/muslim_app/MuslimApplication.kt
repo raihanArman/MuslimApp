@@ -16,8 +16,8 @@ import com.raydev.muslim_app.MainModule.mainModule
 import com.raydev.navigation.NavigationModule.navigatorModule
 import com.raydev.network.di.NetworkModule.networkModule
 import com.raydev.quran.di.QuranModule.quranModule
-import com.raydev.shared.di.SharedModule.sharedModule
-import com.raydev.shared_preference.SharedPrefModule.sharedPrefModule
+import com.raihanarman.location.di.locationModule
+import com.raydev.shared_preference.sharedPrefModule
 import com.raydev.workmanager.di.WorkerModule.workerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -37,7 +37,7 @@ class MuslimApplication: Application() {
                 databaseModule,
                 workerModule,
                 sharedPrefModule,
-                sharedModule,
+                locationModule,
                 apiModule,
                 remoteDataSourceModule,
                 localDataSourceModule,

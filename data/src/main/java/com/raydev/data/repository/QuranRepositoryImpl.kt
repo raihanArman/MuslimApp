@@ -18,6 +18,7 @@ import com.raydev.shared.database.entity.SurahEntity
 import com.raydev.shared.util.FileUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 
 class QuranRepositoryImpl(
@@ -31,6 +32,18 @@ class QuranRepositoryImpl(
     override fun getSurah(): Flow<List<Surah>> = surahDataSource.getSurah().map {
         it.map { surah ->
             surah.mapToModel()
+        }
+    }
+
+    override fun getSurahAyah(): Flow<List<Surah>> = surahDataSource.getSurah().map {
+        it.map { surah ->
+            val ayah = ayahDataSource.getAyahBySurahId(surah.id).last()
+            surah.mapToModel().apply {
+                listAyah = ayah.map {
+                    println("AMPASSS AMPASSS AMPASSS -> ${it.id}")
+                    it.mapToModel()
+                }
+            }
         }
     }
 

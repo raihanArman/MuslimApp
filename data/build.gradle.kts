@@ -19,6 +19,9 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":libraries:cache"))
     implementation(project(":libraries:abstract"))
+    implementation(project(":libraries:prayer"))
+    implementation(project(":libraries:shared_preference"))
+    implementation(project(":libraries:location"))
 
     implementation(libs.bundles.koin)
     implementation(libs.bundles.retrofit)
@@ -26,4 +29,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
+
+    implementation(libs.gson)
+    implementation(libs.coroutines.android)
+    implementation(libs.bundles.maps)
 }

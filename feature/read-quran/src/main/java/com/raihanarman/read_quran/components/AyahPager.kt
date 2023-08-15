@@ -12,6 +12,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,6 +46,7 @@ fun AyahPager(
         LazyColumn {
             itemsIndexed(
                 items = listAyah,
+                key = { _, item -> item.id }
             ) { index, item ->
                 if (index == 0) {
                     SurahDescription(surah = listSurah[pagerState.currentPage])

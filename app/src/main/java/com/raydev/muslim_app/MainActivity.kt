@@ -27,7 +27,9 @@ class MainActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkPermissions(REQUEST_CODE)
+        if (checkPermissions(REQUEST_CODE)) {
+
+        }
         setContent {
             MainScreen()
         }

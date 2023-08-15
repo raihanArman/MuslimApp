@@ -91,6 +91,7 @@ dependencies {
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:network"))
     implementation(project(":libraries:cache"))
+    implementation(project(":libraries:location"))
     implementation(project(":libraries:workmanager"))
     implementation(project(":navigation"))
     implementation(project(":data"))
