@@ -103,6 +103,7 @@ dependencies {
     implementation(project(":feature:read-quran"))
     implementation(project(":feature:home"))
 
+    implementation(libs.bundles.maps)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.accompanist)

@@ -16,7 +16,7 @@ object RepositoryModule {
             )
         }
 
-        factory<PrayerRepository>{
+        single<PrayerRepository>{
             PrayerRepositoryImpl(
                 get(),
                 get()

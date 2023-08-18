@@ -1,7 +1,7 @@
 package com.raydev.domain.repository
 
 import com.google.android.gms.maps.model.LatLng
-import com.raihanarman.prayer.PrayerTime
+import com.raydev.shared.model.PrayerTime
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.shared.model.City
 import com.raydev.shared.model.PrayerData
@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface PrayerRepository {
     fun searchCity(city: String): Flow<ResponseState<List<City>>>
     fun getSholatTime(cityId: String, date: String): Flow<ResponseState<SholatTime>>
+    fun getCurrentPrayerTime(): Flow<PrayerTime>
 
     fun setImsakData(prayerData: PrayerData)
     fun setSubuhData(prayerData: PrayerData)
@@ -26,6 +27,6 @@ interface PrayerRepository {
     fun getMaghribData(): PrayerData
     fun getIsyaData(): PrayerData
 
-    fun getCurrentPrayerTime(latLng: LatLng): PrayerTime
-
+    fun setCurrentPrayerTime(latLng: LatLng)
+    fun getPrayerTime(): PrayerTime
 }

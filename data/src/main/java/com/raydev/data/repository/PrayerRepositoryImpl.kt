@@ -3,7 +3,7 @@ package com.raydev.data.repository
 import com.google.android.gms.maps.model.LatLng
 import com.raihanarman.location.LocationManager
 import com.raihanarman.prayer.PrayTimeScript
-import com.raihanarman.prayer.PrayerTime
+import com.raydev.shared.model.PrayerTime
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.data.datasource.pref.SharedPreferenceSource
 import com.raydev.data.datasource.remote.PrayerRemoteDataSource
@@ -12,6 +12,9 @@ import com.raydev.shared.model.City
 import com.raydev.shared.model.PrayerData
 import com.raydev.shared.model.SholatTime
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
@@ -23,6 +26,7 @@ class PrayerRepositoryImpl(
 ): PrayerRepository {
 
     private val locationManager: LocationManager = LocationManager.instance
+    private val _flowPrayerTime: MutableStateFlow<PrayerTime> = MutableStateFlow(PrayerTime())
 
     override fun searchCity(city: String): Flow<ResponseState<List<City>>> {
         return remoteDataSource.searchCity(city)
@@ -31,6 +35,8 @@ class PrayerRepositoryImpl(
     override fun getSholatTime(cityId: String, date: String): Flow<ResponseState<SholatTime>> {
         return remoteDataSource.getSholatTime(cityId, date)
     }
+
+    override fun getCurrentPrayerTime(): Flow<PrayerTime> = _flowPrayerTime
 
     override fun setImsakData(prayerData: PrayerData) {
         sharedPreferenceSource.setImsakData(prayerData)
@@ -67,14 +73,12 @@ class PrayerRepositoryImpl(
     override fun getMaghribData(): PrayerData = sharedPreferenceSource.getMaghribData()
 
     override fun getIsyaData(): PrayerData = sharedPreferenceSource.getIsyaData()
-    override fun getCurrentPrayerTime(latLng: LatLng): PrayerTime {
+    override fun setCurrentPrayerTime(latLng: LatLng) {
         sharedPreferenceSource.userCoordinates = latLng
-        var currentAddress: String? = "Cannot get location"
 
         locationManager.getAddressLocation(latLng) {
             it?.let { address ->
-                currentAddress = address.locality
-                sharedPreferenceSource.userCity = currentAddress!!
+                sharedPreferenceSource.userCity = address.locality
             }
         }
 
@@ -108,7 +112,7 @@ class PrayerRepositoryImpl(
         )
 
         val prayerTime = PrayerTime(
-            currentAddress,
+            sharedPreferenceSource.userCity,
             prayerTimes[0],
             prayerTimes[1],
             prayerTimes[2],
@@ -118,7 +122,10 @@ class PrayerRepositoryImpl(
             prayerTimes[6]
         )
         sharedPreferenceSource.praytime = prayerTime
-        return prayerTime
+        _flowPrayerTime.value = prayerTime
+        println("AMPASSS KUDDDAAA -> ${_flowPrayerTime.value}")
     }
+
+    override fun getPrayerTime(): PrayerTime = sharedPreferenceSource.praytime
 
 }

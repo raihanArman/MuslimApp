@@ -39,9 +39,9 @@ fun HomeScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        state.location?.let {
+        state.prayerTime?.let {
             Text(
-                text = it,
+                text = it.toString(),
                 color = Color.Black,
                 fontSize = 30.sp
             )

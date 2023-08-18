@@ -42,7 +42,7 @@ class LocationManager(
 
     private val locationRequest = LocationRequest.create().apply {
         priority = Priority.PRIORITY_HIGH_ACCURACY
-        interval = 20 * 1000L
+        interval = 1000L
     }
 
     @SuppressLint("MissingPermission")

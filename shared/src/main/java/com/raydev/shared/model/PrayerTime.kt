@@ -1,4 +1,4 @@
-package com.raihanarman.prayer
+package com.raydev.shared.model
 
 /**
  * @author Raihan Arman

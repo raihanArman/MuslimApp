@@ -82,6 +82,10 @@ object UseCaseModule {
         }
 
         factory {
+            GetCurrentPrayerTimeUseCase(get())
+        }
+
+        factory {
             GetPrayerTimeUseCase(get())
         }
     }

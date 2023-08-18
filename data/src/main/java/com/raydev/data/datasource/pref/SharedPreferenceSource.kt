@@ -3,7 +3,7 @@ package com.raydev.data.datasource.pref
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
-import com.raihanarman.prayer.PrayerTime
+import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.PrayerData
 import com.raydev.shared.util.KeyShared
 import com.raydev.shared.util.KeyShared.PREF_KEY_ASR_JURISTIC
