@@ -1,5 +1,6 @@
 package com.raydev.home.ui
 
+import com.raydev.shared.model.NextPrayerTime
 import com.raydev.shared.model.PrayerTime
 
 /**
@@ -8,5 +9,7 @@ import com.raydev.shared.model.PrayerTime
  */
 data class HomeState(
     val location: String? = null,
-    val prayerTime: PrayerTime ?= null
+    val prayerTime: PrayerTime ?= null,
+    val nextPrayerTime: NextPrayerTime ?= null,
+    val hijrDate: String?= null
 )

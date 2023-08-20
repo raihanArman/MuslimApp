@@ -33,4 +33,5 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.coroutines.android)
     implementation(libs.bundles.maps)
+    implementation("com.github.msarhan:ummalqura-calendar:2.0.2")
 }

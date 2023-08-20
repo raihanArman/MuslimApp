@@ -1,24 +1,29 @@
 package com.raydev.data.repository
 
+import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import com.google.android.gms.maps.model.LatLng
 import com.raihanarman.location.LocationManager
 import com.raihanarman.prayer.PrayTimeScript
-import com.raydev.shared.model.PrayerTime
+import com.raihanarman.prayer.getCurrentPrayerTimeString
+import com.raihanarman.prayer.getTimeUntilNextPrayerString
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.data.datasource.pref.SharedPreferenceSource
 import com.raydev.data.datasource.remote.PrayerRemoteDataSource
 import com.raydev.domain.repository.PrayerRepository
 import com.raydev.shared.model.City
+import com.raydev.shared.model.NextPrayerTime
 import com.raydev.shared.model.PrayerData
+import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.SholatTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
+import java.util.Locale
 import java.util.concurrent.TimeUnit
+
 
 class PrayerRepositoryImpl(
     private val remoteDataSource: PrayerRemoteDataSource,
@@ -127,5 +132,20 @@ class PrayerRepositoryImpl(
     }
 
     override fun getPrayerTime(): PrayerTime = sharedPreferenceSource.praytime
+    override fun getNextPrayerTime(prayerTime: PrayerTime): NextPrayerTime {
+        val untilPrayer = prayerTime.getTimeUntilNextPrayerString()
+        return NextPrayerTime(
+            textPrayerTime = prayerTime.getCurrentPrayerTimeString().orEmpty(),
+            textUntil = untilPrayer.first,
+            textPrayer = untilPrayer.second
+        )
+    }
 
+    override fun getCurrentHijrDate(): String {
+        val cal = UmmalquraCalendar()
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH)
+        val day = cal.get(Calendar.DAY_OF_MONTH)
+        return "$day $month $year"
+    }
 }

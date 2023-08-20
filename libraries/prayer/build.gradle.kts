@@ -24,4 +24,5 @@ android {
 dependencies {
     implementation(libs.bundles.koin)
     implementation(libs.bundles.compose)
+    implementation(project(":shared"))
 }

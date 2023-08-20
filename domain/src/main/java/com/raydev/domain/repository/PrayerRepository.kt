@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.raydev.shared.model.PrayerTime
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.shared.model.City
+import com.raydev.shared.model.NextPrayerTime
 import com.raydev.shared.model.PrayerData
 import com.raydev.shared.model.SholatTime
 import kotlinx.coroutines.flow.Flow
@@ -29,4 +30,6 @@ interface PrayerRepository {
 
     fun setCurrentPrayerTime(latLng: LatLng)
     fun getPrayerTime(): PrayerTime
+    fun getNextPrayerTime(prayerTime: PrayerTime): NextPrayerTime
+    fun getCurrentHijrDate(): String
 }
