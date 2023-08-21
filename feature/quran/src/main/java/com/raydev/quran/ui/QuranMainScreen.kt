@@ -14,7 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.raydev.quran.components.SurahItem
+import com.raydev.quran.ui.components.TileSurah
 import org.koin.androidx.compose.getViewModel
 
 /**
@@ -22,7 +22,9 @@ import org.koin.androidx.compose.getViewModel
  * @date 10/08/23
  */
 fun NavGraphBuilder.quranMainNavigation() = run {
+    println("Ampas kuda -> Su|aaa quranMainNavigation")
     composable("quran_main"){
+        println("Ampas kuda -> Su|aaa composable(\"quran_main\")")
         val viewModel: QuranMainViewModel = getViewModel()
         val event by viewModel.uiEvent.collectAsState(QuranMainEvent.Initial)
         val state by viewModel.uiState.collectAsState()
@@ -40,25 +42,26 @@ fun SurahScreen(
     state: QuranMainState,
     event: QuranMainEvent
 ) {
+    println("Ampas kuda -> Su|aaa SurahScreen")
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
         state.listSurah?.let {
-            println("Ampas kuda -> SurahScreen | $it")
             LazyColumn {
                 itemsIndexed(
                     items = it,
                     key = { _, item -> item.id }
                 ) { index, item ->
-                    SurahItem(
+                    TileSurah(
                         surah = item,
                         modifier = Modifier.animateItemPlacement(
                             animationSpec = tween(
                                 durationMillis = 500,
                                 easing = FastOutSlowInEasing,
                             )
-                        )
+                        ),
+                        number = "${index+1}"
                     ) {
                         onEvent(QuranMainEvent.OnClickSurah(index))
                     }

@@ -22,17 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raydev.shared.database.entity.LanguageString
 import com.raydev.shared.model.Ayah
+import com.raydev.shared.util.getArabic
+import com.raydev.shared.util.getText
 
 /**
  * @author Raihan Arman
  * @date 12/08/23
  */
-fun ArrayList<LanguageString>.getText():String{
-    return filter { it.language == "bahasa" }.firstOrNull()?.text ?: ""
-}
-fun ArrayList<LanguageString>.getArabic():String{
-    return filter { it.language == "arabic" }.firstOrNull()?.text.toString().replace("،","")
-}
 @Composable
 fun AyahItem(
     modifier: Modifier = Modifier,

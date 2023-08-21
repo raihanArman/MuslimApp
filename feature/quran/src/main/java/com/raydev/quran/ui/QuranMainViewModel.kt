@@ -26,9 +26,6 @@ class QuranMainViewModel(
     private val _uiEvent: MutableSharedFlow<QuranMainEvent> = MutableSharedFlow<QuranMainEvent>()
     val uiEvent = _uiEvent.asSharedFlow()
 
-    init {
-        getSurah()
-    }
     private fun getSurah() {
         launch {
             useCase.invoke().collect {
@@ -51,6 +48,10 @@ class QuranMainViewModel(
                             id = event.id
                         )
                     )
+                }
+
+                QuranMainEvent.GetSurah -> {
+                    getSurah()
                 }
             }
         }

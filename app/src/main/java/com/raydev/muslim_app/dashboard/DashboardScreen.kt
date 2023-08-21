@@ -27,6 +27,7 @@ import com.raydev.quran.ui.quranMainNavigation
  */
 fun NavGraphBuilder.dashboardNavigation() = run {
     composable(Destination.DashboardScreen){
+        println("Ampas kuda -> Su| dashboardNavigation")
         DashboardScreen()
     }
 }
@@ -63,6 +64,7 @@ fun DashboardContent(
         navController = navController,
         startDestination = "dashboardBottomNav"
     ){
+        println("Ampas kuda -> Su| NavHost")
         setupDashboardBottomNavScreens()
     }
 }
@@ -72,6 +74,10 @@ fun NavGraphBuilder.setupDashboardBottomNavScreens(){
         startDestination = Screen.Home.route,
         route = "dashboardBottomNav"
     ){
+//        val currentScreen = rememberUpdatedState(newValue = title)
+//        val currentRoute = currentRoute(navController)
+
+        println("Ampas kuda -> Su| setupDashboardBottomNavScreens")
         homeMainNavigation()
         quranMainNavigation()
     }

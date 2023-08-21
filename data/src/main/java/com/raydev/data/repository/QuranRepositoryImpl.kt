@@ -31,14 +31,14 @@ class QuranRepositoryImpl(
 
     override fun getSurah(): Flow<List<Surah>> = surahDataSource.getSurah().map {
         it.map { surah ->
-            surah.mapToModel()
+            surah.mapToModel(context)
         }
     }
 
     override fun getSurahAyah(): Flow<List<Surah>> = surahDataSource.getSurah().map {
         it.map { surah ->
             val ayah = ayahDataSource.getAyahBySurahId(surah.id).last()
-            surah.mapToModel().apply {
+            surah.mapToModel(context).apply {
                 listAyah = ayah.map {
                     println("AMPASSS AMPASSS AMPASSS -> ${it.id}")
                     it.mapToModel()

@@ -16,7 +16,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 /**
  * @author Raihan Arman
@@ -42,11 +44,11 @@ class HomeViewModel(
     private fun getPrayerTime() {
         launch {
             repository.getCurrentPrayerTime().collect { prayerTime ->
-                val nextPrayerTime = repository.getNextPrayerTime(prayerTime)
                 _state.update {
                     it.copy(
                         prayerTime = prayerTime,
-                        hijrDate = repository.getCurrentHijrDate()
+                        hijrDate = repository.getCurrentHijrDate(),
+                        currentdate = getCurrentDate()
                     )
                 }
             }
@@ -70,6 +72,12 @@ class HomeViewModel(
             }
         }
         newtimer?.start()
+    }
+
+    private fun getCurrentDate(): String {
+        val cal = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id"))
+        return dateFormat.format(cal.time)
     }
 
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.raydev.home.ui.components.CardMainInformation
+import com.raydev.home.ui.components.PrayerSection
 import org.koin.androidx.compose.getViewModel
 
 /**
@@ -42,27 +43,9 @@ fun HomeScreen(
     event: HomeEvent,
     onEvent: (HomeEvent) -> Unit
 ) {
-//    Column(
-//        modifier = Modifier.fillMaxSize()
-//    ) {
-//        state.prayerTime?.let {
-//            Text(
-//                text = it.toString(),
-//                color = Color.Black,
-//                fontSize = 30.sp
-//            )
-//            Spacer(modifier = Modifier.height(20.dp))
-//        }
-//        state.nextPrayerTime?.let {
-//            Text(
-//                text = it.toString(),
-//                color = Color.Black,
-//                fontSize = 30.sp
-//            )
-//        }
-//    }
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(20.dp)
     ) {
         state.prayerTime?.let { prayerTime ->
@@ -71,7 +54,12 @@ fun HomeScreen(
                     prayerTime = prayerTime,
                     nextPrayerTime = nextPrayerTime,
                     hijrDate = state.hijrDate.orEmpty(),
-                    currentDate = "20 Agustus 2023"
+                    currentDate = state.currentdate.orEmpty()
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                PrayerSection(
+                    prayerTime = prayerTime,
+                    nextPrayerTime = nextPrayerTime
                 )
             }
         }

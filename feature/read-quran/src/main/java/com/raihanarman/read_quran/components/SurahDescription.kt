@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raydev.shared.model.Surah
+import com.raydev.shared.util.getText
 
 /**
  * @author Raihan Arman

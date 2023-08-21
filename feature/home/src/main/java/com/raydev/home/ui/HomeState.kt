@@ -11,5 +11,6 @@ data class HomeState(
     val location: String? = null,
     val prayerTime: PrayerTime ?= null,
     val nextPrayerTime: NextPrayerTime ?= null,
-    val hijrDate: String?= null
+    val hijrDate: String?= null,
+    val currentdate: String? = null
 )

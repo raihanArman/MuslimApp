@@ -35,6 +35,7 @@ fun MainScreen(
         navController = navController,
         startDestination = Destination.SplashScreen
     ) {
+        println("Ampas kuda -> Su| NavHostApp MainScreen")
         splashNavigation()
         dashboardNavigation()
         readQuranNavigation()
@@ -49,6 +50,7 @@ fun NavigationEffects(
     val activity = (LocalContext.current as? Activity)
     LaunchedEffect(activity, navHostController, navigationChannel) {
         navigationChannel.receiveAsFlow().collect { intent ->
+            println("Ampas kuda -> Su| navigationChannel.receiveAsFlow().collect ")
             if (activity?.isFinishing == true){
                 return@collect
             }
