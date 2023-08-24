@@ -39,6 +39,7 @@ class ReadQuranViewModel(
         getSurah()
         val surahId = stateHandle.get<String>(Destination.ReadQuranScreen.SURAH_ID_KEY) ?: ""
         setTabSelected(surahId.toInt())
+        getAyah(surahId.toInt())
     }
 
     private val _state: MutableStateFlow<ReadQuranState> = MutableStateFlow(ReadQuranState())
@@ -56,7 +57,6 @@ class ReadQuranViewModel(
 
     private fun setTabSelected(id: Int) {
         launch {
-            println("Ampas Kuda -> asasasasas Surah id = $id")
             _state.update {
                 it.copy(
                     tabsSelected = id
@@ -66,7 +66,6 @@ class ReadQuranViewModel(
     }
 
     fun getAyah(surahId: Int) {
-        println("CLICCCCCCKKKKKKKCCCC -> getAyah ${surahId}")
         launch {
             ayahBySurah.invoke(surahId).collect {
                 _state.update { state ->
@@ -101,7 +100,6 @@ class ReadQuranViewModel(
                             surahId = event.id
                         )
                     }
-                    println("CLICCCCCCKKKKKKKCCCC -> ReadQuranEvent.OnClickTabSurah ${event.id}")
                     getAyah(event.id)
                 }
             }
