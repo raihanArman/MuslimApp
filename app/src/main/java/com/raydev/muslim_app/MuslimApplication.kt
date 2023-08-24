@@ -17,6 +17,7 @@ import com.raydev.navigation.NavigationModule.navigatorModule
 import com.raydev.network.di.NetworkModule.networkModule
 import com.raydev.quran.di.QuranModule.quranModule
 import com.raihanarman.location.di.locationModule
+import com.raydev.prayer.di.prayerModule
 import com.raydev.shared_preference.sharedPrefModule
 import com.raydev.workmanager.di.WorkerModule.workerModule
 import org.koin.android.ext.koin.androidContext
@@ -49,7 +50,8 @@ class MuslimApplication: Application() {
                 splashModule,
                 homeModule,
                 quranModule,
-                readQuranModule
+                readQuranModule,
+                prayerModule
             ))
         }
     }

@@ -4,7 +4,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.raihanarman.location.LocationManager
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.repository.PrayerRepository
-import com.raydev.domain.usecase.prayer.GetCurrentPrayerTimeUseCase
 import com.raydev.navigation.AppNavigator
 import kotlinx.coroutines.launch
 

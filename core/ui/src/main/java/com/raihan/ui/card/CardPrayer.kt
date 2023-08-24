@@ -1,4 +1,4 @@
-package com.raydev.home.ui.components
+package com.raihan.ui.card
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

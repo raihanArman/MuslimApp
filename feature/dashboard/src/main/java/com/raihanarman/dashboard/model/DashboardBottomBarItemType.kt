@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
  * @date 06/08/23
  */
 enum class DashboardBottomBarItemType {
-    HOME, QURAN
+    HOME, QURAN, PRAYER
 }
 
 data class DashboardBottomBarItem(

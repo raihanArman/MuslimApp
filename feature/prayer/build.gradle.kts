@@ -12,6 +12,14 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
+    }
 }
 
 dependencies {
@@ -26,6 +34,7 @@ dependencies {
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
     implementation(project(":resource"))
+    implementation(project(":core:ui"))
 //
 //    implementation 'androidx.core:core-ktx:1.7.0'
 //    implementation 'androidx.appcompat:appcompat:1.4.1'

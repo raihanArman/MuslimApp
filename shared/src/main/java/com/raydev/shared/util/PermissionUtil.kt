@@ -37,7 +37,7 @@ fun ComponentActivity.checkPermissions(requestCode: Int?): Boolean {
 }
 
 @Composable
-fun ComponentActivity.CheckAndRequestPermission(
+fun ComponentActivity.checkAndRequestPermission(
     permissions: Array<String>,
     onPermissionsGranted: () -> Unit,
     onPermissionsDenied: () -> Unit,

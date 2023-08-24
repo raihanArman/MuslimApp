@@ -14,3 +14,11 @@ data class PrayerTime(
     var maghrib: String? = "",
     var isya: String? = ""
 )
+
+fun PrayerTime.checkPrayerTimeIsNotEmpty(): Boolean {
+    return !this.fajr.isNullOrEmpty() &&
+            !this.dhuhr.isNullOrEmpty() &&
+            !this.asr.isNullOrEmpty() &&
+            !this.maghrib.isNullOrEmpty() &&
+            !this.isya.isNullOrEmpty()
+}

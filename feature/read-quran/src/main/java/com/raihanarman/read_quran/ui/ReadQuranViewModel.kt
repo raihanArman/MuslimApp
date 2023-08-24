@@ -1,27 +1,18 @@
 package com.raihanarman.read_quran.ui
 
-import androidx.compose.foundation.pager.PagerState
 import androidx.lifecycle.SavedStateHandle
-import com.raihanarman.read_quran.model.PagerStateSnapshot
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.usecase.quran.GetAyahBySurahIdUseCase
-import com.raydev.domain.usecase.quran.GetSurahAyahUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.navigation.Destination
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 

@@ -1,6 +1,5 @@
 package com.raihanarman.splash
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.anabstract.state.ResponseState
@@ -8,12 +7,10 @@ import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.domain.usecase.quran.SetupQuranUseCase
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**

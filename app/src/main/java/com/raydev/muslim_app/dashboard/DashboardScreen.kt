@@ -6,20 +6,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.raihanarman.dashboard.components.DashboardBottomNavigation
 import com.raihanarman.dashboard.util.Screen
 import com.raydev.home.ui.homeMainNavigation
 import com.raydev.navigation.Destination
 import com.raydev.navigation.composable
-import com.raydev.quran.ui.SurahScreen
+import com.raydev.prayer.ui.prayerMainNavigation
 import com.raydev.quran.ui.quranMainNavigation
 
 /**
@@ -66,5 +63,6 @@ fun DashboardContent(
     ){
         homeMainNavigation()
         quranMainNavigation()
+        prayerMainNavigation()
     }
 }

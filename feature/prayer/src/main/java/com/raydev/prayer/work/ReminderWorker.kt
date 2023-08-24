@@ -2,6 +2,7 @@ package com.raydev.prayer.work
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
@@ -54,7 +55,7 @@ class ReminderWorker(
                 context,
                 reqCode,
                 Intent(context, AlarmReceiver::class.java),
-                FLAG_UPDATE_CURRENT
+                FLAG_MUTABLE
             ),
         )
         Log.d(TAG, "triggerAlarm: set alarm")
@@ -68,10 +69,8 @@ class ReminderWorker(
                 applicationContext,
                 reqCode,
                 Intent(applicationContext, AlarmReceiver::class.java),
-                FLAG_UPDATE_CURRENT
+                FLAG_MUTABLE
             ))
-
-        applicationContext.stopService(Intent(applicationContext, AlarmService::class.java))
     }
 
 }

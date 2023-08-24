@@ -1,4 +1,4 @@
-package com.raydev.home.ui.components
+package com.raihan.ui.badge
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

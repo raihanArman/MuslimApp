@@ -2,6 +2,7 @@ package com.raydev.prayer.ui
 
 import android.os.CountDownTimer
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.MutableLiveData
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.repository.PrayerRepository
 import com.raydev.shared.model.PrayerTime
@@ -28,6 +29,12 @@ class PrayerViewModel(
     val event = _event.asSharedFlow()
 
     private var newtimer: CountDownTimer? = null
+
+    var ringFajr = MutableStateFlow(repository.getSubuhData().ringType)
+    var ringDhuhr = MutableLiveData(repository.getDhuhurData().ringType)
+    var ringAsr = MutableLiveData(repository.getAsharData().ringType)
+    var ringMaghrib = MutableLiveData(repository.getMaghribData().ringType)
+    var ringIsya = MutableLiveData(repository.getIsyaData().ringType)
 
     init {
         getPrayerTime()

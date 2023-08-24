@@ -1,10 +1,11 @@
-package com.raydev.home.ui.components
+package com.raihan.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.raihan.ui.card.CardPrayer
 import com.raydev.shared.model.NextPrayerTime
 import com.raydev.shared.model.PrayerTime
 

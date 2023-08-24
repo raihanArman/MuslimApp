@@ -3,7 +3,6 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
-    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -93,7 +92,7 @@ dependencies {
     implementation(project(":libraries:cache"))
     implementation(project(":libraries:location"))
     implementation(project(":libraries:workmanager"))
-    implementation(project(":navigation"))
+    implementation(project(":core:navigation"))
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":feature:quran"))

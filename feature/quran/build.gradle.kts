@@ -33,7 +33,7 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
-    implementation(project(":navigation"))
+    implementation(project(":core:navigation"))
 //    implementation project(path: ':resource')
 //
 //    implementation 'androidx.core:core-ktx:1.7.0'

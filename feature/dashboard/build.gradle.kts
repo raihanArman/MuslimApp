@@ -26,5 +26,5 @@ dependencies {
     implementation(libs.bundles.koin.compose)
     implementation(project(":domain"))
     implementation(project(":shared"))
-    implementation(project(":navigation"))
+    implementation(project(":core:navigation"))
 }

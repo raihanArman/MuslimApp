@@ -32,6 +32,7 @@ dependencies {
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:location"))
     implementation(project(":libraries:workmanager"))
-    implementation(project(":navigation"))
+    implementation(project(":core:navigation"))
+    implementation(project(":core:ui"))
 //    implementation(libs.androidx.ui.text.android)
 }

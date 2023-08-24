@@ -36,7 +36,7 @@ include(
     ":feature:home",
     ":data",
     ":domain",
-    ":navigation",
+    ":core:navigation",
     ":resource",
     ":libraries:abstract",
     ":libraries:network",
@@ -51,3 +51,4 @@ include(":feature:dashboard")
 include(":feature:read-quran")
 include(":libraries:location")
 include(":libraries:prayer")
+include(":core:ui")

@@ -63,7 +63,6 @@ object Dependencies {
         const val player = ":player"
         const val domain = ":domain"
         const val data = ":data"
-        const val core = ":core"
         const val aarMncAnalytics = "MncDigitalAnalytics-1.1"
         const val aarHlsDownload = "HlsDwld-2.0.1"
         const val aarTiktok = "TikTok-0.1.4.1"
