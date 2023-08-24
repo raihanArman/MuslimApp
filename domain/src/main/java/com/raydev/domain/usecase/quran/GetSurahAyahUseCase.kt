@@ -9,6 +9,6 @@ class GetSurahAyahUseCase(
     private val quranRepository: QuranRepository
 ) {
     operator fun invoke(): Flow<List<Surah>> {
-        return quranRepository.getSurahAyah()
+        return quranRepository.getSurah()
     }
 }

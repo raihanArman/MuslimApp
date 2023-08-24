@@ -40,7 +40,6 @@ class QuranRepositoryImpl(
             val ayah = ayahDataSource.getAyahBySurahId(surah.id).last()
             surah.mapToModel(context).apply {
                 listAyah = ayah.map {
-                    println("AMPASSS AMPASSS AMPASSS -> ${it.id}")
                     it.mapToModel()
                 }
             }

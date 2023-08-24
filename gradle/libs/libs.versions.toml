@@ -1,7 +1,7 @@
 [versions]
 kotlin = "1.7.0"
 android = "7.4.1"
-accompanist = "0.27.0"
+accompanist = "0.28.0"
 accompanist-indicator = "0.23.0"
 accompanist-navigation = "0.28.0"
 koin = "3.4.3"
@@ -39,7 +39,7 @@ play-services-location = "20.0.0"
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-androidx-compose" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist-indicator" }
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist-navigation" }
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }

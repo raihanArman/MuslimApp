@@ -1,36 +1,30 @@
-package com.raydev.home.ui
+package com.raydev.prayer.ui
 
 import android.os.CountDownTimer
-import com.google.android.gms.maps.model.LatLng
+import androidx.compose.runtime.Composable
 import com.raydev.anabstract.base.BaseViewModel
-import com.raihanarman.location.LocationManager
 import com.raydev.domain.repository.PrayerRepository
-import com.raydev.shared.model.NextPrayerTime
+import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.util.getCurrentDate
 import com.raydev.shared.util.tick
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 /**
  * @author Raihan Arman
- * @date 12/08/23
+ * @date 21/08/23
  */
-class HomeViewModel(
+class PrayerViewModel(
     private val repository: PrayerRepository
 ): BaseViewModel() {
-
-    private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
+    private val _state: MutableStateFlow<PrayerState> = MutableStateFlow(PrayerState())
     val state = _state.asStateFlow()
 
-    private val _event: MutableSharedFlow<HomeEvent> = MutableSharedFlow()
+    private val _event: MutableSharedFlow<PrayetEvent> = MutableSharedFlow()
     val event = _event.asSharedFlow()
 
     private var newtimer: CountDownTimer? = null
@@ -46,17 +40,9 @@ class HomeViewModel(
                 _state.update {
                     it.copy(
                         prayerTime = prayerTime,
-                        hijrDate = repository.getCurrentHijrDate(),
-                        currentdate = getCurrentDate()
                     )
                 }
             }
-        }
-    }
-
-    fun onEvent(event: HomeEvent) {
-        launch {
-            _event.emit(event)
         }
     }
 
@@ -72,4 +58,10 @@ class HomeViewModel(
         }
         newtimer?.start()
     }
+    fun onEvent(event: PrayetEvent) {
+        launch {
+            _event.emit(event)
+        }
+    }
+
 }

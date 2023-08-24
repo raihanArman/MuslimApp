@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -19,6 +19,7 @@ import com.raihanarman.dashboard.util.Screen
 import com.raydev.home.ui.homeMainNavigation
 import com.raydev.navigation.Destination
 import com.raydev.navigation.composable
+import com.raydev.quran.ui.SurahScreen
 import com.raydev.quran.ui.quranMainNavigation
 
 /**
@@ -27,7 +28,6 @@ import com.raydev.quran.ui.quranMainNavigation
  */
 fun NavGraphBuilder.dashboardNavigation() = run {
     composable(Destination.DashboardScreen){
-        println("Ampas kuda -> Su| dashboardNavigation")
         DashboardScreen()
     }
 }
@@ -62,22 +62,8 @@ fun DashboardContent(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "dashboardBottomNav"
+        startDestination = Screen.Home.route
     ){
-        println("Ampas kuda -> Su| NavHost")
-        setupDashboardBottomNavScreens()
-    }
-}
-
-fun NavGraphBuilder.setupDashboardBottomNavScreens(){
-    navigation(
-        startDestination = Screen.Home.route,
-        route = "dashboardBottomNav"
-    ){
-//        val currentScreen = rememberUpdatedState(newValue = title)
-//        val currentRoute = currentRoute(navController)
-
-        println("Ampas kuda -> Su| setupDashboardBottomNavScreens")
         homeMainNavigation()
         quranMainNavigation()
     }

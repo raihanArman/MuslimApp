@@ -24,6 +24,7 @@ android {
 dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.koin)
+    implementation(libs.bundles.accompanist)
     implementation(libs.bundles.koin.compose)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

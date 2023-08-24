@@ -1,11 +1,10 @@
 package com.raydev.muslim_app.dashboard.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -24,14 +23,14 @@ import com.raihanarman.dashboard.model.destinationList
 fun DashboardBottomNavigation(
     navController: NavHostController
 ) {
-    val surfaceColor = MaterialTheme.colorScheme.onSurface
+    val surfaceColor = MaterialTheme.colors.onSurface
     val contentColor = Color.White
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    NavigationBar(
-        containerColor = surfaceColor,
+    BottomNavigation(
+        backgroundColor = surfaceColor,
         contentColor = contentColor,
         modifier = Modifier
             .fillMaxWidth()
@@ -41,7 +40,7 @@ fun DashboardBottomNavigation(
                 throw Exception("Unknown item type! Please add this type inside the DashboardBottomBarItemType enum class.")
             }
 
-            NavigationBarItem(
+            BottomNavigationItem(
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route)
@@ -50,17 +49,15 @@ fun DashboardBottomNavigation(
                     item.icon()
                 },
                 alwaysShowLabel = true,
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.onPrimary,
-                    unselectedIconColor = Color.Gray.copy(alpha = 0.5f),
-                ),
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = Color.Gray.copy(alpha = 0.5f),
                 label = {
                     Text(
                         text = item.label,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.body1,
                         fontSize = 12.sp,
                         color = if (currentRoute == item.route) {
-                            MaterialTheme.colorScheme.onPrimary
+                            MaterialTheme.colors.onPrimary
                         } else {
                             Color.Gray.copy(alpha = 0.5f)
                         }

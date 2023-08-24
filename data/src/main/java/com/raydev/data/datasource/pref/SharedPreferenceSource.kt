@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.PrayerData
+import com.raydev.shared.model.RingType
 import com.raydev.shared.util.KeyShared
 import com.raydev.shared.util.KeyShared.PREF_KEY_ASR_JURISTIC
 import com.raydev.shared.util.KeyShared.PREF_KEY_ASR_OFFSET
@@ -28,67 +29,67 @@ class SharedPreferenceSource(
     fun setImsakData(prayerData: PrayerData){
         Log.d(TAG, "setImsakData: ${prayerData.time}")
         sharedPreferences.setStringToPreference(KeyShared.IMSAK_TIME, prayerData.time)
-        sharedPreferences.setBooleanToPreference(KeyShared.IMSAK_STATUS, prayerData.checked)
+        sharedPreferences.setIntToPreference(KeyShared.IMSAK_STATUS, prayerData.ringType)
     }
 
     fun setSubuhData(prayerData: PrayerData){
         sharedPreferences.setStringToPreference(KeyShared.SUBUH_TIME, prayerData.time)
-        sharedPreferences.setBooleanToPreference(KeyShared.SUBUH_STATUS, prayerData.checked)
+        sharedPreferences.setIntToPreference(KeyShared.SUBUH_STATUS, prayerData.ringType)
     }
 
     fun setDhuhurData(prayerData: PrayerData){
         sharedPreferences.setStringToPreference(KeyShared.DHUHUR_TIME, prayerData.time)
-        sharedPreferences.setBooleanToPreference(KeyShared.DHUHUR_STATUS, prayerData.checked)
+        sharedPreferences.setIntToPreference(KeyShared.DHUHUR_STATUS, prayerData.ringType)
     }
 
     fun setAsharData(prayerData: PrayerData){
         sharedPreferences.setStringToPreference(KeyShared.ASHAR_TIME, prayerData.time)
-        sharedPreferences.setBooleanToPreference(KeyShared.ASHAR_STATUS, prayerData.checked)
+        sharedPreferences.setIntToPreference(KeyShared.ASHAR_STATUS, prayerData.ringType)
     }
 
     fun setMaghribData(prayerData: PrayerData){
         sharedPreferences.setStringToPreference(KeyShared.MAGHRIB_TIME, prayerData.time)
-        sharedPreferences.setBooleanToPreference(KeyShared.MAGHRIB_STATUS, prayerData.checked)
+        sharedPreferences.setIntToPreference(KeyShared.MAGHRIB_STATUS, prayerData.ringType)
     }
 
     fun setIsyaData(prayerData: PrayerData){
         sharedPreferences.setStringToPreference(KeyShared.ISYA_TIME, prayerData.time)
-        sharedPreferences.setBooleanToPreference(KeyShared.ISYA_STATUS, prayerData.checked)
+        sharedPreferences.setIntToPreference(KeyShared.ISYA_STATUS, prayerData.ringType)
     }
 
     fun getImsakData(): PrayerData{
         val time = sharedPreferences.getStringFromPreference(KeyShared.IMSAK_TIME) ?: ""
-        val checked = sharedPreferences.getBooleanFromPreference(KeyShared.IMSAK_STATUS, false)
+        val checked = sharedPreferences.getIntFromPreference(KeyShared.IMSAK_STATUS, RingType.SOUND)
         return PrayerData(time, checked)
     }
 
     fun getSubuhData(): PrayerData{
         val time = sharedPreferences.getStringFromPreference(KeyShared.SUBUH_TIME) ?: ""
-        val checked = sharedPreferences.getBooleanFromPreference(KeyShared.SUBUH_STATUS, false)
+        val checked = sharedPreferences.getIntFromPreference(KeyShared.SUBUH_STATUS, RingType.SOUND)
         return PrayerData(time, checked)
     }
 
     fun getDzuhurData(): PrayerData{
         val time = sharedPreferences.getStringFromPreference(KeyShared.DHUHUR_TIME) ?: ""
-        val checked = sharedPreferences.getBooleanFromPreference(KeyShared.DHUHUR_STATUS, false)
+        val checked = sharedPreferences.getIntFromPreference(KeyShared.DHUHUR_STATUS, RingType.SOUND)
         return PrayerData(time, checked)
     }
 
     fun getAsharData(): PrayerData{
         val time = sharedPreferences.getStringFromPreference(KeyShared.ASHAR_TIME) ?: ""
-        val checked = sharedPreferences.getBooleanFromPreference(KeyShared.ASHAR_STATUS, false)
+        val checked = sharedPreferences.getIntFromPreference(KeyShared.ASHAR_STATUS, RingType.SOUND)
         return PrayerData(time, checked)
     }
 
     fun getMaghribData(): PrayerData{
         val time = sharedPreferences.getStringFromPreference(KeyShared.MAGHRIB_TIME) ?: ""
-        val checked = sharedPreferences.getBooleanFromPreference(KeyShared.MAGHRIB_STATUS, false)
+        val checked = sharedPreferences.getIntFromPreference(KeyShared.MAGHRIB_STATUS, RingType.SOUND)
         return PrayerData(time, checked)
     }
 
     fun getIsyaData(): PrayerData{
         val time = sharedPreferences.getStringFromPreference(KeyShared.ISYA_TIME) ?: ""
-        val checked = sharedPreferences.getBooleanFromPreference(KeyShared.ISYA_STATUS, false)
+        val checked = sharedPreferences.getIntFromPreference(KeyShared.ISYA_STATUS, RingType.SOUND)
         return PrayerData(time, checked)
     }
 

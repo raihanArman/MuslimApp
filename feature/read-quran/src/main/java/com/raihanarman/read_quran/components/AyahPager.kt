@@ -46,11 +46,7 @@ fun AyahPager(
         LazyColumn {
             itemsIndexed(
                 items = listAyah,
-                key = { _, item -> item.id }
             ) { index, item ->
-                if (index == 0) {
-                    SurahDescription(surah = listSurah[pagerState.currentPage])
-                }
                 if (item.useBismillah == true) {
                     BissmillahItem()
                 }

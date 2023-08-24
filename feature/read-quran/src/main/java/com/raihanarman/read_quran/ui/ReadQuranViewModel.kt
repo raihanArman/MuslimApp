@@ -1,16 +1,21 @@
 package com.raihanarman.read_quran.ui
 
+import androidx.compose.foundation.pager.PagerState
 import androidx.lifecycle.SavedStateHandle
+import com.raihanarman.read_quran.model.PagerStateSnapshot
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.usecase.quran.GetAyahBySurahIdUseCase
 import com.raydev.domain.usecase.quran.GetSurahAyahUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.navigation.Destination
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -26,7 +31,7 @@ import kotlinx.coroutines.launch
  */
 class ReadQuranViewModel(
     private val ayahBySurah: GetAyahBySurahIdUseCase,
-    private val surahUseCase: GetSurahAyahUseCase,
+    private val surahUseCase: GetSurahUseCase,
     private val stateHandle: SavedStateHandle,
 ): BaseViewModel() {
 
@@ -51,7 +56,6 @@ class ReadQuranViewModel(
 
     private fun setTabSelected(id: Int) {
         launch {
-
             println("Ampas Kuda -> asasasasas Surah id = $id")
             _state.update {
                 it.copy(
@@ -62,6 +66,7 @@ class ReadQuranViewModel(
     }
 
     fun getAyah(surahId: Int) {
+        println("CLICCCCCCKKKKKKKCCCC -> getAyah ${surahId}")
         launch {
             ayahBySurah.invoke(surahId).collect {
                 _state.update { state ->
@@ -96,6 +101,7 @@ class ReadQuranViewModel(
                             surahId = event.id
                         )
                     }
+                    println("CLICCCCCCKKKKKKKCCCC -> ReadQuranEvent.OnClickTabSurah ${event.id}")
                     getAyah(event.id)
                 }
             }
