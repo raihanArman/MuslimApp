@@ -17,6 +17,7 @@ import com.raydev.prayer.NotificationAlarmConstants.NOTIFICATION_TITLE
 import com.raydev.prayer.NotificationAlarmConstants.VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
 import com.raydev.prayer.NotificationAlarmConstants.VERBOSE_NOTIFICATION_CHANNEL_NAME
 import com.raydev.prayer.R
+import com.raydev.prayer.ReminderParams
 import com.raydev.prayer.service.AlarmService
 
 
@@ -26,11 +27,13 @@ class AlarmReceiver: BroadcastReceiver() {
         Log.d(TAG, "onReceive: receive alarm")
 
         context?.startService(Intent(context, AlarmService::class.java))
-        sendNotification(context)
+
+        val message = intent?.getStringExtra(ReminderParams.KEY_MESSAGE)
+        sendNotification(context, message)
 
     }
 
-    fun sendNotification(context: Context?){
+    fun sendNotification(context: Context?, message: String?){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
             val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
@@ -59,7 +62,7 @@ class AlarmReceiver: BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
             .setSmallIcon(R.drawable.download)
             .setContentTitle(NOTIFICATION_TITLE)
-            .setContentText("Waktu shalat telah tiba!")
+            .setContentText(message ?: "Waktu shalat telah tiba!")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
             .setOngoing(true)

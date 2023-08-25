@@ -12,5 +12,5 @@ import org.koin.dsl.module
  */
 val prayerModule = module {
     single { ReminderHelper(androidContext()) }
-    viewModel { PrayerViewModel(get()) }
+    viewModel { PrayerViewModel(get(), get()) }
 }

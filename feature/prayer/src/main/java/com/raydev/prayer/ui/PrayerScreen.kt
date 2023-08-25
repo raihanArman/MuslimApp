@@ -18,7 +18,9 @@ import androidx.navigation.compose.composable
 import com.raihan.ui.PrayerSection
 import com.raihan.ui.card.CardNextPrayer
 import com.raydev.prayer.R
+import com.raydev.prayer.ui.components.PrayerIconRing
 import com.raydev.prayer.ui.components.PrayerRingSection
+import com.raydev.shared.model.RingType
 import org.koin.androidx.compose.getViewModel
 
 /**
@@ -64,42 +66,46 @@ fun PrayerScreen(
                     prayerTime = prayerTime,
                     subuhIcon = {
                         PrayerIconRing(isRing = state.subuhRing) {
-
+                            onEvent(PrayetEvent.SetRingingSubuh(
+                                if (state.subuhRing) RingType.SILENT
+                                else RingType.SOUND
+                            ))
                         }
                     },
                     dhuhurIcon = {
                         PrayerIconRing(isRing = state.dhuhurRing) {
-
+                            onEvent(PrayetEvent.SetRingingDhuhur(
+                                if (state.dhuhurRing) RingType.SILENT
+                                else RingType.SOUND
+                            ))
                         }
                     },
                     asharIcon = {
                         PrayerIconRing(isRing = state.asharRing) {
-
+                            onEvent(PrayetEvent.SetRingingAshar(
+                                if (state.asharRing) RingType.SILENT
+                                else RingType.SOUND
+                            ))
                         }
                     },
                     maghribIcon = {
                         PrayerIconRing(isRing = state.maghribRing) {
-
+                            onEvent(PrayetEvent.SetRingingMaghrib(
+                                if (state.maghribRing) RingType.SILENT
+                                else RingType.SOUND
+                            ))
                         }
                     },
                     isyaIcon = {
                         PrayerIconRing(isRing = state.isyaRing) {
-
+                            onEvent(PrayetEvent.SetRingingIsya(
+                                if (state.isyaRing) RingType.SILENT
+                                else RingType.SOUND
+                            ))
                         }
                     }
                 )
             }
         }
     }
-}
-
-@Composable
-fun PrayerIconRing(isRing: Boolean, onClick: () -> Unit) {
-    Icon(
-        modifier = Modifier.clickable {
-            onClick()
-        },
-        painter = painterResource(id = if (isRing) R.drawable.baseline_volume_up_24 else R.drawable.baseline_volume_mute_24),
-        contentDescription = null
-    )
 }

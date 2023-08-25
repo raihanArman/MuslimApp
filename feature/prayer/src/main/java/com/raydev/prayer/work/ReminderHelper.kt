@@ -16,12 +16,13 @@ class ReminderHelper(
     private val workManager: WorkManager = WorkManager.getInstance(context)
     private val repository: PrayerRepository by inject(PrayerRepository::class.java)
 
-    private fun enableReminder(hours: Int, minutes: Int, reqCode: Int, enable: Boolean) {
+    private fun enableReminder(hours: Int, minutes: Int, reqCode: Int, enable: Boolean, message: String) {
         val data = Data.Builder()
             .putInt(ReminderParams.KEY_HOURS, hours)
             .putInt(ReminderParams.KEY_MINUTE, minutes)
             .putInt(ReminderParams.KEY_REQUEST_CODE, reqCode)
             .putBoolean(ReminderParams.KEY_ENABLE, enable)
+            .putString(ReminderParams.KEY_MESSAGE, message)
             .build()
 
         val reminderWorker = OneTimeWorkRequestBuilder<ReminderWorker>()
@@ -57,7 +58,8 @@ class ReminderHelper(
             hours = subuh[0].toTimeInteger(),
             minutes = subuh[1].toTimeInteger(),
             reqCode = 77,
-            enable = isRing
+            enable = isRing,
+            "Waktu sholat shubuh telah tiba"
         )
     }
 
@@ -67,7 +69,8 @@ class ReminderHelper(
             hours = dhuhur[0].toTimeInteger(),
             minutes = dhuhur[1].toTimeInteger(),
             reqCode = 99,
-            enable = isRing
+            enable = isRing,
+            "Waktu sholat dhuhur telah tiba"
         )
     }
 
@@ -77,7 +80,8 @@ class ReminderHelper(
             hours = asr[0].toTimeInteger(),
             minutes = asr[1].toTimeInteger(),
             reqCode = 88,
-            enable = isRing
+            enable = isRing,
+            "Waktu sholat ashar telah tiba"
         )
     }
 
@@ -87,7 +91,8 @@ class ReminderHelper(
             hours = maghrib[0].toTimeInteger(),
             minutes = maghrib[1].toTimeInteger(),
             reqCode = 33,
-            enable = isRing
+            enable = isRing,
+            "Waktu sholat maghrib telah tiba"
         )
     }
 
@@ -97,7 +102,8 @@ class ReminderHelper(
             hours = isya[0].toTimeInteger(),
             minutes = isya[1].toTimeInteger(),
             reqCode = 44,
-            enable = isRing
+            enable = isRing,
+            "Waktu sholat isya telah tiba"
         )
     }
 

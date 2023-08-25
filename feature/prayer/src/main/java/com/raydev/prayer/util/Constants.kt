@@ -6,6 +6,7 @@ object ReminderParams{
     const val KEY_MINUTE = "minutes"
     const val KEY_REQUEST_CODE = "reqCode"
     const val KEY_ENABLE = "enable"
+    const val KEY_MESSAGE = "message"
 }
 
 object NotificationAlarmConstants{

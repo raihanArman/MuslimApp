@@ -3,16 +3,13 @@ package com.raydev.prayer.work
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_MUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.raydev.prayer.ReminderParams
 import com.raydev.prayer.receiver.AlarmReceiver
-import com.raydev.prayer.service.AlarmService
 import java.util.*
 
 class ReminderWorker(
@@ -25,16 +22,19 @@ class ReminderWorker(
         val minutes = inputData.getInt(ReminderParams.KEY_MINUTE, 0)
         val reqCode = inputData.getInt(ReminderParams.KEY_REQUEST_CODE, 0)
         val enable = inputData.getBoolean(ReminderParams.KEY_ENABLE, false)
+        val message = inputData.getString(ReminderParams.KEY_MESSAGE)
 
-        if (enable)
-            triggerAlarm(hours, minutes, reqCode)
+        if (enable) {
+            stopAlarm(reqCode)
+            triggerAlarm(hours, minutes, reqCode, message)
+        }
         else
             stopAlarm(reqCode)
 
         return Result.success()
     }
 
-    fun triggerAlarm(hours: Int, minutes: Int, reqCode: Int){
+    fun triggerAlarm(hours: Int, minutes: Int, reqCode: Int, message: String?){
         Log.d(TAG, "triggerAlarm: $hours, $minutes")
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hours)
@@ -47,6 +47,8 @@ class ReminderWorker(
             calendar.add(Calendar.DATE, 1);
         }
 
+        val intent = Intent(context, AlarmReceiver::class.java)
+        intent.putExtra(ReminderParams.KEY_MESSAGE, message)
         alarm.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
@@ -54,7 +56,7 @@ class ReminderWorker(
             PendingIntent.getBroadcast(
                 context,
                 reqCode,
-                Intent(context, AlarmReceiver::class.java),
+                intent,
                 FLAG_MUTABLE
             ),
         )
