@@ -14,6 +14,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.raydev.home.ui.components.CardMainInformation
 import com.raihan.ui.PrayerSection
+import com.raydev.home.ui.components.CardLastReadQuran
 import org.koin.androidx.compose.getViewModel
 
 /**
@@ -57,6 +58,8 @@ fun HomeScreen(
                     prayerTime = prayerTime,
                     nextPrayerTime = nextPrayerTime
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+                CardLastReadQuran()
             }
         }
     }

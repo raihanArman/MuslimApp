@@ -71,7 +71,6 @@ fun TileSurah(
                     color = Color.Black,
                     fontSize = 20.sp,
                     fontFamily = FontFamily(Font(SharedFont.surah))
-
                 )
             }
             Divider(thickness = 1.dp, color = Color.Gray.copy(alpha = 0.2f))

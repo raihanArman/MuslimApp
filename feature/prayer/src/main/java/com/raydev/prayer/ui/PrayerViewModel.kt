@@ -83,26 +83,26 @@ class PrayerViewModel(
             when(event) {
                 PrayetEvent.Initial -> {}
                 is PrayetEvent.SetRingingAshar -> {
-                    setRinginAshar(event.value)
+                    setRingingAshar(event.value)
                 }
                 is PrayetEvent.SetRingingDhuhur -> {
-                    setRinginDhuhur(event.value)
+                    setRingingDhuhur(event.value)
                 }
                 is PrayetEvent.SetRingingIsya -> {
-                    setRinginIsya(event.value)
+                    setRingingIsya(event.value)
                 }
                 is PrayetEvent.SetRingingMaghrib -> {
-                    setRinginMaghrib(event.value)
+                    setRingingMaghrib(event.value)
                 }
                 is PrayetEvent.SetRingingSubuh -> {
-                    setRinginSubuh(event.value)
+                    setRingingSubuh(event.value)
                 }
             }
             _event.emit(event)
         }
     }
 
-    private fun setRinginSubuh(value: Int) {
+    private fun setRingingSubuh(value: Int) {
         launch {
             val newValue = value == RingType.SOUND
 
@@ -119,7 +119,7 @@ class PrayerViewModel(
         }
     }
 
-    private fun setRinginDhuhur(value: Int) {
+    private fun setRingingDhuhur(value: Int) {
         launch {
             val newValue = value == RingType.SOUND
 
@@ -136,7 +136,7 @@ class PrayerViewModel(
         }
     }
 
-    private fun setRinginAshar(value: Int) {
+    private fun setRingingAshar(value: Int) {
         launch {
             val newValue = value == RingType.SOUND
 
@@ -153,7 +153,7 @@ class PrayerViewModel(
         }
     }
 
-    private fun setRinginMaghrib(value: Int) {
+    private fun setRingingMaghrib(value: Int) {
         launch {
             val newValue = value == RingType.SOUND
 
@@ -170,7 +170,7 @@ class PrayerViewModel(
         }
     }
 
-    private fun setRinginIsya(value: Int) {
+    private fun setRingingIsya(value: Int) {
         launch {
             val newValue = value == RingType.SOUND
 

@@ -49,6 +49,7 @@ class ReminderWorker(
 
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.putExtra(ReminderParams.KEY_MESSAGE, message)
+
         alarm.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
@@ -64,7 +65,8 @@ class ReminderWorker(
 
     }
 
-    fun stopAlarm( reqCode: Int) {
+    fun stopAlarm(reqCode: Int) {
+        Log.d(TAG, "stopAlarm: $reqCode")
         val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarm.cancel(
             PendingIntent.getBroadcast(

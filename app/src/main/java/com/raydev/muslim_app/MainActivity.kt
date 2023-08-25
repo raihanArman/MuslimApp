@@ -26,7 +26,7 @@ import org.koin.android.ext.android.inject
 import java.util.*
 
 class MainActivity: ComponentActivity() {
-    val reminderHelper by inject<ReminderHelper>()
+    private val reminderHelper by inject<ReminderHelper>()
     companion object{
         const val REQUEST_CODE = 123
     }
@@ -34,22 +34,8 @@ class MainActivity: ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        checkPermissions(REQUEST_CODE)
         setContent {
-            checkAndRequestPermission(
-                permissions = arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ),
-                onPermissionsGranted = {
-
-                },
-                onPermissionsDenied = {
-
-                },
-            )
-
             MainScreen()
         }
 
