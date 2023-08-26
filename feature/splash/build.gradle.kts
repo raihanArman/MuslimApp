@@ -29,7 +29,7 @@ dependencies {
     implementation(libs.androidx.splash)
     implementation(project(":domain"))
     implementation(project(":shared"))
-    implementation(project(":navigation"))
+    implementation(project(":core:navigation"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
     implementation("androidx.appcompat:appcompat:1.6.1")

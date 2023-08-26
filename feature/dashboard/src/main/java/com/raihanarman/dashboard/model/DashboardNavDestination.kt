@@ -38,6 +38,18 @@ val destinationList = listOf(
         },
         type = DashboardBottomBarItemType.QURAN,
         label = "Quran",
-        route = Screen.Quran.route
+        route = "quran_main"
+    ),DashboardBottomBarItem(
+        icon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_baseline_favorite_border_24),
+                contentDescription = null,
+                modifier = androidx.compose.ui.Modifier
+                    .size(24.dp),
+            )
+        },
+        type = DashboardBottomBarItemType.PRAYER,
+        label = "Prayer",
+        route = "Prayer"
     ),
 )

@@ -2,7 +2,6 @@ package com.raydev.domain.usecase.quran
 
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.domain.repository.QuranRepository
-import com.raydev.shared.model.Ayat
 import kotlinx.coroutines.flow.Flow
 
 /**

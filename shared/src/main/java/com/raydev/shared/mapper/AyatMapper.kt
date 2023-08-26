@@ -1,8 +1,5 @@
 package com.raydev.shared.mapper
 
-import com.raydev.shared.model.Ayat
-import com.raydev.shared.model.Surah
-
 object AyatMapper {
 //    fun mapResponseToEntities(input: List<Ayat>): List<AyatEntity>{
 //        val data = ArrayList<AyatEntity>()

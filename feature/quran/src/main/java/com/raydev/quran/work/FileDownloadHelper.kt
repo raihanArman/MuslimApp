@@ -17,11 +17,11 @@ class FileDownloadHelper(
     ) {
         val data = Data.Builder()
 
-        data.apply {
-            putString(FileParams.KEY_FILE_NAME, "${file.nama}.mp3")
-            putString(FileParams.KEY_FILE_URL, file.audio)
-            putString(FileParams.KEY_FILE_TYPE, "MP3")
-        }
+//        data.apply {
+//            putString(FileParams.KEY_FILE_NAME, "${file.nama}.mp3")
+//            putString(FileParams.KEY_FILE_URL, file.audio)
+//            putString(FileParams.KEY_FILE_TYPE, "MP3")
+//        }
 
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)

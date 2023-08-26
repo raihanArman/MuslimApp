@@ -2,6 +2,8 @@ package com.raydev.muslim_app
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.raihanarman.bookmark.di.bookmarkModule
+import com.raihanarman.read_quran.di.ReadQuranModule.readQuranModule
 import com.raihanarman.splash.SplashModule.splashModule
 import com.raydev.data.di.ApiModule.apiModule
 import com.raydev.data.di.DataSourceModule.localDataSourceModule
@@ -10,10 +12,14 @@ import com.raydev.data.di.DataSourceModule.sharedPreferenceSourceModule
 import com.raydev.data.di.DatabaseModule.databaseModule
 import com.raydev.data.di.RepositoryModule.repositortModule
 import com.raydev.domain.di.UseCaseModule.useCaseModule
+import com.raydev.home.di.HomeModule.homeModule
 import com.raydev.muslim_app.MainModule.mainModule
 import com.raydev.navigation.NavigationModule.navigatorModule
 import com.raydev.network.di.NetworkModule.networkModule
-import com.raydev.shared_preference.SharedPrefModule.sharedPrefModule
+import com.raydev.quran.di.QuranModule.quranModule
+import com.raihanarman.location.di.locationModule
+import com.raydev.prayer.di.prayerModule
+import com.raydev.shared_preference.sharedPrefModule
 import com.raydev.workmanager.di.WorkerModule.workerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -33,6 +39,7 @@ class MuslimApplication: Application() {
                 databaseModule,
                 workerModule,
                 sharedPrefModule,
+                locationModule,
                 apiModule,
                 remoteDataSourceModule,
                 localDataSourceModule,
@@ -41,7 +48,12 @@ class MuslimApplication: Application() {
                 useCaseModule,
                 navigatorModule,
                 mainModule,
-                splashModule
+                splashModule,
+                homeModule,
+                quranModule,
+                readQuranModule,
+                prayerModule,
+                bookmarkModule
             ))
         }
     }

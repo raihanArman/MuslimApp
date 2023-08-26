@@ -1,13 +1,10 @@
 package com.raihanarman.splash
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
@@ -44,7 +41,7 @@ fun SplashScreen(
     onNavigate: () -> Unit
 ) {
     LaunchedEffect(key1 = "splash") {
-        delay(5000)
+        delay(10000)
         onEvent(SplashEvent.OnNavigateToMain)
 
         event?.collect {

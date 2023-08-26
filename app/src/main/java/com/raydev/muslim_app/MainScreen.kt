@@ -7,8 +7,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.raihanarman.dashboard.dashboardNavigation
+import com.raihanarman.bookmark.ui.bookmarkNavigation
+import com.raihanarman.read_quran.ui.readQuranNavigation
 import com.raihanarman.splash.splashNavigation
+import com.raydev.muslim_app.dashboard.dashboardNavigation
 import com.raydev.navigation.Destination
 import com.raydev.navigation.NavHostApp
 import com.raydev.navigation.NavigationIntent
@@ -36,6 +38,8 @@ fun MainScreen(
     ) {
         splashNavigation()
         dashboardNavigation()
+        readQuranNavigation()
+        bookmarkNavigation()
     }
 }
 

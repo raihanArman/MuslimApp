@@ -1,39 +1,38 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.library)
 }
 
 android {
     compileSdk = 33
-//
+
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-//
-//    buildTypes {
-//        release {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//        }
-//    }
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
-//    kotlinOptions {
-//        jvmTarget = '1.8'
-//    }
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
+    }
 }
 
 dependencies {
-//
-//    implementation 'androidx.core:core-ktx:1.7.0'
-//    implementation 'androidx.appcompat:appcompat:1.4.1'
-//    implementation 'com.google.android.material:material:1.5.0'
-//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-//    testImplementation 'junit:junit:4.+'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation(libs.bundles.compose)
+    implementation(libs.bundles.koin)
+    implementation(libs.bundles.koin.compose)
+    implementation(libs.bundles.maps)
+    implementation(libs.androidx.room.runtime)
+//    kapt(libs.androidx.room.compiler)
+    implementation(project(":domain"))
+    implementation(project(":shared"))
+    implementation(project(":libraries:abstract"))
+    implementation(project(":libraries:location"))
+    implementation(project(":libraries:workmanager"))
+    implementation(project(":core:navigation"))
+    implementation(project(":core:ui"))
+//    implementation(libs.androidx.ui.text.android)
 }

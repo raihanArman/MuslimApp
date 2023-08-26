@@ -1,7 +1,9 @@
 package com.raydev.domain.di
 
 import com.raydev.domain.usecase.prayer.*
-import com.raydev.domain.usecase.quran.GetAyatUseCase
+import com.raydev.domain.usecase.quran.BookmarkAyahUseCase
+import com.raydev.domain.usecase.quran.GetAyahBySurahIdUseCase
+import com.raydev.domain.usecase.quran.GetSurahAyahUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.domain.usecase.quran.SetupQuranUseCase
 import org.koin.dsl.module
@@ -13,7 +15,7 @@ object UseCaseModule {
         }
 
         factory {
-            GetAyatUseCase(get())
+            GetAyahBySurahIdUseCase(get())
         }
 
         factory {
@@ -74,6 +76,22 @@ object UseCaseModule {
 
         factory {
             SetupQuranUseCase(get())
+        }
+
+        factory {
+            GetSurahAyahUseCase(get())
+        }
+
+        factory {
+            GetCurrentPrayerTimeUseCase(get())
+        }
+
+        factory {
+            GetPrayerTimeUseCase(get())
+        }
+
+        factory {
+            BookmarkAyahUseCase(get())
         }
     }
 }

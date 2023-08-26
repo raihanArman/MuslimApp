@@ -4,21 +4,22 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.raydev.data.datasource.remote.QuranRemoteDataSource
-import com.raydev.shared.model.Ayat
+import com.raydev.shared.model.Ayah
 import com.raydev.shared.model.Surah
 import com.raydev.anabstract.state.ResponseState
-import com.raydev.anabstract.util.NetworkBoundResource
 import com.raydev.data.datasource.local.AyatLineLocalDataSource
 import com.raydev.data.datasource.local.AyatLocalDataSource
+import com.raydev.data.datasource.local.BookmarkQuranDataSource
 import com.raydev.data.datasource.local.SurahLocalDataSource
+import com.raydev.data.mapper.mapToModel
 import com.raydev.domain.repository.QuranRepository
 import com.raydev.shared.database.entity.AyahLine
 import com.raydev.shared.database.entity.AyatEntity
 import com.raydev.shared.database.entity.SurahEntity
-import com.raydev.shared.mapper.SurahMapper
 import com.raydev.shared.util.FileUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 
 class QuranRepositoryImpl(
@@ -26,16 +27,42 @@ class QuranRepositoryImpl(
     private val ayahDataSource: AyatLocalDataSource,
     private val ayatLineDataSource: AyatLineLocalDataSource,
     private val surahDataSource: SurahLocalDataSource,
+    private val bookmarkQuranDataSource: BookmarkQuranDataSource,
     private val context: Context,
 ): QuranRepository {
 
     override fun getSurah(): Flow<List<Surah>> = surahDataSource.getSurah().map {
-        it.map { Surah(nama = it.name) }
+        it.map { surah ->
+            surah.mapToModel(context)
+        }
+    }
+
+    override fun getSurahAyah(): Flow<List<Surah>> = surahDataSource.getSurah().map {
+        it.map { surah ->
+            val ayah = ayahDataSource.getAyahBySurahId(surah.id).last()
+            surah.mapToModel(context).apply {
+                listAyah = ayah.map {
+                    val isBookmark = bookmarkQuranDataSource.checkBookmarkIsExists(
+                        surahId = it.chapterId,
+                        ayahId = it.verse_number
+                    )
+                    it.mapToModel(isBookmark)
+                }
+            }
+        }
     }
 
 
-    override fun getAyat(number: String): Flow<ResponseState<List<Ayat>>> {
-        return remoteDataSource.getListAyat(number)
+    override fun getAyahBySurahId(surahId: Int): Flow<List<Ayah>> {
+        return ayahDataSource.getAyahBySurahId(surahId).map {
+            it.map { ayah ->
+                val isBookmark = bookmarkQuranDataSource.checkBookmarkIsExists(
+                    surahId = ayah.chapterId,
+                    ayahId = ayah.verse_number
+                )
+                ayah.mapToModel(isBookmark)
+            }
+        }
     }
 
     override fun setupQuran(): Flow<ResponseState<Unit>> {
