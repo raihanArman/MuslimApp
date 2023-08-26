@@ -9,7 +9,7 @@ import com.raydev.shared.model.Ayah
  * @date 12/08/23
  */
 
-fun AyatEntity.mapToModel(isBookmark: Boolean = false) = Ayah(
+fun AyatEntity.mapToModel(isBookmark: Boolean = false, isLastRead: Boolean = false) = Ayah(
     id = id,
     verseNumber = verse_number,
     text = ArrayList(text.map {
@@ -22,5 +22,6 @@ fun AyatEntity.mapToModel(isBookmark: Boolean = false) = Ayah(
     hizb = hizb,
     useBismillah = use_bismillah,
     chapterId = chapterId,
-    isBookmark = isBookmark
+    isBookmark = isBookmark,
+    isLastRead = isLastRead
 )

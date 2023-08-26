@@ -11,6 +11,7 @@ import com.raydev.data.datasource.local.AyatLineLocalDataSource
 import com.raydev.data.datasource.local.AyatLocalDataSource
 import com.raydev.data.datasource.local.BookmarkQuranDataSource
 import com.raydev.data.datasource.local.SurahLocalDataSource
+import com.raydev.data.datasource.pref.SharedPreferenceSource
 import com.raydev.data.mapper.mapToModel
 import com.raydev.domain.repository.QuranRepository
 import com.raydev.shared.database.entity.AyahLine
@@ -28,6 +29,7 @@ class QuranRepositoryImpl(
     private val ayatLineDataSource: AyatLineLocalDataSource,
     private val surahDataSource: SurahLocalDataSource,
     private val bookmarkQuranDataSource: BookmarkQuranDataSource,
+    private val sharedPreferenceSource: SharedPreferenceSource,
     private val context: Context,
 ): QuranRepository {
 
@@ -60,7 +62,10 @@ class QuranRepositoryImpl(
                     surahId = ayah.chapterId,
                     ayahId = ayah.verse_number
                 )
-                ayah.mapToModel(isBookmark)
+                val lastReadValue = sharedPreferenceSource.quranLastRead
+                val isLastRead = surahId == lastReadValue.surahId &&
+                        ayah.verse_number == lastReadValue.ayah
+                ayah.mapToModel(isBookmark, isLastRead)
             }
         }
     }

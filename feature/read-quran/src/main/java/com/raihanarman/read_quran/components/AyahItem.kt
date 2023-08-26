@@ -1,5 +1,6 @@
 package com.raihanarman.read_quran.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -53,13 +55,27 @@ fun AyahItem(
                     .padding(horizontal = 10.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.Top
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .animateContentSize()
+                ) {
                     Text(text = number, color = Color.Black, fontSize = 14.sp)
                     if (ayah.isBookmark) {
                         Spacer(modifier = Modifier.height(5.dp))
                         Icon(
                             painter = painterResource(id = SharedDrawable.baseline_bookmarks_24),
-                            contentDescription = null
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(13.dp)
+                        )
+                    }
+                    if (ayah.isLastRead) {
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Icon(
+                            painter = painterResource(id = SharedDrawable.outline_attachment_24),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(13.dp)
                         )
                     }
                 }

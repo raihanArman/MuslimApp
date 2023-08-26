@@ -2,6 +2,7 @@ package com.raydev.home.ui
 
 import com.raydev.shared.model.NextPrayerTime
 import com.raydev.shared.model.PrayerTime
+import com.raydev.shared.model.QuranLastRead
 
 /**
  * @author Raihan Arman
@@ -12,5 +13,6 @@ data class HomeState(
     val prayerTime: PrayerTime ?= null,
     val nextPrayerTime: NextPrayerTime ?= null,
     val hijrDate: String?= null,
-    val currentdate: String? = null
+    val currentdate: String? = null,
+    val lastRead: QuranLastRead ?= null
 )

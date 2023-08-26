@@ -2,6 +2,7 @@ package com.raihanarman.read_quran.ui
 
 import androidx.lifecycle.SavedStateHandle
 import com.raydev.anabstract.base.BaseViewModel
+import com.raydev.domain.repository.LastReadRepository
 import com.raydev.domain.usecase.quran.BookmarkAyahUseCase
 import com.raydev.domain.usecase.quran.GetAyahBySurahIdUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
@@ -28,7 +29,8 @@ class ReadQuranViewModel(
     private val ayahBySurah: GetAyahBySurahIdUseCase,
     private val surahUseCase: GetSurahUseCase,
     private val stateHandle: SavedStateHandle,
-    private val bookmarkAyahUseCase: BookmarkAyahUseCase
+    private val bookmarkAyahUseCase: BookmarkAyahUseCase,
+    private val lastReadRepository: LastReadRepository,
 ): BaseViewModel() {
     init {
         getSurah()
@@ -134,17 +136,56 @@ class ReadQuranViewModel(
                 }
 
                 ReadQuranEvent.OnBookmarkAyah -> {
-                    bookmarkAyah()
+                    onBookmarkAyah()
                 }
 
                 ReadQuranEvent.OnScrollToBookmark -> {
                     goToIndexBookmarkFromAyah()
                 }
+
+                ReadQuranEvent.OnLastReadAyah -> {
+                    onLastReadAyah()
+                }
             }
         }
     }
 
-    private fun bookmarkAyah() {
+    private fun onLastReadAyah() {
+        launch(Dispatchers.IO) {
+            val surah = _state.value.surahSelected
+            val ayah = _state.value.ayahSelected
+            val sumAyah = _state.value.listAyah?.size
+            if (surah != null && ayah != null && sumAyah != null) {
+                val newAyahState = ayah.copy(
+                    isLastRead = true
+                )
+
+                val oldAyahState = _state.value.listAyah?.find {
+                    it.isLastRead
+                }
+
+                lastReadRepository.setLastRead(
+                    ayah = ayah,
+                    surah = surah,
+                    sumAyah = sumAyah
+                )
+                _state.update { state ->
+                    state.copy(
+                        bottomSheetIsOpen = false,
+                        listAyah = state.listAyah?.toMutableList()?.apply {
+                            set(state.ayahIndexSelected, newAyahState)
+                            oldAyahState?.let {
+                                val index = state.listAyah.indexOf(it)
+                                set(index, it.copy(isLastRead = false))
+                            }
+                        }?.toList()
+                    )
+                }
+            }
+        }
+    }
+
+    private fun onBookmarkAyah() {
         launch(Dispatchers.IO) {
             val surah = _state.value.surahSelected
             val ayah = _state.value.ayahSelected

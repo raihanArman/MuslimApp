@@ -12,6 +12,7 @@ sealed interface ReadQuranEvent {
     data class OnClickTabSurah(val id: Int): ReadQuranEvent
     data class OnClickAyah(val surah: Surah, val ayah: Ayah, val ayahIndexSelected: Int): ReadQuranEvent
     object OnBookmarkAyah: ReadQuranEvent
+    object OnLastReadAyah: ReadQuranEvent
     object OnCloseBottomSheet: ReadQuranEvent
     object OnScrollToBookmark: ReadQuranEvent
 }

@@ -15,7 +15,8 @@ object ReadQuranModule {
                 surahUseCase = get(),
                 ayahBySurah = get(),
                 stateHandle = params.get(),
-                bookmarkAyahUseCase = get()
+                bookmarkAyahUseCase = get(),
+                lastReadRepository = get()
             )
         }
     }
