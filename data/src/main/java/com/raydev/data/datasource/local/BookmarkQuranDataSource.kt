@@ -15,8 +15,8 @@ class BookmarkQuranDataSource(
     fun checkBookmarkIsExists(surahId: Int, ayahId: Int) =
         bookmarkQuranDao.getBookmarkBySurahAndAyah(surahId, ayahId) != null
 
-    suspend fun deleteBookmark(bookmarkQuranEntity: BookmarkQuranEntity) =
-        bookmarkQuranDao.deleteBookmark(bookmarkQuranEntity)
+    suspend fun deleteBookmark(surahId: Int, ayahId: Int) =
+        bookmarkQuranDao.deleteBookmark(surahId, ayahId)
 
     suspend fun saveBookmark(bookmarkQuranEntity: BookmarkQuranEntity) =
         bookmarkQuranDao.saveBookmark(bookmarkQuranEntity)

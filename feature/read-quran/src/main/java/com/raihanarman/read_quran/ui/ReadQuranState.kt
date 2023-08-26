@@ -16,5 +16,7 @@ data class ReadQuranState(
     val bottomSheetIsOpen: Boolean = false,
     val ayahIndexSelected: Int = -1,
     val ayahSelected: Ayah ?= null,
-    val surahSelected: Surah ?= null
+    val surahSelected: Surah ?= null,
+    val isFromBookmark: Boolean = false,
+    val indexBookmark: Int ?= null
 )

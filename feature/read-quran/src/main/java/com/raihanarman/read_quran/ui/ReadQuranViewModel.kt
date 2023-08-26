@@ -30,7 +30,6 @@ class ReadQuranViewModel(
     private val stateHandle: SavedStateHandle,
     private val bookmarkAyahUseCase: BookmarkAyahUseCase
 ): BaseViewModel() {
-
     init {
         getSurah()
         val surahId = stateHandle.get<String>(Destination.ReadQuranScreen.SURAH_ID_KEY) ?: ""
@@ -61,13 +60,30 @@ class ReadQuranViewModel(
         }
     }
 
-    fun getAyah(surahId: Int) {
+    private fun getAyah(surahId: Int) {
         launch(Dispatchers.IO) {
             ayahBySurah.invoke(surahId).collect {
                 _state.update { state ->
                     state.copy(
                         listAyah = it,
                         surahId = surahId,
+                    )
+                }
+            }
+        }
+    }
+
+    private fun goToIndexBookmarkFromAyah() {
+        launch {
+            val ayahVerseNumber = stateHandle.get<String>(Destination.ReadQuranScreen.VERSE_NUMBER)
+            val indexBookmark = _state.value.listAyah?.indexOfFirst {
+                it.verseNumber == ayahVerseNumber?.toInt()
+            }
+
+            if (indexBookmark != null && indexBookmark != -1) {
+                _state.update {
+                    it.copy(
+                        indexBookmark = indexBookmark
                     )
                 }
             }
@@ -120,6 +136,10 @@ class ReadQuranViewModel(
                 ReadQuranEvent.OnBookmarkAyah -> {
                     bookmarkAyah()
                 }
+
+                ReadQuranEvent.OnScrollToBookmark -> {
+                    goToIndexBookmarkFromAyah()
+                }
             }
         }
     }
@@ -138,6 +158,7 @@ class ReadQuranViewModel(
                     val newAyahState = ayah.copy(
                         isBookmark = isBookmark
                     )
+
                     _state.update { state ->
                         state.copy(
                             bottomSheetIsOpen = false,

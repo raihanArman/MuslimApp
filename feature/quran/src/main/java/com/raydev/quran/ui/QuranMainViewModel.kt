@@ -47,7 +47,7 @@ class QuranMainViewModel(
                 is QuranMainEvent.OnClickSurah -> {
                     navigator.tryNavigateTo(
                         Destination.ReadQuranScreen(
-                            id = event.id
+                            id = event.id, -1
                         )
                     )
                 }

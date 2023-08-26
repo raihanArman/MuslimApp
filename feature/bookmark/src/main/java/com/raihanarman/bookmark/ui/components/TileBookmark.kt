@@ -1,5 +1,6 @@
 package com.raihanarman.bookmark.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,10 +24,14 @@ import com.raydev.shared.model.BookmarkQuran
 @Composable
 fun TileBookmark(
     modifier: Modifier = Modifier,
-    bookmarkQuran: BookmarkQuran
+    bookmarkQuran: BookmarkQuran,
+    onClick: (BookmarkQuran) -> Unit
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .clickable {
+                onClick(bookmarkQuran)
+            },
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
     ) {

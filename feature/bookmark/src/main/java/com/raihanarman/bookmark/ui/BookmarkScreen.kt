@@ -77,7 +77,12 @@ fun BookmarkScreen(
                 ) {
                     state.data?.let {
                         items(it) {
-                            TileBookmark(bookmarkQuran = it)
+                            TileBookmark(bookmarkQuran = it) { bookmark ->
+                                onEvent(BookmarkEvent.OnNavigateToReadQuran(
+                                    surahId = bookmark.surah?.id ?: 0,
+                                    ayahId = bookmark.ayah?.verseNumber ?: 0
+                                ))
+                            }
                         }
                     }
                 }

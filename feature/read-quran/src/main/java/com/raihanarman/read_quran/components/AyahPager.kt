@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -29,10 +30,12 @@ import com.raydev.shared.model.Surah
 @Composable
 fun AyahPager(
     pagerState: PagerState,
+    lazyListState: LazyListState,
     listSurah: List<Surah>,
     listAyah: List<Ayah>,
     surahSelected: Surah,
-    onEvent: (ReadQuranEvent) -> Unit
+    onEvent: (ReadQuranEvent) -> Unit,
+    onScrolling: () -> Unit
 ) {
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -44,7 +47,9 @@ fun AyahPager(
         state = pagerState,
         pageCount = listSurah.size
     ) {
-        LazyColumn {
+        LazyColumn(
+            state = lazyListState,
+        ) {
             itemsIndexed(
                 items = listAyah,
                 key = { _, item ->
@@ -70,5 +75,7 @@ fun AyahPager(
                 }
             }
         }
+
+        onScrolling()
     }
 }

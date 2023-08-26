@@ -8,7 +8,11 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.raihanarman.read_quran.ui.ReadQuranEvent
@@ -26,11 +30,14 @@ fun SurahTabLayout(
     listSurah: List<Surah>,
     pageSelected: Int,
     onClick: (Int) -> Unit,
+    onScrolling: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
+
     LaunchedEffect(key1 = true) {
         println("ANANAAANOA -> $pageSelected")
+        onScrolling()
         pagerState.scrollToPage(pageSelected)
     }
 

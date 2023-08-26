@@ -15,10 +15,11 @@ class BookmarkAyahUseCase(
                 ayahId = bookmarkQuran.ayah?.verseNumber ?: 0
             )
 
-            println("CheckBookmark -> $checkBookmark")
-
             if (checkBookmark) {
-                bookmarkRepository.deleteBookmark(bookmarkQuran)
+                bookmarkRepository.deleteBookmark(
+                    surahId = bookmarkQuran.surah?.id ?: 0,
+                    ayahId = bookmarkQuran.ayah?.verseNumber ?: 0
+                )
                 emit(false)
             } else {
                 bookmarkRepository.saveBookmark(bookmarkQuran)

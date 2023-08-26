@@ -5,11 +5,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
@@ -49,6 +54,14 @@ fun ReadQuranScreen(
     onEvent: (ReadQuranEvent) -> Unit
 ) {
     val pagerState = rememberPagerState()
+    val scrollState = rememberLazyListState()
+    var isScrollInProgress by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = state.indexBookmark) {
+        if (state.indexBookmark != null && !isScrollInProgress) {
+            scrollState.animateScrollToItem(state.indexBookmark)
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -57,17 +70,30 @@ fun ReadQuranScreen(
             state.tabsSelected?.let { surahSelected ->
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                     Box(modifier = Modifier.padding(vertical = 10.dp)) {
-                        SurahTabLayout(pagerState = pagerState, listSurah = surah, pageSelected = surahSelected){
-                            onEvent(ReadQuranEvent.OnClickTabSurah(it))
-                        }
+                        SurahTabLayout(
+                            pagerState = pagerState,
+                            listSurah = surah,
+                            pageSelected = surahSelected,
+                            onClick = {
+                                onEvent(ReadQuranEvent.OnClickTabSurah(it))
+                            },
+                            onScrolling = {
+                                isScrollInProgress = true
+                            }
+                        )
                     }
                     state.listAyah?.let {
                         AyahPager(
                             pagerState = pagerState,
+                            lazyListState = scrollState,
                             listSurah = surah,
                             listAyah = it,
                             surahSelected = surah[pagerState.currentPage],
-                            onEvent = onEvent
+                            onEvent = onEvent,
+                            onScrolling = {
+                                isScrollInProgress = false
+                                onEvent(ReadQuranEvent.OnScrollToBookmark)
+                            }
                         )
                     }
                 }

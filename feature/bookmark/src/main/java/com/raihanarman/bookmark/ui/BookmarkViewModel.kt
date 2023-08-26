@@ -4,6 +4,7 @@ import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.domain.repository.BookmarkRepository
 import com.raydev.navigation.AppNavigator
+import com.raydev.navigation.Destination
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -76,7 +77,10 @@ class BookmarkViewModel(
                     appNavigator.navigateBack()
                 }
                 is BookmarkEvent.OnNavigateToReadQuran -> {
-                    appNavigator.navigateBack()
+                    appNavigator.tryNavigateTo(Destination.ReadQuranScreen(
+                        event.surahId - 1,
+                        event.ayahId
+                    ))
                 }
             }
         }

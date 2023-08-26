@@ -39,8 +39,8 @@ class BookmarkRepositoryImpl(
             emit(ResponseState.Empty)
     }
 
-    override suspend fun deleteBookmark(bookmarkQuran: BookmarkQuran) {
-        bookmarkQuranDataSource.deleteBookmark(bookmarkQuran.mapToEntity())
+    override suspend fun deleteBookmark(surahId: Int, ayahId: Int) {
+        bookmarkQuranDataSource.deleteBookmark(surahId, ayahId)
     }
 
     override suspend fun saveBookmark(bookmarkQuran: BookmarkQuran) {

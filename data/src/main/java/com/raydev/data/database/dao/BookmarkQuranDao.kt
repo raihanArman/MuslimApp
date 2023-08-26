@@ -20,8 +20,8 @@ interface BookmarkQuranDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveBookmark(bookmark:BookmarkQuranEntity)
-    @Delete
-    suspend fun deleteBookmark(bookmarkQuranEntity: BookmarkQuranEntity)
+    @Query("DELETE FROM bookmark_quran WHERE :surahId = surahId AND :ayahId = ayahId")
+    suspend fun deleteBookmark(surahId: Int, ayahId: Int)
     @Query("SELECT * FROM bookmark_quran WHERE :surahId = surahId AND :ayahId = ayahId")
     fun getBookmarkBySurahAndAyah(surahId: Int, ayahId: Int): BookmarkQuranEntity?
 }

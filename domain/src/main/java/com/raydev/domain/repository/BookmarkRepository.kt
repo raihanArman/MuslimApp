@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface BookmarkRepository {
     fun getBookmarks(): Flow<ResponseState<List<BookmarkQuran>>>
-    suspend fun deleteBookmark(bookmarkQuran: BookmarkQuran)
+    suspend fun deleteBookmark(surahId: Int, ayahId: Int)
     suspend fun saveBookmark(bookmarkQuran: BookmarkQuran)
     suspend fun checkIsBookmark(surahId: Int, ayahId: Int): Boolean
 }
