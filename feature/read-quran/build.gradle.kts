@@ -31,9 +31,9 @@ dependencies {
     implementation(libs.androidx.work.manager)
 //    kapt(libs.androidx.room.compiler)
     implementation(project(":domain"))
-    implementation(project(":shared"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:ui"))
 //    implementation(libs.androidx.ui.text.android)
 }

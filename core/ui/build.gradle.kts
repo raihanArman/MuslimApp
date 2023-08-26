@@ -30,7 +30,7 @@ dependencies {
     implementation(libs.androidx.work.manager)
 
     implementation(project(":domain"))
-    implementation(project(":shared"))
+    api(project(":shared"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
     implementation(project(":resource"))

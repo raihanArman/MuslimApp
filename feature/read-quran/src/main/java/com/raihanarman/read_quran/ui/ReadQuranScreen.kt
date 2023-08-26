@@ -15,7 +15,9 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
+import com.raihanarman.read_quran.components.QuranBottomSheet
 import com.raihanarman.read_quran.components.AyahPager
+import com.raihanarman.read_quran.components.QuranBottomSheetMenu
 import com.raihanarman.read_quran.components.SurahTabLayout
 import com.raydev.navigation.Destination
 import com.raydev.navigation.composable
@@ -52,24 +54,45 @@ fun ReadQuranScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         state.listSurah?.let { surah ->
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                Box(modifier = Modifier.padding(vertical = 10.dp)) {
-                    state.tabsSelected?.let {
-                        println("Ampas Kuda -> ananaananan Surah id = $it")
-                        SurahTabLayout(pagerState = pagerState, listSurah = surah, pageSelected = state.tabsSelected){
+            state.tabsSelected?.let { surahSelected ->
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                    Box(modifier = Modifier.padding(vertical = 10.dp)) {
+                        SurahTabLayout(pagerState = pagerState, listSurah = surah, pageSelected = surahSelected){
                             onEvent(ReadQuranEvent.OnClickTabSurah(it))
                         }
                     }
-                }
-                state.listAyah?.let {
-                    AyahPager(
-                        pagerState = pagerState,
-                        listSurah = surah,
-                        listAyah = it,
-                        onEvent = onEvent
-                    )
+                    state.listAyah?.let {
+                        AyahPager(
+                            pagerState = pagerState,
+                            listSurah = surah,
+                            listAyah = it,
+                            surahSelected = surah[pagerState.currentPage],
+                            onEvent = onEvent
+                        )
+                    }
                 }
             }
         }
     }
+
+    if (state.bottomSheetIsOpen) {
+        if (state.surahSelected != null && state.ayahSelected != null) {
+            QuranBottomSheet(
+                surah = state.surahSelected,
+                ayah = state.ayahSelected,
+                onClick = {
+                    when (it) {
+                        is QuranBottomSheetMenu.OnBookmark -> {}
+                        is QuranBottomSheetMenu.OnCopy -> {}
+                        is QuranBottomSheetMenu.OnLastRead -> {}
+                        is QuranBottomSheetMenu.OnShare -> {}
+                    }
+                },
+                onDismiss = {
+                    onEvent(ReadQuranEvent.OnCloseBottomSheet)
+                }
+            )
+        }
+    }
+
 }

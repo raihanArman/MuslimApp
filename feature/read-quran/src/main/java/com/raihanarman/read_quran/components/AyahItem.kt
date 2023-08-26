@@ -1,5 +1,6 @@
 package com.raihanarman.read_quran.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,10 +35,14 @@ fun AyahItem(
     modifier: Modifier = Modifier,
     ayah: Ayah,
     number: String,
+    onClick: (Ayah) -> Unit
 ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Box(
             modifier = modifier
+                .clickable { 
+                    onClick(ayah)
+                }
         ) {
             Row(
                 modifier = Modifier

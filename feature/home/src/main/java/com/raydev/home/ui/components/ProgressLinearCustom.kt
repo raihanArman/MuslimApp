@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +34,7 @@ fun ProgressLinearCustom(
     backgroundColor: Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
     clipShape: Shape = RoundedCornerShape(16.dp)
 ) {
-    var initialProgress by remember {
+    var initialProgress by rememberSaveable {
         mutableStateOf(0f)
     }
 

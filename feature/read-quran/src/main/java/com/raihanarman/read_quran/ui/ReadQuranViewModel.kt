@@ -93,6 +93,24 @@ class ReadQuranViewModel(
                     }
                     getAyah(event.id)
                 }
+
+                is ReadQuranEvent.OnClickAyah -> {
+                    _state.update { state ->
+                        state.copy(
+                            ayahSelected = event.ayah,
+                            surahSelected = event.surah,
+                            bottomSheetIsOpen = true,
+                        )
+                    }
+                }
+
+                ReadQuranEvent.OnCloseBottomSheet -> {
+                    _state.update { state ->
+                        state.copy(
+                            bottomSheetIsOpen = false,
+                        )
+                    }
+                }
             }
         }
     }

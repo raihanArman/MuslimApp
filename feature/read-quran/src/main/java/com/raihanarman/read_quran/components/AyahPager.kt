@@ -31,6 +31,7 @@ fun AyahPager(
     pagerState: PagerState,
     listSurah: List<Surah>,
     listAyah: List<Ayah>,
+    surahSelected: Surah,
     onEvent: (ReadQuranEvent) -> Unit
 ) {
     LaunchedEffect(key1 = pagerState) {
@@ -57,7 +58,9 @@ fun AyahPager(
                         if (index % 2 == 0) Color.White
                         else MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                     )
-                )
+                ) {
+                    onEvent(ReadQuranEvent.OnClickAyah(surah = surahSelected, ayah = it))
+                }
             }
         }
     }
