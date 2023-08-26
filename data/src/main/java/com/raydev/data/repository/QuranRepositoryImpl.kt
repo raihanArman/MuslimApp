@@ -9,6 +9,7 @@ import com.raydev.shared.model.Surah
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.data.datasource.local.AyatLineLocalDataSource
 import com.raydev.data.datasource.local.AyatLocalDataSource
+import com.raydev.data.datasource.local.BookmarkQuranDataSource
 import com.raydev.data.datasource.local.SurahLocalDataSource
 import com.raydev.data.mapper.mapToModel
 import com.raydev.domain.repository.QuranRepository
@@ -26,6 +27,7 @@ class QuranRepositoryImpl(
     private val ayahDataSource: AyatLocalDataSource,
     private val ayatLineDataSource: AyatLineLocalDataSource,
     private val surahDataSource: SurahLocalDataSource,
+    private val bookmarkQuranDataSource: BookmarkQuranDataSource,
     private val context: Context,
 ): QuranRepository {
 
@@ -40,7 +42,11 @@ class QuranRepositoryImpl(
             val ayah = ayahDataSource.getAyahBySurahId(surah.id).last()
             surah.mapToModel(context).apply {
                 listAyah = ayah.map {
-                    it.mapToModel()
+                    val isBookmark = bookmarkQuranDataSource.checkBookmarkIsExists(
+                        surahId = it.chapterId,
+                        ayahId = it.verse_number
+                    )
+                    it.mapToModel(isBookmark)
                 }
             }
         }
@@ -50,7 +56,11 @@ class QuranRepositoryImpl(
     override fun getAyahBySurahId(surahId: Int): Flow<List<Ayah>> {
         return ayahDataSource.getAyahBySurahId(surahId).map {
             it.map { ayah ->
-                ayah.mapToModel()
+                val isBookmark = bookmarkQuranDataSource.checkBookmarkIsExists(
+                    surahId = ayah.chapterId,
+                    ayahId = ayah.verse_number
+                )
+                ayah.mapToModel(isBookmark)
             }
         }
     }

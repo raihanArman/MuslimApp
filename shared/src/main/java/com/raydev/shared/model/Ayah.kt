@@ -9,5 +9,6 @@ data class Ayah(
     var juz:Int,
     var hizb:Float,
     var useBismillah:Boolean?=false,
-    var chapterId:Int
+    var chapterId:Int,
+    val isBookmark: Boolean
 )

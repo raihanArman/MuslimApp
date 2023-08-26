@@ -10,7 +10,7 @@ import com.raydev.shared.model.Surah
 sealed interface ReadQuranEvent {
     object Initial: ReadQuranEvent
     data class OnClickTabSurah(val id: Int): ReadQuranEvent
-    data class OnClickAyah(val surah: Surah, val ayah: Ayah): ReadQuranEvent
+    data class OnClickAyah(val surah: Surah, val ayah: Ayah, val ayahIndexSelected: Int): ReadQuranEvent
     object OnBookmarkAyah: ReadQuranEvent
     object OnCloseBottomSheet: ReadQuranEvent
 }

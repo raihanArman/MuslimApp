@@ -14,6 +14,7 @@ data class ReadQuranState(
     val listAyah: List<Ayah> ?= null,
     val listSurah: List<Surah> ?= null,
     val bottomSheetIsOpen: Boolean = false,
+    val ayahIndexSelected: Int = -1,
     val ayahSelected: Ayah ?= null,
     val surahSelected: Surah ?= null
 )

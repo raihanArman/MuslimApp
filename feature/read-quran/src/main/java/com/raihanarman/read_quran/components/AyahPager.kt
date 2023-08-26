@@ -47,6 +47,9 @@ fun AyahPager(
         LazyColumn {
             itemsIndexed(
                 items = listAyah,
+                key = { _, item ->
+                    item.id
+                }
             ) { index, item ->
                 if (item.useBismillah == true) {
                     BissmillahItem()
@@ -59,7 +62,11 @@ fun AyahPager(
                         else MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                     )
                 ) {
-                    onEvent(ReadQuranEvent.OnClickAyah(surah = surahSelected, ayah = it))
+                    onEvent(ReadQuranEvent.OnClickAyah(
+                        surah = surahSelected,
+                        ayah = it,
+                        ayahIndexSelected = index
+                    ))
                 }
             }
         }

@@ -62,7 +62,7 @@ class ReadQuranViewModel(
     }
 
     fun getAyah(surahId: Int) {
-        launch {
+        launch(Dispatchers.IO) {
             ayahBySurah.invoke(surahId).collect {
                 _state.update { state ->
                     state.copy(
@@ -104,6 +104,7 @@ class ReadQuranViewModel(
                             ayahSelected = event.ayah,
                             surahSelected = event.surah,
                             bottomSheetIsOpen = true,
+                            ayahIndexSelected = event.ayahIndexSelected
                         )
                     }
                 }
@@ -133,11 +134,18 @@ class ReadQuranViewModel(
                         id = null,
                         surah, ayah
                     )
-                ).collect()
-                _state.update { state ->
-                    state.copy(
-                        bottomSheetIsOpen = false,
+                ).collect { isBookmark ->
+                    val newAyahState = ayah.copy(
+                        isBookmark = isBookmark
                     )
+                    _state.update { state ->
+                        state.copy(
+                            bottomSheetIsOpen = false,
+                            listAyah = state.listAyah?.toMutableList()?.apply {
+                                set(state.ayahIndexSelected, newAyahState)
+                            }?.toList()
+                        )
+                    }
                 }
             }
         }

@@ -13,7 +13,7 @@ object RepositoryModule {
     var repositortModule = module {
         factory<QuranRepository> {
             QuranRepositoryImpl(
-                get(),get(), get(), get(), androidContext()
+                get(),get(), get(), get(), get(), androidContext()
             )
         }
 

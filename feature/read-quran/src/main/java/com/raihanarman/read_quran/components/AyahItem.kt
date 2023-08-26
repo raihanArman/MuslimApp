@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -17,12 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raydev.shared.database.entity.LanguageString
 import com.raydev.shared.model.Ayah
+import com.raydev.shared.util.SharedDrawable
 import com.raydev.shared.util.getArabic
 import com.raydev.shared.util.getText
 
@@ -48,8 +51,18 @@ fun AyahItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.Top
             ) {
-                Text(text = number, color = Color.Black)
+                Column {
+                    Text(text = number, color = Color.Black, fontSize = 14.sp)
+                    if (ayah.isBookmark) {
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Icon(
+                            painter = painterResource(id = SharedDrawable.baseline_bookmarks_24),
+                            contentDescription = null
+                        )
+                    }
+                }
                 Spacer(modifier = Modifier.width(15.dp))
                 Column(
                     modifier = Modifier
@@ -61,14 +74,14 @@ fun AyahItem(
                             if (ayah.verseNumber == 1 && ayah.chapterId != 1) "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" else "",
                             ""
                         ),
-                        fontSize = 22.sp,
+                        fontSize = 24.sp,
                         color = Color.Black,
                         textAlign = TextAlign.End
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         text = ayah.text.getText(),
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = Color.Gray
                     )
                 }

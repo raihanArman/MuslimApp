@@ -40,6 +40,12 @@ fun QuranBottomSheet(
     onClick: (QuranBottomSheetMenu) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val bookmarkMessage = if (ayah.isBookmark) {
+        "Hapus dari Bookmark"
+    } else {
+        "Tambahkan ke Bookmark"
+    }
+    
     BaseBottomSheet(onDismiss = onDismiss) {
         Box(
             modifier = modifier
@@ -57,7 +63,7 @@ fun QuranBottomSheet(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                QuranRowMenu(icon = SharedDrawable.baseline_bookmarks_24, text = "Tambahkan ke Bookmark") {
+                QuranRowMenu(icon = SharedDrawable.baseline_bookmarks_24, text = bookmarkMessage) {
                     onClick(QuranBottomSheetMenu.OnBookmark(surah, ayah))
                 }
                 QuranRowMenu(icon = SharedDrawable.outline_attachment_24, text = "Tandai ke Bacaan Terakhir") {
