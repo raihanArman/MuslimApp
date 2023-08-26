@@ -23,5 +23,6 @@ object DatabaseModule {
         factory { get<QuranDatabase>().ayatDao() }
         factory { get<QuranDatabase>().ayatLineDao() }
         factory { get<QuranDatabase>().surahDao() }
+        factory { get<QuranDatabase>().bookmarkQuran() }
     }
 }

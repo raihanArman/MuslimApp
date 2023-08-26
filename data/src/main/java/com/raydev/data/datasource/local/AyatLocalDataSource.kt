@@ -15,6 +15,8 @@ class AyatLocalDataSource(
     fun getAyahByJuz(juz:Int, limit:Int) = ayatDao.getAyahByJuz(juz, limit)
     fun getAyahByHizb(hizb:Float, limit:Int) =  ayatDao.getAyahByHizb(hizb, limit)
     fun getAyahById(id: Int) = ayatDao.getAyahById(id)
+
+    fun getAyahByVerseNumber(verseNumber: Int) = ayatDao.getAyahByVerseNumber(verseNumber)
     suspend fun saveAyah(book:List<AyatEntity>) = ayatDao.saveAyah(book)
     suspend fun deleteAyah() = ayatDao.deleteAyah()
 }

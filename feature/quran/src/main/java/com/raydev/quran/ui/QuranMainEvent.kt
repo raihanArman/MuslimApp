@@ -9,4 +9,5 @@ import com.raydev.shared.model.Surah
 sealed interface QuranMainEvent {
     object Initial: QuranMainEvent
     data class OnClickSurah(val id: Int): QuranMainEvent
+    object OnNavigateToBookmark: QuranMainEvent
 }

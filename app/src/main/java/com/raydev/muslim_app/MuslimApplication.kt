@@ -2,6 +2,7 @@ package com.raydev.muslim_app
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.raihanarman.bookmark.di.bookmarkModule
 import com.raihanarman.read_quran.di.ReadQuranModule.readQuranModule
 import com.raihanarman.splash.SplashModule.splashModule
 import com.raydev.data.di.ApiModule.apiModule
@@ -51,7 +52,8 @@ class MuslimApplication: Application() {
                 homeModule,
                 quranModule,
                 readQuranModule,
-                prayerModule
+                prayerModule,
+                bookmarkModule
             ))
         }
     }

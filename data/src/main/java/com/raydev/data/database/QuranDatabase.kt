@@ -5,6 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.raydev.data.database.converter.AyahLineWordConverter
 import com.raydev.data.database.converter.LanguageStringConverter
+import com.raydev.data.database.dao.BookmarkQuranDao
+import com.raydev.data.database.entity.BookmarkQuranEntity
 import com.raydev.shared.database.dao.AyatDao
 import com.raydev.shared.database.dao.AyatLineDao
 import com.raydev.shared.database.dao.SurahDao
@@ -20,7 +22,8 @@ import com.raydev.shared.database.entity.SurahEntity
     entities = [
         SurahEntity::class,
         AyatEntity::class,
-        AyahLine::class
+        AyahLine::class,
+        BookmarkQuranEntity::class
     ],
     version = 2,
     exportSchema = false
@@ -30,4 +33,5 @@ abstract class QuranDatabase : RoomDatabase() {
     abstract fun surahDao(): SurahDao
     abstract fun ayatDao(): AyatDao
     abstract fun ayatLineDao(): AyatLineDao
+    abstract fun bookmarkQuran(): BookmarkQuranDao
 }

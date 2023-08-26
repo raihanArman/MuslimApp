@@ -51,6 +51,10 @@ class QuranMainViewModel(
                         )
                     )
                 }
+
+                QuranMainEvent.OnNavigateToBookmark -> {
+                    navigator.tryNavigateTo(Destination.BookmarkScreen())
+                }
             }
         }
     }

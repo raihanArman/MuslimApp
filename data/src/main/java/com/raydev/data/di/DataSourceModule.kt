@@ -2,6 +2,7 @@ package com.raydev.data.di
 
 import com.raydev.data.datasource.local.AyatLineLocalDataSource
 import com.raydev.data.datasource.local.AyatLocalDataSource
+import com.raydev.data.datasource.local.BookmarkQuranDataSource
 import com.raydev.data.datasource.local.SurahLocalDataSource
 import com.raydev.data.datasource.pref.SharedPreferenceSource
 import com.raydev.data.datasource.remote.PrayerRemoteDataSource
@@ -28,6 +29,9 @@ object DataSourceModule {
         }
         factory {
             SurahLocalDataSource(get())
+        }
+        factory {
+            BookmarkQuranDataSource(get())
         }
     }
 

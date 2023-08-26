@@ -1,6 +1,7 @@
 package com.raydev.domain.di
 
 import com.raydev.domain.usecase.prayer.*
+import com.raydev.domain.usecase.quran.BookmarkAyahUseCase
 import com.raydev.domain.usecase.quran.GetAyahBySurahIdUseCase
 import com.raydev.domain.usecase.quran.GetSurahAyahUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
@@ -87,6 +88,10 @@ object UseCaseModule {
 
         factory {
             GetPrayerTimeUseCase(get())
+        }
+
+        factory {
+            BookmarkAyahUseCase(get())
         }
     }
 }

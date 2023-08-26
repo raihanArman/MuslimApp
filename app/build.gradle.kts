@@ -101,6 +101,7 @@ dependencies {
     implementation(project(":feature:splash"))
     implementation(project(":feature:read-quran"))
     implementation(project(":feature:home"))
+    implementation(project(":feature:bookmark"))
 
     implementation(libs.bundles.maps)
     implementation(libs.bundles.koin)

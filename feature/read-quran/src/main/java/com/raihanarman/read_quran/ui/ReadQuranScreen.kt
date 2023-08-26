@@ -82,7 +82,9 @@ fun ReadQuranScreen(
                 ayah = state.ayahSelected,
                 onClick = {
                     when (it) {
-                        is QuranBottomSheetMenu.OnBookmark -> {}
+                        is QuranBottomSheetMenu.OnBookmark -> {
+                            onEvent(ReadQuranEvent.OnBookmarkAyah)
+                        }
                         is QuranBottomSheetMenu.OnCopy -> {}
                         is QuranBottomSheetMenu.OnLastRead -> {}
                         is QuranBottomSheetMenu.OnShare -> {}

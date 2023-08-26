@@ -14,7 +14,8 @@ object ReadQuranModule {
             ReadQuranViewModel(
                 surahUseCase = get(),
                 ayahBySurah = get(),
-                stateHandle = params.get()
+                stateHandle = params.get(),
+                bookmarkAyahUseCase = get()
             )
         }
     }

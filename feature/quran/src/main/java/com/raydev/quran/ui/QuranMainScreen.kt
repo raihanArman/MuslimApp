@@ -5,9 +5,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,6 +17,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.raydev.quran.ui.components.HeaderQuran
 import com.raydev.quran.ui.components.TileSurah
 import org.koin.androidx.compose.getViewModel
 
@@ -41,27 +44,35 @@ fun SurahScreen(
     state: QuranMainState,
     event: QuranMainEvent
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
+    Scaffold(
+        topBar = {
+            HeaderQuran {
+                onEvent(QuranMainEvent.OnNavigateToBookmark)
+            }
+        }
     ) {
-        state.listSurah?.let {
-            LazyColumn {
-                itemsIndexed(
-                    items = it,
-                    key = { _, item -> item.id }
-                ) { index, item ->
-                    TileSurah(
-                        surah = item,
-                        modifier = Modifier.animateItemPlacement(
-                            animationSpec = tween(
-                                durationMillis = 500,
-                                easing = FastOutSlowInEasing,
-                            )
-                        ),
-                        number = "${index+1}"
-                    ) {
-                        onEvent(QuranMainEvent.OnClickSurah(index))
+        Box(
+            modifier = Modifier
+                .fillMaxSize().padding(top = it.calculateTopPadding())
+        ) {
+            state.listSurah?.let {
+                LazyColumn {
+                    itemsIndexed(
+                        items = it,
+                        key = { _, item -> item.id }
+                    ) { index, item ->
+                        TileSurah(
+                            surah = item,
+                            modifier = Modifier.animateItemPlacement(
+                                animationSpec = tween(
+                                    durationMillis = 500,
+                                    easing = FastOutSlowInEasing,
+                                )
+                            ),
+                            number = "${index+1}"
+                        ) {
+                            onEvent(QuranMainEvent.OnClickSurah(index))
+                        }
                     }
                 }
             }

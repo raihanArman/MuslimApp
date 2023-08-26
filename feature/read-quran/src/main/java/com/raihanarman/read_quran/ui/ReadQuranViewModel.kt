@@ -2,14 +2,18 @@ package com.raihanarman.read_quran.ui
 
 import androidx.lifecycle.SavedStateHandle
 import com.raydev.anabstract.base.BaseViewModel
+import com.raydev.domain.usecase.quran.BookmarkAyahUseCase
 import com.raydev.domain.usecase.quran.GetAyahBySurahIdUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.navigation.Destination
+import com.raydev.shared.model.BookmarkQuran
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
@@ -24,6 +28,7 @@ class ReadQuranViewModel(
     private val ayahBySurah: GetAyahBySurahIdUseCase,
     private val surahUseCase: GetSurahUseCase,
     private val stateHandle: SavedStateHandle,
+    private val bookmarkAyahUseCase: BookmarkAyahUseCase
 ): BaseViewModel() {
 
     init {
@@ -81,7 +86,6 @@ class ReadQuranViewModel(
 
     fun onEvent(event: ReadQuranEvent) {
         launch {
-            _event.emit(event)
             when(event) {
                 ReadQuranEvent.Initial -> {}
                 is ReadQuranEvent.OnClickTabSurah -> {
@@ -110,6 +114,30 @@ class ReadQuranViewModel(
                             bottomSheetIsOpen = false,
                         )
                     }
+                }
+
+                ReadQuranEvent.OnBookmarkAyah -> {
+                    bookmarkAyah()
+                }
+            }
+        }
+    }
+
+    private fun bookmarkAyah() {
+        launch(Dispatchers.IO) {
+            val surah = _state.value.surahSelected
+            val ayah = _state.value.ayahSelected
+            if (surah != null && ayah != null) {
+                bookmarkAyahUseCase.invoke(
+                    BookmarkQuran(
+                        id = null,
+                        surah, ayah
+                    )
+                ).collect()
+                _state.update { state ->
+                    state.copy(
+                        bottomSheetIsOpen = false,
+                    )
                 }
             }
         }

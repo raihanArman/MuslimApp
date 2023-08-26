@@ -37,6 +37,10 @@ interface AyatDao {
     @Query("SELECT * FROM tb_ayat WHERE id IS :id")
     fun getAyahById(id:Int): Flow<AyatEntity?>
 
+
+    @Query("SELECT * FROM tb_ayat WHERE verse_number = :verseNumber")
+    fun getAyahByVerseNumber(verseNumber:Int): Flow<AyatEntity?>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveAyah(book:List<AyatEntity>)
 
