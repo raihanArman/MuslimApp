@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.PrayerData
+import com.raydev.shared.model.QuranLastRead
 import com.raydev.shared.model.RingType
 import com.raydev.shared.util.KeyShared
 import com.raydev.shared.util.KeyShared.PREF_KEY_ASR_JURISTIC
@@ -16,6 +17,7 @@ import com.raydev.shared.util.KeyShared.PREF_KEY_HIGHER_LATITUDES
 import com.raydev.shared.util.KeyShared.PREF_KEY_ISYA_OFFSET
 import com.raydev.shared.util.KeyShared.PREF_KEY_MAGHRIB_OFFSET
 import com.raydev.shared.util.KeyShared.PREF_KEY_PRAYERTIME
+import com.raydev.shared.util.KeyShared.PREF_KEY_QURAN_LAST_READ
 import com.raydev.shared.util.KeyShared.PREF_KEY_USER_CITY
 import com.raydev.shared.util.KeyShared.PREF_KEY_USER_COORDINATES
 import com.raydev.shared_preference.PreferenceProvider
@@ -164,6 +166,17 @@ class SharedPreferenceSource(
         get() = sharedPreferences.getStringFromPreference(PREF_KEY_USER_CITY, "") ?: ""
         set(value) {
             sharedPreferences.setStringToPreference(PREF_KEY_USER_CITY, value)
+        }
+
+    var quranLastRead: QuranLastRead
+        get() = Gson().fromJson(
+            sharedPreferences.getStringFromPreference(
+                PREF_KEY_QURAN_LAST_READ,
+                Gson().toJson(QuranLastRead())
+            ), QuranLastRead::class.java
+        )
+        set(value) {
+            sharedPreferences.setStringToPreference(PREF_KEY_QURAN_LAST_READ, Gson().toJson(value))
         }
 
 }

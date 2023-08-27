@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.raydev.shared.model.QuranLastRead
 import com.raydev.shared.model.Surah
 import com.raydev.shared.util.SharedFont
 
@@ -31,48 +32,50 @@ import com.raydev.shared.util.SharedFont
 @Composable
 fun CardLastReadQuran(
     modifier: Modifier = Modifier,
-    surah: Surah? = null,
-    ayah: String ?= null,
-    sumAyah: Int = 0,
-    lastAyah: Int = 0
+    lastRead: QuranLastRead,
+    onContinueClick: (QuranLastRead) -> Unit
 ) {
+    val progress = (lastRead.ayah.toFloat()/lastRead.sumAyah.toFloat())
+
     Box(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier.padding(10.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
+        Column {
+            Row(
+                modifier = Modifier.padding(10.dp)
             ) {
-                Text(
-                    text = surah?.name ?: "Al fatihah",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = ayah ?: "Ayah ke 5",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Gray
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                ProgressLinearCustom(
-                    progress = 0.6f
-                )
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                ) {
+                    Text(
+                        text = lastRead.surahText,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Ayah ke ${lastRead.ayah}",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Gray
+                    )
+                }
+                Column {
+                    ContinueButton {
+                        onContinueClick(lastRead)
+                    }
+                }
             }
-            Column {
-                Text(
-                    text = surah?.caligraphy ?: "",
-                    color = Color.Black,
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily(Font(SharedFont.surah))
-                )
-            }
+            Spacer(modifier = Modifier.height(10.dp))
+            ProgressLinearCustom(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                progress = progress
+            )
         }
     }
 }

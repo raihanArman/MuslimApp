@@ -34,11 +34,12 @@ fun ProgressLinearCustom(
     backgroundColor: Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
     clipShape: Shape = RoundedCornerShape(16.dp)
 ) {
-    var initialProgress by rememberSaveable {
+    var initialProgress by remember {
         mutableStateOf(0f)
     }
 
     LaunchedEffect(key1 = true) {
+        println("AMPAAASSS KUDAA -> progress $progress")
         initialProgress = progress
     }
 

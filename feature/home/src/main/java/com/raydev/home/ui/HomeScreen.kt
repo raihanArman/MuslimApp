@@ -59,7 +59,11 @@ fun HomeScreen(
                     nextPrayerTime = nextPrayerTime
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                CardLastReadQuran()
+                state.lastRead?.let {
+                    CardLastReadQuran(lastRead = it) {
+                        onEvent(HomeEvent.OnNavigateToReadQuran(it))
+                    }
+                }
             }
         }
     }

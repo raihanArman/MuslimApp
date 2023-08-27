@@ -26,6 +26,7 @@ import com.raihanarman.read_quran.components.QuranBottomSheetMenu
 import com.raihanarman.read_quran.components.SurahTabLayout
 import com.raydev.navigation.Destination
 import com.raydev.navigation.composable
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
 /**
@@ -59,6 +60,7 @@ fun ReadQuranScreen(
 
     LaunchedEffect(key1 = state.indexBookmark) {
         if (state.indexBookmark != null && !isScrollInProgress) {
+            delay(1000)
             scrollState.animateScrollToItem(state.indexBookmark)
         }
     }
@@ -112,7 +114,9 @@ fun ReadQuranScreen(
                             onEvent(ReadQuranEvent.OnBookmarkAyah)
                         }
                         is QuranBottomSheetMenu.OnCopy -> {}
-                        is QuranBottomSheetMenu.OnLastRead -> {}
+                        is QuranBottomSheetMenu.OnLastRead -> {
+                            onEvent(ReadQuranEvent.OnLastReadAyah)
+                        }
                         is QuranBottomSheetMenu.OnShare -> {}
                     }
                 },
