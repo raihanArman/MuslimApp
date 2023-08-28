@@ -31,7 +31,7 @@ class ReadQuranViewModel(
     private val stateHandle: SavedStateHandle,
     private val bookmarkAyahUseCase: BookmarkAyahUseCase,
     private val lastReadRepository: LastReadRepository,
-): BaseViewModel() {
+) : BaseViewModel() {
     init {
         getSurah()
         val surahId = stateHandle.get<String>(Destination.ReadQuranScreen.SURAH_ID_KEY) ?: ""
@@ -104,7 +104,7 @@ class ReadQuranViewModel(
 
     fun onEvent(event: ReadQuranEvent) {
         launch {
-            when(event) {
+            when (event) {
                 ReadQuranEvent.Initial -> {}
                 is ReadQuranEvent.OnClickTabSurah -> {
                     _state.update { state ->
@@ -185,7 +185,7 @@ class ReadQuranViewModel(
         }
     }
 
-    private fun onBookmarkAyah() {
+    private fun onBookmarkAyah(coba: String = "") {
         launch(Dispatchers.IO) {
             val surah = _state.value.surahSelected
             val ayah = _state.value.ayahSelected
@@ -212,5 +212,4 @@ class ReadQuranViewModel(
             }
         }
     }
-
 }

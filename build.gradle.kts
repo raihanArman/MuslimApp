@@ -36,6 +36,8 @@ apply(from="buildScripts/git-hooks.gradle")
 subprojects {
     apply {
         from("$rootDir/buildScripts/ktlint.gradle")
+    }
+    apply {
         from("$rootDir/buildScripts/detekt.gradle")
     }
 }
