@@ -5,15 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-// import com.google.android.gms.location.*
-// import com.google.android.gms.tasks.CancellationToken
-// import com.google.android.gms.tasks.CancellationTokenSource
-// import com.google.android.gms.tasks.OnTokenCanceledListener
-// import com.google.android.gms.tasks.Task
 import com.raydev.prayer.work.ReminderHelper
 import com.raydev.shared.util.checkPermissions
 import org.koin.android.ext.android.inject
-import java.util.*
 
 class MainActivity : ComponentActivity() {
     private val reminderHelper by inject<ReminderHelper>()
