@@ -14,16 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.raydev.shared.util.SharedFont
 
 /**
  * @author Raihan Arman
  * @date 12/08/23
  */
-@OptIn(ExperimentalTextApi::class)
 @Composable
 fun BissmillahItem(
     modifier: Modifier = Modifier
@@ -39,10 +40,10 @@ fun BissmillahItem(
                 text = "﷽",
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp).fillMaxWidth(),
                 fontSize = 24.sp,
-                textAlign = TextAlign.Center
-//           fontFamily = FontFamily(
-//               Font(LocalContext.current.assets,"fonts/Bismillah.ttf")
-//           )
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(
+                    Font(SharedFont.bismillah)
+                )
             )
             Divider(
                 color = Color.LightGray

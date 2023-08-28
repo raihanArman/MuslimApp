@@ -21,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -28,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.raydev.shared.database.entity.LanguageString
 import com.raydev.shared.model.Ayah
 import com.raydev.shared.util.SharedDrawable
+import com.raydev.shared.util.SharedFont
 import com.raydev.shared.util.getArabic
 import com.raydev.shared.util.getText
 
@@ -92,7 +95,9 @@ fun AyahItem(
                         ),
                         fontSize = 24.sp,
                         color = Color.Black,
-                        textAlign = TextAlign.End
+                        textAlign = TextAlign.End,
+                        fontFamily = FontFamily(
+                            Font(SharedFont.uthman))
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
