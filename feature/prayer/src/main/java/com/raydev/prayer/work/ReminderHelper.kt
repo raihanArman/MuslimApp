@@ -1,9 +1,11 @@
 package com.raydev.prayer.work
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.raydev.domain.repository.PrayerRepository
-import com.raydev.domain.repository.QuranRepository
 import com.raydev.prayer.ReminderParams
 import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.RingType

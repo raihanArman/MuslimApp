@@ -24,11 +24,9 @@ import org.koin.androidx.compose.getViewModel
 fun NavGraphBuilder.homeMainNavigation() = run {
     composable("home"){
         val viewModel: HomeViewModel = getViewModel()
-        val event by viewModel.event.collectAsState(HomeEvent.Initial)
         val state by viewModel.state.collectAsState()
         HomeScreen(
             onEvent = viewModel::onEvent,
-            event = event,
             state =  state
         )
     }
@@ -37,7 +35,6 @@ fun NavGraphBuilder.homeMainNavigation() = run {
 @Composable
 fun HomeScreen(
     state: HomeState,
-    event: HomeEvent,
     onEvent: (HomeEvent) -> Unit
 ) {
     Column(

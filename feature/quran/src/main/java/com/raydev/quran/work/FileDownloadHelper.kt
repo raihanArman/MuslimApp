@@ -1,7 +1,13 @@
 package com.raydev.quran.work
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.raydev.quran.util.FileParams
 import com.raydev.shared.model.Surah
 
@@ -9,7 +15,6 @@ class FileDownloadHelper(
     private val workManager: WorkManager
 ) {
     fun startDownloadingFile(
-        file: Surah,
         success:(String) -> Unit,
         failed:(String) -> Unit,
         running:() -> Unit,

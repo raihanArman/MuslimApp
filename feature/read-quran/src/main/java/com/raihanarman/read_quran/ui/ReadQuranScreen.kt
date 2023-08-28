@@ -38,10 +38,8 @@ fun NavGraphBuilder.readQuranNavigation() = run {
     composable(Destination.ReadQuranScreen){
         val viewModel: ReadQuranViewModel = getViewModel()
         val state by viewModel.state.collectAsState()
-        val event by viewModel.event.collectAsState(initial = ReadQuranEvent.Initial)
         ReadQuranScreen(
             state = state,
-            event = event,
             onEvent = viewModel::onEvent
         )
     }
@@ -51,7 +49,6 @@ fun NavGraphBuilder.readQuranNavigation() = run {
 @Composable
 fun ReadQuranScreen(
     state: ReadQuranState,
-    event: ReadQuranEvent,
     onEvent: (ReadQuranEvent) -> Unit
 ) {
     val pagerState = rememberPagerState()

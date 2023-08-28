@@ -16,7 +16,9 @@ class ReminderWorker(
     private val context: Context,
     workerParameters: WorkerParameters
 ): CoroutineWorker(context, workerParameters) {
-    private val TAG = "ReminderWorker"
+    companion object {
+        private const val TAG = "ReminderWorker"
+    }
     override suspend fun doWork(): Result {
         val hours = inputData.getInt(ReminderParams.KEY_HOURS, 0)
         val minutes = inputData.getInt(ReminderParams.KEY_MINUTE, 0)

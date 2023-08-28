@@ -7,6 +7,6 @@ package com.raydev.muslim_app.dashboard.util
 sealed class Screen(
     val route: String
 ) {
-    object Home: Screen("home")
-    object Quran: Screen("quran")
+    object Home : Screen("home")
+    object Quran : Screen("quran")
 }

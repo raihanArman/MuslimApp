@@ -13,15 +13,15 @@ import java.io.Writer
  * @date 06/08/23
  */
 object FileUtils {
-    fun getJsonStringFromAssets(context: Context, assetPath: String, progress:(Int)->Any?={}):String{
-        val `is`: InputStream = context.assets.open(assetPath)
-        ProgressInputStream(`is`).addListener {
+    fun getJsonStringFromAssets(context: Context, assetPath: String, progress: (Int) -> Any? = {}): String {
+        val inputStream: InputStream = context.assets.open(assetPath)
+        ProgressInputStream(inputStream).addListener {
             progress.invoke(it)
         }
         val writer: Writer = StringWriter()
         val buffer = CharArray(1024)
-        `is`.use { `is` ->
-            val reader: Reader = BufferedReader(InputStreamReader(`is`, "UTF-8"))
+        inputStream.use { input ->
+            val reader: Reader = BufferedReader(InputStreamReader(input, "UTF-8"))
             var n: Int
             while (reader.read(buffer).also { n = it } != -1) {
                 writer.write(buffer, 0, n)

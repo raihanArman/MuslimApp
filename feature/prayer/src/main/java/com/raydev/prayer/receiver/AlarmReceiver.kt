@@ -22,7 +22,9 @@ import com.raydev.prayer.service.AlarmService
 
 
 class AlarmReceiver: BroadcastReceiver() {
-    private val TAG = "AlarmReceiver"
+    companion object{
+        private const val TAG = "AlarmReceiver"
+    }
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d(TAG, "onReceive: receive alarm")
 

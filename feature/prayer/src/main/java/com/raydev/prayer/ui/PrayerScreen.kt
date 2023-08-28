@@ -30,11 +30,9 @@ import org.koin.androidx.compose.getViewModel
 fun NavGraphBuilder.prayerMainNavigation() = run {
     composable("prayer"){
         val viewModel: PrayerViewModel = getViewModel()
-        val event by viewModel.event.collectAsState(PrayetEvent.Initial)
         val state by viewModel.state.collectAsState()
         PrayerScreen(
             onEvent = viewModel::onEvent,
-            event = event,
             state =  state
         )
     }
@@ -43,7 +41,6 @@ fun NavGraphBuilder.prayerMainNavigation() = run {
 @Composable
 fun PrayerScreen(
     state: PrayerState,
-    event: PrayetEvent,
     onEvent: (PrayetEvent) -> Unit
 ) {
     Column(

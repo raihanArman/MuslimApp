@@ -28,9 +28,13 @@ class FileDownloadWorker(
     private val context: Context,
     workerParameters: WorkerParameters
 ): CoroutineWorker(context, workerParameters) {
-    private val TAG = "FileDownloadWorker"
+    companion object{
+        private const val TAG = "FileDownloadWorker"
+    }
 
-    val builder = NotificationCompat.Builder(context, NotificationConstants.CHANNEL_ID).setSmallIcon(R.drawable.download)
+    private val builder = NotificationCompat.Builder(
+        context, NotificationConstants.CHANNEL_ID
+    ).setSmallIcon(R.drawable.download)
 
     override suspend fun doWork(): Result {
         val fileUrl = inputData.getString(FileParams.KEY_FILE_URL) ?: ""
@@ -90,13 +94,13 @@ class FileDownloadWorker(
         setForeground(foregroundInfo)
     }
 
-    private suspend fun showProgress(progress: Int) {
-        val notification = builder
-            .setContentText("Download selesai")
-            .setProgress(100, progress, false)
-            .build()
-        setupForegroundWork(notification)
-    }
+//    private suspend fun showProgress(progress: Int) {
+//        val notification = builder
+//            .setContentText("Download selesai")
+//            .setProgress(100, progress, false)
+//            .build()
+//        setupForegroundWork(notification)
+//    }
 
     private fun getSavedFileUri(
         fileName:String,

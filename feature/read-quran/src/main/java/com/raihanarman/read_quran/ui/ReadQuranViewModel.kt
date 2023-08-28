@@ -45,13 +45,6 @@ class ReadQuranViewModel(
     private val _event: MutableSharedFlow<ReadQuranEvent> = MutableSharedFlow()
     val event = _event.asSharedFlow()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val ayahBySurahIdFlow = _state.filter {
-        it.surahId != null
-    }.flatMapLatest {
-        ayahBySurah.invoke(it.surahId!!)
-    }.distinctUntilChanged()
-
     private fun setTabSelected(id: Int) {
         launch {
             _state.update {
@@ -185,7 +178,7 @@ class ReadQuranViewModel(
         }
     }
 
-    private fun onBookmarkAyah(coba: String = "") {
+    private fun onBookmarkAyah() {
         launch(Dispatchers.IO) {
             val surah = _state.value.surahSelected
             val ayah = _state.value.ayahSelected

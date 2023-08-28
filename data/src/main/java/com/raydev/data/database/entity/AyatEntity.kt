@@ -7,16 +7,17 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "tb_ayat")
 data class AyatEntity(
     @PrimaryKey(autoGenerate = true)
-    val id:Int,
-    val verse_number:Int,
+    val id: Int,
+    @ColumnInfo(name = "verse_number")
+    val verseNumber: Int,
     @ColumnInfo(name = "text")
     var text: ArrayList<LanguageStringEntity> = ArrayList(),
     @ColumnInfo(name = "juz")
-    var juz:Int,
+    var juz: Int,
     @ColumnInfo(name = "hizb")
-    var hizb:Float,
+    var hizb: Float,
     @ColumnInfo(name = "use_bismillah")
-    var use_bismillah:Boolean?=false,
+    var useBismillah: Boolean? = false,
     @ColumnInfo(name = "chapter_id")
-    var chapterId:Int
+    var chapterId: Int
 )

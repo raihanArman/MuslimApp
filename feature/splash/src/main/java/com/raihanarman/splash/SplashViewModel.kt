@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
  */
 class SplashViewModel(
     private val setupQuranUseCase: SetupQuranUseCase,
-    private val getSurahUseCase: GetSurahUseCase,
     private val navigator: AppNavigator
 ): BaseViewModel() {
 
@@ -45,14 +44,6 @@ class SplashViewModel(
 
                     else -> {}
                 }
-            }
-        }
-    }
-
-    private fun getSurah() {
-        viewModelScope.launch {
-            getSurahUseCase.invoke().collect {
-                println("Ampas Kuda -> getSurah | $it")
             }
         }
     }

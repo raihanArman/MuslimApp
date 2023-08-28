@@ -10,11 +10,11 @@ object ReminderParams{
 }
 
 object NotificationAlarmConstants{
-    @JvmField val VERBOSE_NOTIFICATION_CHANNEL_NAME: CharSequence =
+    const val VERBOSE_NOTIFICATION_CHANNEL_NAME =
         "Verbose WorkManager Notifications"
     const val VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION =
         "Shows notifications whenever work starts"
-    @JvmField val NOTIFICATION_TITLE: CharSequence = "Reminder"
+    const val NOTIFICATION_TITLE = "Reminder"
     const val CHANNEL_ID = "VERBOSE_NOTIFICATION"
     const val NOTIFICATION_ID = 1
 }

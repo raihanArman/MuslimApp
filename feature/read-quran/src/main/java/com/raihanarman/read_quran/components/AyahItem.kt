@@ -90,7 +90,8 @@ fun AyahItem(
                 ) {
                     Text(
                         text = ayah.text.getArabic().replace(
-                            if (ayah.verseNumber == 1 && ayah.chapterId != 1) "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" else "",
+                            if (ayah.verseNumber == 1 && ayah.chapterId != 1) "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
+                            else "",
                             ""
                         ),
                         fontSize = 24.sp,

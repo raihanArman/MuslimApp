@@ -1,12 +1,6 @@
 package com.raydev.muslim_app
 
-import com.raydev.data.datasource.remote.QuranRemoteDataSource
-import com.raydev.shared.model.Ayah
-import com.raydev.shared.model.Surah
-
-class FakeQuranRepositoryTest(
-    private val remoteDataSource: QuranRemoteDataSource
-) {
+class FakeQuranRepositoryTest {
 
 //    suspend fun getSurah(): List<Surah> {
 //        val response = remoteDataSource.getListSurah()

@@ -37,8 +37,8 @@ fun DashboardBottomNavigation(
             .fillMaxWidth()
     ) {
         destinationList.forEach { item ->
-            if(!DashboardBottomBarItemType.values().contains(item.type)){
-                throw Exception("Unknown item type! Please add this type inside the DashboardBottomBarItemType enum class.")
+            if (!DashboardBottomBarItemType.values().contains(item.type)) {
+                throw Exception("Unknown item type!")
             }
 
             NavigationBarItem(
@@ -75,5 +75,4 @@ fun DashboardBottomNavigation(
             )
         }
     }
-
 }

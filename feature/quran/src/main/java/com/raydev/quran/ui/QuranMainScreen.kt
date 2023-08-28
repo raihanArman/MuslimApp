@@ -28,11 +28,9 @@ import org.koin.androidx.compose.getViewModel
 fun NavGraphBuilder.quranMainNavigation() = run {
     composable("quran_main"){
         val viewModel: QuranMainViewModel = getViewModel()
-        val event by viewModel.uiEvent.collectAsState(QuranMainEvent.Initial)
         val state by viewModel.uiState.collectAsState()
         SurahScreen(
             onEvent = viewModel::onEvent,
-            event = event,
             state =  state
         )
     }
@@ -41,8 +39,7 @@ fun NavGraphBuilder.quranMainNavigation() = run {
 @Composable
 fun SurahScreen(
     onEvent: (QuranMainEvent) -> Unit,
-    state: QuranMainState,
-    event: QuranMainEvent
+    state: QuranMainState
 ) {
     Scaffold(
         topBar = {

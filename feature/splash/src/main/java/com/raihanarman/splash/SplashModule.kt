@@ -7,8 +7,6 @@ import org.koin.dsl.module
  * @author Raihan Arman
  * @date 06/08/23
  */
-object SplashModule {
-    val splashModule = module {
-        viewModel { SplashViewModel(get(), get(), get()) }
-    }
+val splashModule = module {
+    viewModel { SplashViewModel(get(), get(), get()) }
 }

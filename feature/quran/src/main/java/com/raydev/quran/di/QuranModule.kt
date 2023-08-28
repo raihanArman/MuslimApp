@@ -5,14 +5,12 @@ import com.raydev.quran.work.FileDownloadHelper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-object QuranModule {
-    val quranModule = module{
-        viewModel {
-            QuranMainViewModel(get(), get())
-        }
+val quranModule = module{
+    viewModel {
+        QuranMainViewModel(get(), get())
+    }
 
-        single {
-            FileDownloadHelper(get())
-        }
+    single {
+        FileDownloadHelper(get())
     }
 }
