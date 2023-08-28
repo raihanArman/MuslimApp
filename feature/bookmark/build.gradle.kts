@@ -33,7 +33,6 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
-    implementation(project(":resource"))
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
 }

@@ -32,8 +32,13 @@ buildscript {
 }
 
 apply(from="buildScripts/git-hooks.gradle")
-apply(from="buildScripts/ktlint.gradle")
-apply(from="buildScripts/detekt.gradle")
+
+subprojects {
+    apply {
+        from("$rootDir/buildScripts/ktlint.gradle")
+        from("$rootDir/buildScripts/detekt.gradle")
+    }
+}
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

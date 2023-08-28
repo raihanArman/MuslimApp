@@ -37,7 +37,6 @@ include(
     ":data",
     ":domain",
     ":core:navigation",
-    ":resource",
     ":libraries:abstract",
     ":libraries:network",
     ":libraries:cache",
