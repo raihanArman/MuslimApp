@@ -7,7 +7,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.raydev.prayer.NotificationAlarmConstants
 import com.raydev.prayer.service.AlarmService
 
-class CancelServiceReceiver: BroadcastReceiver() {
+class CancelServiceReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.stopService(Intent(context, AlarmService::class.java))
         NotificationManagerCompat.from(context!!).cancel(NotificationAlarmConstants.NOTIFICATION_ID)

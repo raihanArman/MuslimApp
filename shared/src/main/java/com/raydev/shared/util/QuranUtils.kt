@@ -10,11 +10,11 @@ import com.raydev.shared.model.SeparatorItem
  * @author Raihan Arman
  * @date 20/08/23
  */
-fun ArrayList<LanguageString>.getText():String{
+fun ArrayList<LanguageString>.getText(): String {
     return filter { it.language == "bahasa" }.firstOrNull()?.text ?: ""
 }
-fun ArrayList<LanguageString>.getArabic():String{
-    return filter { it.language == "arabic" }.firstOrNull()?.text.toString().replace("،","")
+fun ArrayList<LanguageString>.getArabic(): String {
+    return filter { it.language == "arabic" }.firstOrNull()?.text.toString().replace("،", "")
 }
 
 fun getArabicCalligraphy(mContext: Context, surah: Int): String {
@@ -22,7 +22,8 @@ fun getArabicCalligraphy(mContext: Context, surah: Int): String {
         FileUtils.getJsonStringFromAssets(
             mContext,
             "json/quran/paged/separator.json"
-        ), object :
+        ),
+        object :
             TypeToken<ArrayList<SeparatorItem>>() {}.type
     ).filter { it.surah == surah }.firstOrNull()?.unicode ?: ""
 }

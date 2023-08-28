@@ -24,7 +24,7 @@ import com.raydev.navigation.composable
  * @date 06/08/23
  */
 fun NavGraphBuilder.dashboardNavigation() = run {
-    composable(Destination.DashboardScreen){
+    composable(Destination.DashboardScreen) {
         DashboardScreen()
     }
 }
@@ -60,22 +60,22 @@ fun DashboardContent(
     NavHost(
         navController = navController,
         startDestination = "dashboardBottomNav"
-    ){
+    ) {
         setupDashboardBottomNavScreens()
     }
 }
 
-fun NavGraphBuilder.setupDashboardBottomNavScreens(){
+fun NavGraphBuilder.setupDashboardBottomNavScreens() {
     navigation(
         startDestination = Screen.Home.route,
         route = "dashboardBottomNav"
-    ){
-        composable(Screen.Home.route){
+    ) {
+        composable(Screen.Home.route) {
             Box {
                 Text("Ini home")
             }
         }
-        composable(Screen.Quran.route){
+        composable(Screen.Quran.route) {
             Box {
                 Text("Ini Quran")
             }

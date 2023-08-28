@@ -108,7 +108,6 @@ class ReminderHelper(
             "Waktu sholat isya telah tiba"
         )
     }
-
 }
 
 fun String.toTimeInteger(): Int {

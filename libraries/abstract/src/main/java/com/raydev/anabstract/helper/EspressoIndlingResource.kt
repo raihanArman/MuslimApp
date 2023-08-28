@@ -1,21 +1,21 @@
 package com.raydev.anabstract.helper
 
-//import androidx.test.espresso.IdlingResource
+// import androidx.test.espresso.IdlingResource
 //
-//interface FetcherListener {
+// interface FetcherListener {
 //    fun begin()
 //    fun complete()
-//}
+// }
 //
-////singleton idling resources
-//object FetchingIdlingResource {
+// //singleton idling resources
+// object FetchingIdlingResource {
 //    private var idlingResource = EspressoIdlingResource()
 //    fun begin() = idlingResource.begin()
 //    fun complete() = idlingResource.complete()
 //    fun get(): EspressoIdlingResource = idlingResource
-//}
+// }
 //
-//class EspressoIdlingResource: IdlingResource, FetcherListener {
+// class EspressoIdlingResource: IdlingResource, FetcherListener {
 //    private var idle = true
 //    private var resourceCallback: IdlingResource.ResourceCallback? = null
 //
@@ -38,4 +38,4 @@ package com.raydev.anabstract.helper
 //    override fun begin() {
 //        idle = false
 //    }
-//}
+// }

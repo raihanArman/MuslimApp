@@ -9,15 +9,14 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.raydev.quran.util.FileParams
-import com.raydev.shared.model.Surah
 
 class FileDownloadHelper(
     private val workManager: WorkManager
 ) {
     fun startDownloadingFile(
-        success:(String) -> Unit,
-        failed:(String) -> Unit,
-        running:() -> Unit,
+        success: (String) -> Unit,
+        failed: (String) -> Unit,
+        running: () -> Unit,
         lifecycleOwner: LifecycleOwner
     ) {
         val data = Data.Builder()
@@ -46,7 +45,7 @@ class FileDownloadHelper(
         )
 
         workManager.getWorkInfoByIdLiveData(fileDownloadWorker.id)
-            .observe(lifecycleOwner){ info->
+            .observe(lifecycleOwner) { info ->
                 info?.let {
                     when (it.state) {
                         WorkInfo.State.SUCCEEDED -> {

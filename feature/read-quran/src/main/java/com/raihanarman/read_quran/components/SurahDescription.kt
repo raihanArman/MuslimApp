@@ -2,7 +2,6 @@ package com.raihanarman.read_quran.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,7 +31,7 @@ fun SurahDescription(
         Column(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             Text(text = surah.name, color = Color.Black, fontSize = 18.sp)
             Spacer(modifier = Modifier.height(5.dp))
             Text(text = surah.translation.getText(), color = Color.Gray, fontSize = 14.sp)

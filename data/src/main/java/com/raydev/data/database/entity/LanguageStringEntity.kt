@@ -11,4 +11,4 @@ import kotlinx.android.parcel.Parcelize
 data class LanguageStringEntity(
     var text: String? = null,
     var language: String? = null
-): Parcelable
+) : Parcelable

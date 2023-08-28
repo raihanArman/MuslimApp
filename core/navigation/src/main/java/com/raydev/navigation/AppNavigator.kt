@@ -33,8 +33,6 @@ interface AppNavigator {
         isSingleTop: Boolean = false,
     )
 
-
-
     fun tryNavigateAndReplaceStartRoute(
         route: String,
     )

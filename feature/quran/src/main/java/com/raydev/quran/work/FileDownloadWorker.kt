@@ -27,8 +27,8 @@ import java.net.URL
 class FileDownloadWorker(
     private val context: Context,
     workerParameters: WorkerParameters
-): CoroutineWorker(context, workerParameters) {
-    companion object{
+) : CoroutineWorker(context, workerParameters) {
+    companion object {
         private const val TAG = "FileDownloadWorker"
     }
 
@@ -41,36 +41,33 @@ class FileDownloadWorker(
         val fileName = inputData.getString(FileParams.KEY_FILE_NAME) ?: ""
         val fileType = inputData.getString(FileParams.KEY_FILE_TYPE) ?: ""
 
-
         Log.d("TAG", "doWork: $fileUrl | $fileName | $fileType")
 
-        if (fileName.isEmpty()
-            || fileType.isEmpty()
-            || fileUrl.isEmpty()
-        ){
+        if (fileName.isEmpty() ||
+            fileType.isEmpty() ||
+            fileUrl.isEmpty()
+        ) {
             Result.failure()
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             val name = NotificationConstants.CHANNEL_NAME
             val description = NotificationConstants.CHANNEL_DESCRIPTION
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(NotificationConstants.CHANNEL_ID,name,importance)
+            val channel = NotificationChannel(NotificationConstants.CHANNEL_ID, name, importance)
             channel.description = description
 
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
 
             notificationManager?.createNotificationChannel(channel)
-
         }
-
 
         builder.setContentTitle("Downloading your file...")
             .setOngoing(true)
-            .setProgress(0,0,true)
+            .setProgress(0, 0, true)
 
-        NotificationManagerCompat.from(context).notify(NotificationConstants.NOTIFICATION_ID,builder.build())
+        NotificationManagerCompat.from(context).notify(NotificationConstants.NOTIFICATION_ID, builder.build())
 
         setupForegroundWork(builder.build())
 
@@ -82,9 +79,9 @@ class FileDownloadWorker(
         )
 
         NotificationManagerCompat.from(context).cancel(NotificationConstants.NOTIFICATION_ID)
-        return if (uri != null){
+        return if (uri != null) {
             Result.success(workDataOf(FileParams.KEY_FILE_URI to uri.toString()))
-        }else{
+        } else {
             Result.failure()
         }
     }
@@ -103,11 +100,12 @@ class FileDownloadWorker(
 //    }
 
     private fun getSavedFileUri(
-        fileName:String,
-        fileType:String,
-        fileUrl:String,
-        context: Context): Uri?{
-        val mimeType = when(fileType){
+        fileName: String,
+        fileType: String,
+        fileUrl: String,
+        context: Context
+    ): Uri? {
+        val mimeType = when (fileType) {
             "PDF" -> "application/pdf"
             "PNG" -> "image/png"
             "MP4" -> "video/mp4"
@@ -117,7 +115,7 @@ class FileDownloadWorker(
 
         if (mimeType.isEmpty()) return null
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Log.d(TAG, "getSavedFileUri: process convert ${Build.VERSION.SDK_INT}")
             val contentValues = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
@@ -129,25 +127,24 @@ class FileDownloadWorker(
 
             val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
 
-            return if (uri!=null){
-                URL(fileUrl).openStream().use { input->
-                    resolver.openOutputStream(uri).use { output->
+            return if (uri != null) {
+                URL(fileUrl).openStream().use { input ->
+                    resolver.openOutputStream(uri).use { output ->
                         input.copyTo(output!!, DEFAULT_BUFFER_SIZE)
                     }
                 }
                 val file = File(uri.path)
                 Log.d(TAG, "getSavedFileUri: ${file.path}")
                 uri
-            }else{
+            } else {
                 null
             }
-
-        }else{
+        } else {
             val target = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                 fileName
             )
-            URL(fileUrl).openStream().use { input->
+            URL(fileUrl).openStream().use { input ->
                 FileOutputStream(target).use { output ->
                     input.copyTo(output)
                 }

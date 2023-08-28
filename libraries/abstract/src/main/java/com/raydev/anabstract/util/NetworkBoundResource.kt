@@ -14,7 +14,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {
             emit(ResponseState.Loading())
-            createCall().collect {response ->
+            createCall().collect { response ->
                 when (response) {
                     is ResponseState.Success -> {
                         saveCallResult(response.data!!)
@@ -31,7 +31,6 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                     else -> {}
                 }
             }
-
         } else {
             emitAll(loadFromDB().map { ResponseState.Success(it) })
         }
@@ -48,5 +47,4 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
     protected abstract suspend fun saveCallResult(data: RequestType)
 
     fun asFlow(): Flow<ResponseState<ResultType>> = result
-
 }

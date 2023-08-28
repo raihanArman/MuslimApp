@@ -8,8 +8,8 @@ import com.raydev.shared.model.PrayerTime
  * @date 21/08/23
  */
 data class PrayerState(
-    val prayerTime: PrayerTime ?= null,
-    val nextPrayerTime: NextPrayerTime ?= null,
+    val prayerTime: PrayerTime ? = null,
+    val nextPrayerTime: NextPrayerTime ? = null,
     val subuhRing: Boolean = false,
     val dhuhurRing: Boolean = false,
     val asharRing: Boolean = false,

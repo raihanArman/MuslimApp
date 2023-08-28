@@ -5,7 +5,6 @@ import com.raydev.shared.model.SholatTime
 import com.raydev.shared.response.ResponseSholat
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface PrayerService {
 
@@ -19,5 +18,4 @@ interface PrayerService {
         @Path("city_id") cityId: String,
         @Path("date") date: String
     ): ResponseSholat<SholatTime>
-
 }

@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class QuranMainViewModel(
     private val useCase: GetSurahUseCase,
     private val navigator: AppNavigator
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<QuranMainState> = MutableStateFlow(QuranMainState())
     val uiState = _uiState.asStateFlow()
@@ -42,7 +42,7 @@ class QuranMainViewModel(
     fun onEvent(event: QuranMainEvent) {
         launch {
             _uiEvent.emit(event)
-            when(event) {
+            when (event) {
                 QuranMainEvent.Initial -> {}
                 is QuranMainEvent.OnClickSurah -> {
                     navigator.tryNavigateTo(
@@ -58,5 +58,4 @@ class QuranMainViewModel(
             }
         }
     }
-
 }

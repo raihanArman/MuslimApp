@@ -14,7 +14,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,7 +42,8 @@ fun ProgressLinearCustom(
         initialProgress = progress
     }
 
-    val progressAnimation by animateFloatAsState(targetValue = initialProgress, animationSpec = tween(1500),
+    val progressAnimation by animateFloatAsState(
+        targetValue = initialProgress, animationSpec = tween(1500),
         label = ""
     )
 

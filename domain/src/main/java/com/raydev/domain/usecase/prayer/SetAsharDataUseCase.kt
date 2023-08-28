@@ -6,7 +6,7 @@ import com.raydev.shared.model.PrayerData
 class SetAsharDataUseCase(
     private val prayerRepository: PrayerRepository
 ) {
-    operator fun invoke(prayerData: PrayerData){
+    operator fun invoke(prayerData: PrayerData) {
         prayerRepository.setAsharData(prayerData)
     }
 }

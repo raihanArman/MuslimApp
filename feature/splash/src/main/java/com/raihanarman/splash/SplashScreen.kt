@@ -21,7 +21,7 @@ import org.koin.androidx.compose.getViewModel
  */
 
 fun NavGraphBuilder.splashNavigation() = run {
-    composable(Destination.SplashScreen){
+    composable(Destination.SplashScreen) {
         val viewModel: SplashViewModel = getViewModel()
         val event = viewModel.observeEvent
         SplashScreen(
@@ -45,12 +45,11 @@ fun SplashScreen(
         onEvent(SplashEvent.OnNavigateToMain)
 
         event?.collect {
-            when(it) {
+            when (it) {
                 SplashEvent.Initial -> {}
                 SplashEvent.OnNavigateToMain -> onNavigate()
             }
         }
-
     }
     Surface(
         modifier = Modifier.fillMaxSize()

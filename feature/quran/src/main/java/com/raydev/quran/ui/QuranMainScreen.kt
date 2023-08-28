@@ -13,7 +13,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -26,12 +25,12 @@ import org.koin.androidx.compose.getViewModel
  * @date 10/08/23
  */
 fun NavGraphBuilder.quranMainNavigation() = run {
-    composable("quran_main"){
+    composable("quran_main") {
         val viewModel: QuranMainViewModel = getViewModel()
         val state by viewModel.uiState.collectAsState()
         SurahScreen(
             onEvent = viewModel::onEvent,
-            state =  state
+            state = state
         )
     }
 }
@@ -66,7 +65,7 @@ fun SurahScreen(
                                     easing = FastOutSlowInEasing,
                                 )
                             ),
-                            number = "${index+1}"
+                            number = "${index + 1}"
                         ) {
                             onEvent(QuranMainEvent.OnClickSurah(index))
                         }

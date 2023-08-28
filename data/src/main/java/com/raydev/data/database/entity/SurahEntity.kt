@@ -10,6 +10,6 @@ data class SurahEntity(
     val revelation: String,
     val verses: Int,
     val name: String,
-    val page:Int,
+    val page: Int,
     val translation: ArrayList<LanguageStringEntity>
 )

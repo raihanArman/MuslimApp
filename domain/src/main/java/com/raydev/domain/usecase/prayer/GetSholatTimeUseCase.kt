@@ -2,7 +2,6 @@ package com.raydev.domain.usecase.prayer
 
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.domain.repository.PrayerRepository
-import com.raydev.shared.model.City
 import com.raydev.shared.model.SholatTime
 import kotlinx.coroutines.flow.Flow
 

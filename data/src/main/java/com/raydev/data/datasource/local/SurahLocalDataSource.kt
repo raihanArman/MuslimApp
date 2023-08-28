@@ -11,8 +11,8 @@ class SurahLocalDataSource(
     private val surahDao: SurahDao
 ) {
     fun getSurah() = surahDao.getSurah()
-    fun getSurahById(id:Int) = surahDao.getSurahById(id)
-    fun getSurahByIdSingle(id:Int) = surahDao.getSurahByIdSingle(id)
-    suspend fun saveSurah(book:List<SurahEntity>) = surahDao.saveSurah(book)
+    fun getSurahById(id: Int) = surahDao.getSurahById(id)
+    fun getSurahByIdSingle(id: Int) = surahDao.getSurahByIdSingle(id)
+    suspend fun saveSurah(book: List<SurahEntity>) = surahDao.saveSurah(book)
     suspend fun deleteSurah() = surahDao.deleteSurah()
 }

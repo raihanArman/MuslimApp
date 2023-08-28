@@ -1,7 +1,6 @@
 package com.raydev.prayer
 
-
-object ReminderParams{
+object ReminderParams {
     const val KEY_HOURS = "hours"
     const val KEY_MINUTE = "minutes"
     const val KEY_REQUEST_CODE = "reqCode"
@@ -9,7 +8,7 @@ object ReminderParams{
     const val KEY_MESSAGE = "message"
 }
 
-object NotificationAlarmConstants{
+object NotificationAlarmConstants {
     const val VERBOSE_NOTIFICATION_CHANNEL_NAME =
         "Verbose WorkManager Notifications"
     const val VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION =

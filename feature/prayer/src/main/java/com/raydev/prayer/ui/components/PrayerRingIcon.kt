@@ -19,7 +19,7 @@ fun PrayerIconRing(isRing: Boolean, onClick: () -> Unit) {
         },
         painter = painterResource(
             id = if (isRing) R.drawable.baseline_volume_up_24
-                else R.drawable.baseline_volume_off_24
+            else R.drawable.baseline_volume_off_24
         ),
         contentDescription = null
     )

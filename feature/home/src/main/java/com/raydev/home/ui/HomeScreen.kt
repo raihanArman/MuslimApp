@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.raydev.home.ui.components.CardMainInformation
 import com.raihan.ui.PrayerSection
 import com.raydev.home.ui.components.CardLastReadQuran
+import com.raydev.home.ui.components.CardMainInformation
 import org.koin.androidx.compose.getViewModel
 
 /**
@@ -22,12 +22,12 @@ import org.koin.androidx.compose.getViewModel
  * @date 12/08/23
  */
 fun NavGraphBuilder.homeMainNavigation() = run {
-    composable("home"){
+    composable("home") {
         val viewModel: HomeViewModel = getViewModel()
         val state by viewModel.state.collectAsState()
         HomeScreen(
             onEvent = viewModel::onEvent,
-            state =  state
+            state = state
         )
     }
 }

@@ -27,6 +27,5 @@ object LiveDataTestUtil {
         }
 
         return data[0] as T
-
     }
 }

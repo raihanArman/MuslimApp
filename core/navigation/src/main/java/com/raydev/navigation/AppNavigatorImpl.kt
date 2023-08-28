@@ -7,7 +7,7 @@ import kotlinx.coroutines.channels.Channel
  * @author Raihan Arman
  * @date 06/08/23
  */
-class AppNavigatorImpl: AppNavigator {
+class AppNavigatorImpl : AppNavigator {
     override val navigationChannel = Channel<NavigationIntent>(
         capacity = Int.MAX_VALUE,
         onBufferOverflow = BufferOverflow.DROP_LATEST
@@ -68,5 +68,4 @@ class AppNavigatorImpl: AppNavigator {
             NavigationIntent.NavigateAndReplace(route)
         )
     }
-
 }

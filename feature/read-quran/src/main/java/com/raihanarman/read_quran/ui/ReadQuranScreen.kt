@@ -20,8 +20,8 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
-import com.raihanarman.read_quran.components.QuranBottomSheet
 import com.raihanarman.read_quran.components.AyahPager
+import com.raihanarman.read_quran.components.QuranBottomSheet
 import com.raihanarman.read_quran.components.QuranBottomSheetMenu
 import com.raihanarman.read_quran.components.SurahTabLayout
 import com.raydev.navigation.Destination
@@ -35,7 +35,7 @@ import org.koin.androidx.compose.getViewModel
  */
 
 fun NavGraphBuilder.readQuranNavigation() = run {
-    composable(Destination.ReadQuranScreen){
+    composable(Destination.ReadQuranScreen) {
         val viewModel: ReadQuranViewModel = getViewModel()
         val state by viewModel.state.collectAsState()
         ReadQuranScreen(
@@ -123,5 +123,4 @@ fun ReadQuranScreen(
             )
         }
     }
-
 }

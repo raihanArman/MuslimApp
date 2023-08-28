@@ -1,9 +1,9 @@
 package com.raydev.data.datasource.remote
 
+import com.raydev.anabstract.state.ResponseState
+import com.raydev.data.network.QuranService
 import com.raydev.shared.model.Ayah
 import com.raydev.shared.model.Surah
-import com.raydev.data.network.QuranService
-import com.raydev.anabstract.state.ResponseState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,7 +29,7 @@ class QuranRemoteDataSource(
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getListAyat(number: String): Flow<ResponseState<List<Ayah>>>  {
+    fun getListAyat(number: String): Flow<ResponseState<List<Ayah>>> {
         return flow {
             emit(ResponseState.Loading())
             try {
@@ -45,5 +45,4 @@ class QuranRemoteDataSource(
             }
         }.flowOn(Dispatchers.IO)
     }
-
 }

@@ -17,18 +17,16 @@ import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.SholatTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-
 class PrayerRepositoryImpl(
     private val remoteDataSource: PrayerRemoteDataSource,
     private val sharedPreferenceSource: SharedPreferenceSource
-): PrayerRepository {
+) : PrayerRepository {
 
     private val locationManager: LocationManager = LocationManager.instance
     private val _flowPrayerTime: MutableStateFlow<PrayerTime> = MutableStateFlow(PrayerTime())

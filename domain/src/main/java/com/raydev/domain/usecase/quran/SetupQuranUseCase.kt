@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
  */
 class SetupQuranUseCase(
     private val repository: QuranRepository
-){
+) {
     operator fun invoke(): Flow<ResponseState<Unit>> {
         return repository.setupQuran()
     }

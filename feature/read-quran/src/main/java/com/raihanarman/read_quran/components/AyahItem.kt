@@ -2,7 +2,6 @@ package com.raihanarman.read_quran.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.raydev.shared.database.entity.LanguageString
 import com.raydev.shared.model.Ayah
 import com.raydev.shared.util.SharedDrawable
 import com.raydev.shared.util.SharedFont
@@ -48,7 +46,7 @@ fun AyahItem(
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Box(
             modifier = modifier
-                .clickable { 
+                .clickable {
                     onClick(ayah)
                 }
         ) {
@@ -98,7 +96,8 @@ fun AyahItem(
                         color = Color.Black,
                         textAlign = TextAlign.End,
                         fontFamily = FontFamily(
-                            Font(SharedFont.uthman))
+                            Font(SharedFont.uthman)
+                        )
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(

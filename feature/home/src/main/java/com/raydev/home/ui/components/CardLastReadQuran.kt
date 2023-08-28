@@ -7,23 +7,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raydev.shared.model.QuranLastRead
-import com.raydev.shared.model.Surah
-import com.raydev.shared.util.SharedFont
 
 /**
  * @author Raihan Arman
@@ -35,7 +26,7 @@ fun CardLastReadQuran(
     lastRead: QuranLastRead,
     onContinueClick: (QuranLastRead) -> Unit
 ) {
-    val progress = (lastRead.ayah.toFloat()/lastRead.sumAyah.toFloat())
+    val progress = (lastRead.ayah.toFloat() / lastRead.sumAyah.toFloat())
 
     Box(
         modifier = modifier

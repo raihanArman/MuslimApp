@@ -9,7 +9,7 @@ import com.raydev.shared.model.Surah
  * @author Raihan Arman
  * @date 26/08/23
  */
-fun BookmarkQuranEntity.mapToModel(ayah: Ayah?, surah: Surah?)= BookmarkQuran(
+fun BookmarkQuranEntity.mapToModel(ayah: Ayah?, surah: Surah?) = BookmarkQuran(
     id = id ?: 0,
     surah = surah,
     ayah = ayah

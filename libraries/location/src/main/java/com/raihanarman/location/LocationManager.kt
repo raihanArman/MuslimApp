@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.lang.IllegalStateException
 import java.util.Locale
 
 /**
@@ -32,7 +31,7 @@ import java.util.Locale
 class LocationManager(
     private val context: Context
 ) {
-    companion object: KoinComponent {
+    companion object : KoinComponent {
         val instance: LocationManager by inject()
     }
 
@@ -63,9 +62,9 @@ class LocationManager(
     @SuppressLint("MissingPermission")
     fun getLocationFlowEvent(): Flow<Location> {
         val callbackFlow = callbackFlow<Location> {
-            val locationCallback = object : LocationCallback(){
+            val locationCallback = object : LocationCallback() {
                 override fun onLocationResult(result: LocationResult) {
-                    for (location in result.locations){
+                    for (location in result.locations) {
                         trySend(location)
                     }
                 }
@@ -91,10 +90,8 @@ class LocationManager(
         }
     }
 
-
-
     fun getAddressLocation(currentLocation: Location, address: (Address?) -> Unit) {
-        try{
+        try {
             val geocoder = Geocoder(context, Locale.getDefault())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1) {
@@ -105,16 +102,16 @@ class LocationManager(
 
             try {
                 address(geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1)?.firstOrNull())
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 address(null)
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             address(null)
         }
     }
 
     fun getAddressLocation(currentLocation: LatLng, address: (Address?) -> Unit) {
-        try{
+        try {
             val geocoder = Geocoder(context, Locale.getDefault())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1) {
@@ -125,12 +122,11 @@ class LocationManager(
 
             try {
                 address(geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1)?.firstOrNull())
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 address(null)
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             address(null)
         }
     }
-
 }

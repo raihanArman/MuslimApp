@@ -14,37 +14,36 @@ class PrayerRemoteDataSource(
     private val apiService: PrayerService
 ) {
 
-    fun searchCity(city: String): Flow<ResponseState<List<City>>>{
+    fun searchCity(city: String): Flow<ResponseState<List<City>>> {
         return flow {
             emit(ResponseState.Loading())
-            try{
+            try {
                 val response = apiService.searchCity(city)
                 val data = response.data
-                if(data.isNotEmpty()){
+                if (data.isNotEmpty()) {
                     emit(ResponseState.Success(data))
-                }else{
+                } else {
                     emit(ResponseState.Empty)
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(ResponseState.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getSholatTime(cityId: String, date: String): Flow<ResponseState<SholatTime>>{
+    fun getSholatTime(cityId: String, date: String): Flow<ResponseState<SholatTime>> {
         return flow {
             emit(ResponseState.Loading())
-            try{
+            try {
                 val response = apiService.getSholatTime(cityId, date)
-                if(response.data != null){
+                if (response.data != null) {
                     emit(ResponseState.Success(response.data))
-                }else{
+                } else {
                     emit(ResponseState.Empty)
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 emit(ResponseState.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }
-
 }

@@ -1,6 +1,5 @@
 package com.raihan.ui.card
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -28,9 +27,9 @@ fun CardPrayer(
     isSelected: Boolean
 ) {
     val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary
-                else Color.White
+    else Color.White
     val contentColor = if (isSelected) Color.White
-                else Color.Black
+    else Color.Black
     Surface(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp)),

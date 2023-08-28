@@ -1,8 +1,8 @@
 package com.raydev.domain.repository
 
+import com.raydev.anabstract.state.ResponseState
 import com.raydev.shared.model.Ayah
 import com.raydev.shared.model.Surah
-import com.raydev.anabstract.state.ResponseState
 import kotlinx.coroutines.flow.Flow
 
 interface QuranRepository {

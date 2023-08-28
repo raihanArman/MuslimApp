@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-val networkModule = module{
+val networkModule = module {
 
     single {
         val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
@@ -27,13 +27,11 @@ val networkModule = module{
 //                chain.proceed(newRequest)
 //            }
 
-
-
         clientBuilder.readTimeout(120, TimeUnit.SECONDS)
         clientBuilder.writeTimeout(120, TimeUnit.SECONDS)
         clientBuilder.build()
     }
-    single{
+    single {
         GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create()

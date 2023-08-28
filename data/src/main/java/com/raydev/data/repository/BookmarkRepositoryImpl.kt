@@ -12,7 +12,6 @@ import com.raydev.shared.model.BookmarkQuran
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 
 /**
@@ -24,7 +23,7 @@ class BookmarkRepositoryImpl(
     private val ayatLocalDataSource: AyatLocalDataSource,
     private val surahLocalDataSource: SurahLocalDataSource,
     private val bookmarkQuranDataSource: BookmarkQuranDataSource
-): BookmarkRepository {
+) : BookmarkRepository {
     override fun getBookmarks(): Flow<ResponseState<List<BookmarkQuran>>> = flow {
         emit(ResponseState.Loading())
         val bookmarks = bookmarkQuranDataSource.getBookmarks().first().map {

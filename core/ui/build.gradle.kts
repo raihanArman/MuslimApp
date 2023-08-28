@@ -19,7 +19,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.0"
     }
-
 }
 
 dependencies {

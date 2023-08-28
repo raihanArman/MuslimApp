@@ -84,7 +84,7 @@ android {
     }
 }
 
-//apply from: '../shared_dependencies.gradle'
+// apply from: '../shared_dependencies.gradle'
 dependencies {
     implementation(project(":libraries:shared_preference"))
     implementation(project(":libraries:abstract"))

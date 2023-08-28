@@ -1,18 +1,12 @@
 package com.raydev.anabstract.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.OnReceiveContentListener
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
-import androidx.viewbinding.ViewBinding
-import com.raydev.anabstract.extention.toast
 import com.raydev.anabstract.util.ViewDataBindingOwner
-import kotlin.system.exitProcess
 
-abstract class BaseActivity<VM: BaseViewModel?, B: ViewDataBinding> : FragmentActivity(),
+abstract class BaseActivity<VM : BaseViewModel?, B : ViewDataBinding> :
+    FragmentActivity(),
     ViewDataBindingOwner<B> {
 
     abstract val layoutResourceId: Int

@@ -2,7 +2,6 @@ package com.raydev.data.datasource.local
 
 import com.raydev.data.database.dao.BookmarkQuranDao
 import com.raydev.data.database.entity.BookmarkQuranEntity
-import kotlinx.coroutines.flow.Flow
 
 /**
  * @author Raihan Arman
