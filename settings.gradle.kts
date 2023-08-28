@@ -6,7 +6,6 @@ pluginManagement {
         jcenter()
         maven { url = uri("https://www.jitpack.io") }
         flatDir { dirs("app/libs") }
-
     }
 }
 dependencyResolutionManagement {
@@ -25,8 +24,8 @@ dependencyResolutionManagement {
             from(files("gradle/libs/libs.versions.toml"))
         }
     }
-
 }
+
 rootProject.name = "My Application"
 include(
     ":app",

@@ -31,7 +31,7 @@ buildscript {
     }
 }
 
-apply(from="buildScripts/git-hooks.gradle")
+apply(from = "buildScripts/git-hooks.gradle")
 
 subprojects {
     apply {
