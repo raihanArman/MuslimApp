@@ -9,12 +9,13 @@ import com.raydev.data.datasource.local.AyatLocalDataSource
 import com.raydev.data.datasource.local.BookmarkQuranDataSource
 import com.raydev.data.datasource.local.SurahLocalDataSource
 import com.raydev.data.datasource.pref.SharedPreferenceSource
+import com.raydev.data.mapper.mapToEntity
 import com.raydev.data.mapper.mapToModel
 import com.raydev.domain.repository.QuranRepository
 import com.raydev.shared.database.entity.AyahLine
-import com.raydev.shared.database.entity.AyatEntity
 import com.raydev.shared.database.entity.SurahEntity
 import com.raydev.shared.model.Ayah
+import com.raydev.shared.model.AyahFromFile
 import com.raydev.shared.model.Surah
 import com.raydev.shared.util.FileUtils
 import kotlinx.coroutines.flow.Flow
@@ -99,60 +100,63 @@ class QuranRepositoryImpl(
                 surahDataSource.saveSurah(surah)
                 emit(ResponseState.Loading(605))
 
-                val juz1To5 = Gson().fromJson<ArrayList<AyatEntity>>(
+                val juz1To5 = Gson().fromJson<ArrayList<AyahFromFile>>(
                     FileUtils.getJsonStringFromAssets(
                         context, "json/quran/quran1.json"
                     ) {},
-                    object : TypeToken<ArrayList<AyatEntity>>() {}.type,
+                    object : TypeToken<ArrayList<AyahFromFile>>() {}.type,
                 )
-                ayahDataSource.saveAyah(juz1To5)
+                val data = juz1To5.map { it.mapToEntity() }
+                println("KAMMMAMAMMAMMA -> $data")
+                ayahDataSource.saveAyah(data)
                 emit(ResponseState.Loading(606))
 
-                val juz6To10 = Gson().fromJson<ArrayList<AyatEntity>>(
+                val juz6To10 = Gson().fromJson<ArrayList<AyahFromFile>>(
                     FileUtils.getJsonStringFromAssets(
                         context, "json/quran/quran2.json"
                     ) {},
-                    object : TypeToken<ArrayList<AyatEntity>>() {}.type,
+                    object : TypeToken<ArrayList<AyahFromFile>>() {}.type,
                 )
-                ayahDataSource.saveAyah(juz6To10)
+                ayahDataSource.saveAyah(juz6To10.map { it.mapToEntity() })
                 emit(ResponseState.Loading(607))
 
-                val juz11To15 = Gson().fromJson<ArrayList<AyatEntity>>(
+                val juz11To15 = Gson().fromJson<ArrayList<AyahFromFile>>(
                     FileUtils.getJsonStringFromAssets(
                         context, "json/quran/quran3.json"
                     ) {},
-                    object : TypeToken<ArrayList<AyatEntity>>() {}.type,
+                    object : TypeToken<ArrayList<AyahFromFile>>() {}.type,
                 )
-                ayahDataSource.saveAyah(juz11To15)
+                ayahDataSource.saveAyah(juz11To15.map { it.mapToEntity() })
                 emit(ResponseState.Loading(608))
 
-                val juz16To20 = Gson().fromJson<ArrayList<AyatEntity>>(
+                val juz16To20 = Gson().fromJson<ArrayList<AyahFromFile>>(
                     FileUtils.getJsonStringFromAssets(
                         context, "json/quran/quran4.json"
                     ) {},
-                    object : TypeToken<ArrayList<AyatEntity>>() {}.type,
+                    object : TypeToken<ArrayList<AyahFromFile>>() {}.type,
                 )
-                ayahDataSource.saveAyah(juz16To20)
+                ayahDataSource.saveAyah(juz16To20.map { it.mapToEntity() })
                 emit(ResponseState.Loading(609))
 
-                val juz21To25 = Gson().fromJson<ArrayList<AyatEntity>>(
+                val juz21To25 = Gson().fromJson<ArrayList<AyahFromFile>>(
                     FileUtils.getJsonStringFromAssets(
                         context, "json/quran/quran5.json"
                     ) {},
-                    object : TypeToken<ArrayList<AyatEntity>>() {}.type,
+                    object : TypeToken<ArrayList<AyahFromFile>>() {}.type,
                 )
-                ayahDataSource.saveAyah(juz21To25)
+                ayahDataSource.saveAyah(juz21To25.map { it.mapToEntity() })
                 emit(ResponseState.Loading(610))
 
-                val juz26To30 = Gson().fromJson<ArrayList<AyatEntity>>(
+                val juz26To30 = Gson().fromJson<ArrayList<AyahFromFile>>(
                     FileUtils.getJsonStringFromAssets(
                         context, "json/quran/quran6.json"
                     ) {},
-                    object : TypeToken<ArrayList<AyatEntity>>() {}.type,
+                    object : TypeToken<ArrayList<AyahFromFile>>() {}.type,
                 )
-                ayahDataSource.saveAyah(juz26To30)
+                ayahDataSource.saveAyah(juz26To30.map { it.mapToEntity() })
                 emit(ResponseState.Loading(611))
 
+                println("OOAOAOAOAOAOAOAO -> ${ayahDataSource.getAyahCount()}")
                 if (ayahDataSource.getAyahCount() != 6236) {
                     return@flow
                 }

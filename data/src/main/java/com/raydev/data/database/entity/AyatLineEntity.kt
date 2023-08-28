@@ -3,6 +3,7 @@ package com.raydev.shared.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 /**
  * @author Raihan Arman
@@ -26,13 +27,18 @@ data class AyahLine(
     val hizbNumber: Int? = null,
 )
 data class AyahLineWord(
+    @SerializedName("line_number")
     val lineNumber: Int? = null,
     val id: Int? = null,
     val position: Int? = null,
+    @SerializedName("verse_key")
     var verseKey: String? = null,
+    @SerializedName("code_v1")
     val codeV1: String? = null,
     var page: Int? = null,
+    @SerializedName("chapter_number")
     var chapterNumber: Int,
     val surah: SurahEntity? = null,
+    @SerializedName("is_bismillah")
     val isBismillah: Boolean? = false
 )

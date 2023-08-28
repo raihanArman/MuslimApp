@@ -3,7 +3,6 @@ package com.raihanarman.splash
 import androidx.lifecycle.viewModelScope
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.anabstract.state.ResponseState
-import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.domain.usecase.quran.SetupQuranUseCase
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
@@ -20,11 +19,10 @@ import kotlinx.coroutines.launch
 class SplashViewModel(
     private val setupQuranUseCase: SetupQuranUseCase,
     private val navigator: AppNavigator
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _observeSetupQuran = MutableStateFlow<ResponseState<Unit>>(ResponseState.Loading())
     val observeSetupQuran = _observeSetupQuran.asStateFlow()
-
 
     private val _observeEvent = MutableSharedFlow<SplashEvent>()
     val observeEvent = _observeEvent.asSharedFlow()
@@ -33,11 +31,11 @@ class SplashViewModel(
         setupQuran()
     }
 
-    fun setupQuran() {
+    private fun setupQuran() {
         viewModelScope.launch {
             setupQuranUseCase.invoke().collect {
                 _observeSetupQuran.value = it
-                when(it) {
+                when (it) {
                     is ResponseState.Success -> {
 //                        getSurah()
                     }
@@ -48,7 +46,7 @@ class SplashViewModel(
         }
     }
 
-    fun onEvent(event: SplashEvent){
+    fun onEvent(event: SplashEvent) {
         launch {
             _observeEvent.emit(event)
         }
@@ -57,5 +55,4 @@ class SplashViewModel(
     fun goToDashboard() {
         navigator.tryNavigateAndReplaceStartRoute(Destination.DashboardScreen())
     }
-
 }
