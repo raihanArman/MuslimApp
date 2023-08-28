@@ -8,13 +8,13 @@ class FakeQuranRepositoryTest(
     private val remoteDataSource: QuranRemoteDataSource
 ) {
 
-    suspend fun getSurah(): List<Surah> {
-        val response = remoteDataSource.getListSurah()
-        return response
-    }
-
-    suspend fun getAyat(number: String): List<Ayah> {
-        val response = remoteDataSource.getListAyat(number)
-        return response
-    }
+//    suspend fun getSurah(): List<Surah> {
+//        val response = remoteDataSource.getListSurah()
+//        return response
+//    }
+//
+//    suspend fun getAyat(number: String): List<Ayah> {
+//        val response = remoteDataSource.getListAyat(number)
+//        return response
+//    }
 }
