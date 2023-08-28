@@ -37,7 +37,6 @@ fun NavGraphBuilder.bookmarkNavigation() = run {
         val state by viewModel.state.collectAsState()
         BookmarkScreen(
             onEvent = viewModel::onEvent,
-            event = event,
             state =  state
         )
     }
@@ -46,7 +45,6 @@ fun NavGraphBuilder.bookmarkNavigation() = run {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BookmarkScreen(
-    event: BookmarkEvent,
     state: BookmarkState,
     onEvent: (BookmarkEvent) -> Unit
 ) {
