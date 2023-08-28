@@ -107,7 +107,6 @@ class QuranRepositoryImpl(
                     object : TypeToken<ArrayList<AyahFromFile>>() {}.type,
                 )
                 val data = juz1To5.map { it.mapToEntity() }
-                println("KAMMMAMAMMAMMA -> $data")
                 ayahDataSource.saveAyah(data)
                 emit(ResponseState.Loading(606))
 
@@ -156,7 +155,6 @@ class QuranRepositoryImpl(
                 ayahDataSource.saveAyah(juz26To30.map { it.mapToEntity() })
                 emit(ResponseState.Loading(611))
 
-                println("OOAOAOAOAOAOAOAO -> ${ayahDataSource.getAyahCount()}")
                 if (ayahDataSource.getAyahCount() != 6236) {
                     return@flow
                 }
