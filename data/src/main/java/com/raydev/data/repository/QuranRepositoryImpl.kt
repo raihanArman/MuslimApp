@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.raydev.anabstract.state.ResponseState
+import com.raydev.data.database.entity.SurahEntity
 import com.raydev.data.datasource.local.AyatLineLocalDataSource
 import com.raydev.data.datasource.local.AyatLocalDataSource
 import com.raydev.data.datasource.local.BookmarkQuranDataSource
@@ -13,7 +14,6 @@ import com.raydev.data.mapper.mapToEntity
 import com.raydev.data.mapper.mapToModel
 import com.raydev.domain.repository.QuranRepository
 import com.raydev.shared.database.entity.AyahLine
-import com.raydev.shared.database.entity.SurahEntity
 import com.raydev.shared.model.Ayah
 import com.raydev.shared.model.AyahFromFile
 import com.raydev.shared.model.Surah
@@ -90,16 +90,6 @@ class QuranRepositoryImpl(
                     emit(ResponseState.Loading(i))
                 }
 
-                val surah = Gson().fromJson<ArrayList<SurahEntity>>(
-                    FileUtils.getJsonStringFromAssets(
-                        context,
-                        "json/quran/surah.json"
-                    ) {},
-                    object : TypeToken<ArrayList<SurahEntity>>() {}.type,
-                )
-                surahDataSource.saveSurah(surah)
-                emit(ResponseState.Loading(605))
-
                 val juz1To5 = Gson().fromJson<ArrayList<AyahFromFile>>(
                     FileUtils.getJsonStringFromAssets(
                         context, "json/quran/quran1.json"
@@ -155,9 +145,22 @@ class QuranRepositoryImpl(
                 ayahDataSource.saveAyah(juz26To30.map { it.mapToEntity() })
                 emit(ResponseState.Loading(611))
 
-                if (ayahDataSource.getAyahCount() != 6236) {
+                if (ayahDataSource.getAyahCount() == 6236) {
+                    val surah = Gson().fromJson<ArrayList<SurahEntity>>(
+                        FileUtils.getJsonStringFromAssets(
+                            context,
+                            "json/quran/surah.json"
+                        ) {},
+                        object : TypeToken<ArrayList<SurahEntity>>() {}.type,
+                    )
+                    surahDataSource.saveSurah(
+                        surah.onEach {
+                            it.ayahCount = ayahDataSource.getAyahCountBySurahId(it.id - 1)
+                        }
+                    )
+                    emit(ResponseState.Loading(605))
+                } else
                     return@flow
-                }
 
                 emit(ResponseState.Success(Unit))
             } catch (e: Exception) {

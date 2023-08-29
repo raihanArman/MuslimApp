@@ -1,7 +1,7 @@
 package com.raydev.data.datasource.local
 
+import com.raydev.data.database.entity.SurahEntity
 import com.raydev.shared.database.dao.SurahDao
-import com.raydev.shared.database.entity.SurahEntity
 
 /**
  * @author Raihan Arman

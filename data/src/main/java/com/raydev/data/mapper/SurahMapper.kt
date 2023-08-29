@@ -1,8 +1,8 @@
 package com.raydev.data.mapper
 
 import android.content.Context
+import com.raydev.data.database.entity.SurahEntity
 import com.raydev.shared.database.entity.LanguageString
-import com.raydev.shared.database.entity.SurahEntity
 import com.raydev.shared.model.Surah
 import com.raydev.shared.util.getArabicCalligraphy
 
@@ -25,5 +25,6 @@ fun SurahEntity.mapToModel(context: Context) = Surah(
             )
         }
     ),
-    caligraphy = getArabicCalligraphy(context, id)
+    caligraphy = getArabicCalligraphy(context, id),
+    ayahCount = ayahCount
 )

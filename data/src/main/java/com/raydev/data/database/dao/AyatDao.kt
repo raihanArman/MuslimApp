@@ -28,6 +28,9 @@ interface AyatDao {
     @Query("Select count() from tb_ayat")
     suspend fun getAyahCount(): Int
 
+    @Query("Select count() from tb_ayat WHERE chapter_id = :surahId")
+    suspend fun getAyahCountBySurahId(surahId: Int): Int
+
     @Query("SELECT * FROM tb_ayat WHERE juz IS :juz LIMIT :limit")
     fun getAyahByJuz(juz: Int, limit: Int): Flow<List<AyatEntity>>
 

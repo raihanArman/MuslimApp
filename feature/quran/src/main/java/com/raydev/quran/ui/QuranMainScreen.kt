@@ -16,7 +16,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.raihan.ui.dialog.DialogAyahJump
 import com.raydev.quran.ui.components.HeaderQuran
+import com.raydev.quran.ui.components.HeaderQuranMenu
 import com.raydev.quran.ui.components.TileSurah
 import org.koin.androidx.compose.getViewModel
 
@@ -43,13 +45,21 @@ fun SurahScreen(
     Scaffold(
         topBar = {
             HeaderQuran {
-                onEvent(QuranMainEvent.OnNavigateToBookmark)
+                when (it) {
+                    HeaderQuranMenu.OnNavigateToBookmark -> {
+                        onEvent(QuranMainEvent.OnNavigateToBookmark)
+                    }
+                    HeaderQuranMenu.OnOpenFilterDialog -> {
+                        onEvent(QuranMainEvent.OnOpenFilterDialog(true))
+                    }
+                }
             }
         }
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize().padding(top = it.calculateTopPadding())
+                .fillMaxSize()
+                .padding(top = it.calculateTopPadding())
         ) {
             state.listSurah?.let {
                 LazyColumn {
@@ -72,6 +82,14 @@ fun SurahScreen(
                     }
                 }
             }
+        }
+    }
+
+    state.listSurah?.let {
+        if (state.isOpenJumpDialog) {
+            DialogAyahJump(listSurah = it, onDismissDialog = {
+                onEvent(QuranMainEvent.OnOpenFilterDialog(false))
+            })
         }
     }
 }

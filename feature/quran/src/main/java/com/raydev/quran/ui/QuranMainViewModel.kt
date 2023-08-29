@@ -55,6 +55,14 @@ class QuranMainViewModel(
                 QuranMainEvent.OnNavigateToBookmark -> {
                     navigator.tryNavigateTo(Destination.BookmarkScreen())
                 }
+
+                is QuranMainEvent.OnOpenFilterDialog -> {
+                    _uiState.update {
+                        it.copy(
+                            isOpenJumpDialog = event.isOpen
+                        )
+                    }
+                }
             }
         }
     }

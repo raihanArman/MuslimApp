@@ -12,6 +12,7 @@ class AyatLocalDataSource(
     fun getAyah() = ayatDao.getAyah()
     fun searchAyah(query: String) = ayatDao.searchAyah(query)
     suspend fun getAyahCount() = ayatDao.getAyahCount()
+    suspend fun getAyahCountBySurahId(surahId: Int) = ayatDao.getAyahCountBySurahId(surahId)
     fun getAyahByJuz(juz: Int, limit: Int) = ayatDao.getAyahByJuz(juz, limit)
     fun getAyahByHizb(hizb: Float, limit: Int) = ayatDao.getAyahByHizb(hizb, limit)
     fun getAyahById(id: Int) = ayatDao.getAyahById(id)
