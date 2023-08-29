@@ -93,7 +93,7 @@ fun DialogAyahJump(
                 Box(
                     modifier = Modifier
                         .width(250.dp)
-                        .height(100.dp),
+                        .height(120.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Surface(
@@ -110,7 +110,7 @@ fun DialogAyahJump(
                         modifier = Modifier.fillMaxSize()
                     ) {
                         item {
-                            Spacer(modifier = Modifier.height(20.dp))
+                            Spacer(modifier = Modifier.height(35.dp))
                         }
                         itemsIndexed(listSurah) { index, item ->
                             Box(
@@ -126,7 +126,7 @@ fun DialogAyahJump(
                             }
                         }
                         item {
-                            Spacer(modifier = Modifier.height(25.dp))
+                            Spacer(modifier = Modifier.height(35.dp))
                         }
                     }
                 }
