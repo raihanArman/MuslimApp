@@ -1,6 +1,7 @@
 package com.raihan.ui.dialog
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -105,45 +107,12 @@ fun DialogAyahJump(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Box(
-                    modifier = Modifier
-                        .width(250.dp)
-                        .height(120.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Surface(
-                        color = Color.Gray.copy(alpha = 0.3f),
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                    ) {
-                    }
-                    LazyColumn(
-                        state = lazyListState,
-                        flingBehavior = snapBehavior,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        item {
-                            Spacer(modifier = Modifier.height(35.dp))
-                        }
-                        itemsIndexed(listSurah) { index, item ->
-                            Box(
-                                modifier = Modifier
-                                    .height(50.dp)
-                                    .padding(horizontal = 10.dp)
-                                    .onGloballyPositioned { coordinates ->
-                                        focusedItemIndex = index
-                                    },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(text = "${index + 1}.  ${item.name}")
-                            }
-                        }
-                        item {
-                            Spacer(modifier = Modifier.height(35.dp))
-                        }
-                    }
+                BoxListSurah(
+                    state = lazyListState,
+                    snapBehavior = snapBehavior,
+                    listSurah = listSurah
+                ) { indexPostion ->
+                    focusedItemIndex = indexPostion
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(text = textMessage)
@@ -190,5 +159,54 @@ fun DialogAyahJump(
 inline fun validationMaxLength(value: Int, maxValue: Int, onChanged: () -> Unit) {
     if (value <= maxValue) {
         onChanged()
+    }
+}
+
+@Composable
+fun BoxListSurah(
+    state: LazyListState,
+    snapBehavior: FlingBehavior,
+    listSurah: List<Surah>,
+    onFocusPosition: (Int) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .width(250.dp)
+            .height(120.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Surface(
+            color = Color.Gray.copy(alpha = 0.3f),
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+        ) {
+        }
+        LazyColumn(
+            state = state,
+            flingBehavior = snapBehavior,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(35.dp))
+            }
+            itemsIndexed(listSurah) { index, item ->
+                Box(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .padding(horizontal = 10.dp)
+                        .onGloballyPositioned {
+                            onFocusPosition(index)
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = "${index + 1}.  ${item.name}")
+                }
+            }
+            item {
+                Spacer(modifier = Modifier.height(35.dp))
+            }
+        }
     }
 }
