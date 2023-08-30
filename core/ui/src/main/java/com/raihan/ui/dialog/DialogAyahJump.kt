@@ -3,6 +3,7 @@ package com.raihan.ui.dialog
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -98,7 +99,8 @@ fun DialogAyahJump(
         ) {
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
                     text = "Pergi ke Ayat",
@@ -106,17 +108,14 @@ fun DialogAyahJump(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(16.dp))
                 BoxListSurah(
                     state = lazyListState,
                     snapBehavior = snapBehavior,
                     listSurah = listSurah
-                ) { indexPostion ->
-                    focusedItemIndex = indexPostion
+                ) { indexPosition ->
+                    focusedItemIndex = indexPosition
                 }
-                Spacer(modifier = Modifier.height(16.dp))
                 Text(text = textMessage)
-                Spacer(modifier = Modifier.height(16.dp))
                 TextFieldCustom(
                     modifier = Modifier.width(150.dp),
                     value = textFieldValue,
