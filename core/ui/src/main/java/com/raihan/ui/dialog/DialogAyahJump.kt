@@ -52,7 +52,6 @@ fun DialogAyahJump(
     onDismissDialog: () -> Unit,
     onPositiveClick: (Surah, Int) -> Unit
 ) {
-
     val lazyListState = rememberLazyListState()
     val snapBehavior = rememberSnapFlingBehavior(lazyListState = lazyListState)
 
@@ -120,13 +119,7 @@ fun DialogAyahJump(
                     modifier = Modifier.width(150.dp),
                     value = textFieldValue,
                     onValueChange = { value ->
-                        if (value.isNotEmpty()) {
-                            if (value.all { it.isDigit() }) {
-                                validationMaxLength(value.toInt(), maxLength) {
-                                    textFieldValue = value
-                                }
-                            }
-                        } else {
+                        setValueAyahInput(value, maxLength) {
                             textFieldValue = value
                         }
                     },
@@ -207,5 +200,17 @@ fun BoxListSurah(
                 Spacer(modifier = Modifier.height(35.dp))
             }
         }
+    }
+}
+
+inline fun setValueAyahInput(value: String, maxLength: Int, setValue: () -> Unit) {
+    if (value.isNotEmpty()) {
+        if (value.all { it.isDigit() }) {
+            validationMaxLength(value.toInt(), maxLength) {
+                setValue()
+            }
+        }
+    } else {
+        setValue()
     }
 }
