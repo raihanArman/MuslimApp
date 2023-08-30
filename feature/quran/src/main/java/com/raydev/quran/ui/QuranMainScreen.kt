@@ -87,9 +87,15 @@ fun SurahScreen(
 
     state.listSurah?.let {
         if (state.isOpenJumpDialog) {
-            DialogAyahJump(listSurah = it, onDismissDialog = {
-                onEvent(QuranMainEvent.OnOpenFilterDialog(false))
-            })
+            DialogAyahJump(
+                listSurah = it,
+                onDismissDialog = {
+                    onEvent(QuranMainEvent.OnOpenFilterDialog(false))
+                },
+                onPositiveClick = { surah, ayat ->
+                    onEvent(QuranMainEvent.OnNavigateToReadQuran(surah.id - 1, ayat))
+                }
+            )
         }
     }
 }

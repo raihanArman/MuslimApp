@@ -9,4 +9,5 @@ sealed interface QuranMainEvent {
     data class OnClickSurah(val id: Int) : QuranMainEvent
     object OnNavigateToBookmark : QuranMainEvent
     data class OnOpenFilterDialog(val isOpen: Boolean) : QuranMainEvent
+    data class OnNavigateToReadQuran(val surahId: Int, val ayah: Int) : QuranMainEvent
 }

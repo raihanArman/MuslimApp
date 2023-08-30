@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,8 +17,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,13 +46,17 @@ import com.raydev.shared.model.Surah
 fun DialogAyahJump(
     modifier: Modifier = Modifier,
     listSurah: List<Surah>,
-    onDismissDialog: () -> Unit
+    onDismissDialog: () -> Unit,
+    onPositiveClick: (Surah, Int) -> Unit
 ) {
 
     val lazyListState = rememberLazyListState()
     val snapBehavior = rememberSnapFlingBehavior(lazyListState = lazyListState)
 
-    var focusedItemIndex by remember { mutableStateOf(-1) }
+    var focusedItemIndex by remember {
+        mutableStateOf(-1)
+    }
+
     var textMessage by remember {
         mutableStateOf("")
     }
@@ -66,11 +73,19 @@ fun DialogAyahJump(
         mutableStateOf("")
     }
 
-    LaunchedEffect(key1 = focusedItemIndex) {
-        val surah = listSurah[focusedItemIndex]
-        maxLength = surah.ayahCount
-        textFieldPlaceHolderValue = "1 - ${surah.ayahCount}"
-        textMessage = "Masukkan nomor ayat antara 1 - ${surah.ayahCount}"
+    val doneScrolling by remember {
+        derivedStateOf {
+            !lazyListState.isScrollInProgress
+        }
+    }
+
+    LaunchedEffect(key1 = doneScrolling) {
+        if (doneScrolling) {
+            val surah = listSurah[focusedItemIndex]
+            maxLength = surah.ayahCount
+            textFieldPlaceHolderValue = "1 - ${surah.ayahCount}"
+            textMessage = "Masukkan nomor ayat antara 1 - ${surah.ayahCount}"
+        }
     }
 
     Dialog(onDismissRequest = onDismissDialog) {
@@ -136,24 +151,43 @@ fun DialogAyahJump(
                 TextFieldCustom(
                     modifier = Modifier.width(150.dp),
                     value = textFieldValue,
-                    onValueChange = {
-                        if (it.isNotEmpty()) {
-                            validationMaxLength(it.toInt(), maxLength) {
-                                textFieldValue = it
+                    onValueChange = { value ->
+                        if (value.isNotEmpty()) {
+                            if (value.all { it.isDigit() }) {
+                                validationMaxLength(value.toInt(), maxLength) {
+                                    textFieldValue = value
+                                }
                             }
                         } else {
-                            textFieldValue = it
+                            textFieldValue = value
                         }
                     },
                     textPlaceHolder = textFieldPlaceHolderValue,
                     keyboardType = KeyboardType.Number
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+                Row {
+                    TextButton(onClick = onDismissDialog) {
+                        Text(text = "Batal")
+                    }
+                    TextButton(onClick = {
+                        val currentIndex = focusedItemIndex - 1
+                        if (currentIndex > -1 && textFieldValue.isNotEmpty()) {
+                            onPositiveClick(
+                                listSurah[currentIndex],
+                                textFieldValue.toInt()
+                            )
+                        }
+                    }) {
+                        Text(text = "Pergi")
+                    }
+                }
             }
         }
     }
 }
 
-fun validationMaxLength(value: Int, maxValue: Int, onChanged: () -> Unit) {
+inline fun validationMaxLength(value: Int, maxValue: Int, onChanged: () -> Unit) {
     if (value <= maxValue) {
         onChanged()
     }
