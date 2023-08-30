@@ -17,8 +17,8 @@ import kotlinx.coroutines.launch
  */
 class QuranMainViewModel(
     private val useCase: GetSurahUseCase,
-    private val navigator: AppNavigator
-): BaseViewModel() {
+    private val navigator: AppNavigator,
+) : BaseViewModel() {
 
     private val _uiState: MutableStateFlow<QuranMainState> = MutableStateFlow(QuranMainState())
     val uiState = _uiState.asStateFlow()
@@ -42,7 +42,7 @@ class QuranMainViewModel(
     fun onEvent(event: QuranMainEvent) {
         launch {
             _uiEvent.emit(event)
-            when(event) {
+            when (event) {
                 QuranMainEvent.Initial -> {}
                 is QuranMainEvent.OnClickSurah -> {
                     navigator.tryNavigateTo(
@@ -55,8 +55,29 @@ class QuranMainViewModel(
                 QuranMainEvent.OnNavigateToBookmark -> {
                     navigator.tryNavigateTo(Destination.BookmarkScreen())
                 }
+
+                is QuranMainEvent.OnOpenFilterDialog -> {
+                    _uiState.update {
+                        it.copy(
+                            isOpenJumpDialog = event.isOpen
+                        )
+                    }
+                }
+
+                is QuranMainEvent.OnNavigateToReadQuran -> {
+                    _uiState.update {
+                        it.copy(
+                            isOpenJumpDialog = false
+                        )
+                    }
+                    navigator.tryNavigateTo(
+                        Destination.ReadQuranScreen(
+                            event.surahId,
+                            event.ayah
+                        )
+                    )
+                }
             }
         }
     }
-
 }

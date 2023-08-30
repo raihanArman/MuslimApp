@@ -7,12 +7,12 @@ import com.raydev.data.database.converter.AyahLineWordConverter
 import com.raydev.data.database.converter.LanguageStringConverter
 import com.raydev.data.database.dao.BookmarkQuranDao
 import com.raydev.data.database.entity.BookmarkQuranEntity
+import com.raydev.data.database.entity.SurahEntity
 import com.raydev.shared.database.dao.AyatDao
 import com.raydev.shared.database.dao.AyatLineDao
 import com.raydev.shared.database.dao.SurahDao
 import com.raydev.shared.database.entity.AyahLine
 import com.raydev.shared.database.entity.AyatEntity
-import com.raydev.shared.database.entity.SurahEntity
 
 /**
  * @author Raihan Arman

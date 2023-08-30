@@ -19,7 +19,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.0"
     }
-
 }
 
 dependencies {
@@ -33,7 +32,6 @@ dependencies {
     api(project(":shared"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
-    implementation(project(":resource"))
 //
 //    implementation 'androidx.core:core-ktx:1.7.0'
 //    implementation 'androidx.appcompat:appcompat:1.4.1'

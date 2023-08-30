@@ -12,7 +12,7 @@ import android.content.SharedPreferences
 
 class PreferenceProviderImpl(
     private val preference: SharedPreferences
-): PreferenceProvider {
+) : PreferenceProvider {
     override fun setStringToPreference(key: String, value: String?) {
         preference.edit().putString(key, value).apply()
     }
@@ -52,5 +52,4 @@ class PreferenceProviderImpl(
     override fun clearPreferences() {
         preference.edit().clear().apply()
     }
-
 }

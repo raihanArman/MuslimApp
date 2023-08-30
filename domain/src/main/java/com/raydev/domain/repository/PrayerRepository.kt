@@ -1,11 +1,11 @@
 package com.raydev.domain.repository
 
 import com.google.android.gms.maps.model.LatLng
-import com.raydev.shared.model.PrayerTime
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.shared.model.City
 import com.raydev.shared.model.NextPrayerTime
 import com.raydev.shared.model.PrayerData
+import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.SholatTime
 import kotlinx.coroutines.flow.Flow
 

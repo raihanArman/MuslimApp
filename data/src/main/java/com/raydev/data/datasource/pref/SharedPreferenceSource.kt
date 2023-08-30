@@ -1,10 +1,9 @@
 package com.raydev.data.datasource.pref
 
-import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
-import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.PrayerData
+import com.raydev.shared.model.PrayerTime
 import com.raydev.shared.model.QuranLastRead
 import com.raydev.shared.model.RingType
 import com.raydev.shared.util.KeyShared
@@ -22,62 +21,60 @@ import com.raydev.shared.util.KeyShared.PREF_KEY_USER_CITY
 import com.raydev.shared.util.KeyShared.PREF_KEY_USER_COORDINATES
 import com.raydev.shared_preference.PreferenceProvider
 
-
-private const val TAG = "SharedPreferenceSource"
 class SharedPreferenceSource(
     private val sharedPreferences: PreferenceProvider
-)  {
+) {
 
-    fun setImsakData(prayerData: PrayerData){
+    fun setImsakData(prayerData: PrayerData) {
         sharedPreferences.setIntToPreference(KeyShared.IMSAK_STATUS, prayerData.ringType)
     }
 
-    fun setSubuhData(prayerData: PrayerData){
+    fun setSubuhData(prayerData: PrayerData) {
         sharedPreferences.setIntToPreference(KeyShared.SUBUH_STATUS, prayerData.ringType)
     }
 
-    fun setDhuhurData(prayerData: PrayerData){
+    fun setDhuhurData(prayerData: PrayerData) {
         sharedPreferences.setIntToPreference(KeyShared.DHUHUR_STATUS, prayerData.ringType)
     }
 
-    fun setAsharData(prayerData: PrayerData){
+    fun setAsharData(prayerData: PrayerData) {
         sharedPreferences.setIntToPreference(KeyShared.ASHAR_STATUS, prayerData.ringType)
     }
 
-    fun setMaghribData(prayerData: PrayerData){
+    fun setMaghribData(prayerData: PrayerData) {
         sharedPreferences.setIntToPreference(KeyShared.MAGHRIB_STATUS, prayerData.ringType)
     }
 
-    fun setIsyaData(prayerData: PrayerData){
+    fun setIsyaData(prayerData: PrayerData) {
         sharedPreferences.setIntToPreference(KeyShared.ISYA_STATUS, prayerData.ringType)
     }
 
-    fun getImsakData(): PrayerData{
+    fun getImsakData(): PrayerData {
         val checked = sharedPreferences.getIntFromPreference(KeyShared.IMSAK_STATUS, RingType.SOUND)
         return PrayerData(checked)
     }
 
-    fun getSubuhData(): PrayerData{
+    fun getSubuhData(): PrayerData {
         val checked = sharedPreferences.getIntFromPreference(KeyShared.SUBUH_STATUS, RingType.SOUND)
         return PrayerData(checked)
     }
 
-    fun getDzuhurData(): PrayerData{
+    fun getDzuhurData(): PrayerData {
         val checked = sharedPreferences.getIntFromPreference(KeyShared.DHUHUR_STATUS, RingType.SOUND)
         return PrayerData(checked)
     }
 
-    fun getAsharData(): PrayerData{
+    fun getAsharData(): PrayerData {
         val checked = sharedPreferences.getIntFromPreference(KeyShared.ASHAR_STATUS, RingType.SOUND)
         return PrayerData(checked)
     }
 
-    fun getMaghribData(): PrayerData{
+    fun getMaghribData(): PrayerData {
         val checked = sharedPreferences.getIntFromPreference(KeyShared.MAGHRIB_STATUS, RingType.SOUND)
         return PrayerData(checked)
     }
 
-    fun getIsyaData(): PrayerData{
+    fun getIsyaData(): PrayerData {
         val checked = sharedPreferences.getIntFromPreference(KeyShared.ISYA_STATUS, RingType.SOUND)
         return PrayerData(checked)
     }
@@ -132,7 +129,8 @@ class SharedPreferenceSource(
     var praytime: PrayerTime
         get() = Gson().fromJson(
             sharedPreferences.getStringFromPreference(
-                PREF_KEY_PRAYERTIME, Gson().toJson(
+                PREF_KEY_PRAYERTIME,
+                Gson().toJson(
                     PrayerTime(
                         null,
                         "00:00",
@@ -156,7 +154,8 @@ class SharedPreferenceSource(
             sharedPreferences.getStringFromPreference(
                 PREF_KEY_USER_COORDINATES,
                 Gson().toJson(LatLng(0.0, 0.0))
-            ), LatLng::class.java
+            ),
+            LatLng::class.java
         )
         set(value) {
             sharedPreferences.setStringToPreference(PREF_KEY_USER_COORDINATES, Gson().toJson(value))
@@ -173,10 +172,10 @@ class SharedPreferenceSource(
             sharedPreferences.getStringFromPreference(
                 PREF_KEY_QURAN_LAST_READ,
                 Gson().toJson(QuranLastRead())
-            ), QuranLastRead::class.java
+            ),
+            QuranLastRead::class.java
         )
         set(value) {
             sharedPreferences.setStringToPreference(PREF_KEY_QURAN_LAST_READ, Gson().toJson(value))
         }
-
 }

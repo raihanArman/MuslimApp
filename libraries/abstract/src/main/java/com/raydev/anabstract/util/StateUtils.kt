@@ -8,9 +8,9 @@ import com.raydev.anabstract.state.ResponseState
  */
 val <T>ResponseState<T>.value: T?
     get() {
-        return if(this is ResponseState.Success){
+        return if (this is ResponseState.Success) {
             this.data
-        }else {
+        } else {
             null
         }
     }

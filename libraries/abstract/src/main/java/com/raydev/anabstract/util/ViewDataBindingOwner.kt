@@ -17,7 +17,7 @@ interface ViewDataBindingOwner<T : ViewDataBinding> {
     val bindingNotNull: T
         get() = binding!!
 
-    fun clearDataBinding(){
+    fun clearDataBinding() {
         binding?.lifecycleOwner = null
         binding = null
     }

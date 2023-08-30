@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class BookmarkViewModel(
     private val repository: BookmarkRepository,
     private val appNavigator: AppNavigator
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _state: MutableStateFlow<BookmarkState> = MutableStateFlow(BookmarkState())
     val state = _state.asStateFlow()
@@ -36,7 +36,7 @@ class BookmarkViewModel(
         launch {
             repository.getBookmarks().collect { response ->
                 println("ResponseBookmark -> $response")
-                when(response) {
+                when (response) {
                     ResponseState.Empty -> {
                         _state.update {
                             it.copy(
@@ -71,19 +71,20 @@ class BookmarkViewModel(
 
     fun onEvent(event: BookmarkEvent) {
         launch {
-            when(event) {
+            when (event) {
                 BookmarkEvent.Initial -> {}
                 BookmarkEvent.OnBack -> {
                     appNavigator.navigateBack()
                 }
                 is BookmarkEvent.OnNavigateToReadQuran -> {
-                    appNavigator.tryNavigateTo(Destination.ReadQuranScreen(
-                        event.surahId - 1,
-                        event.ayahId
-                    ))
+                    appNavigator.tryNavigateTo(
+                        Destination.ReadQuranScreen(
+                            event.surahId - 1,
+                            event.ayahId
+                        )
+                    )
                 }
             }
         }
     }
-
 }

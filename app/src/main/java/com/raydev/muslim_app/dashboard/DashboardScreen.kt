@@ -24,7 +24,7 @@ import com.raydev.quran.ui.quranMainNavigation
  * @date 06/08/23
  */
 fun NavGraphBuilder.dashboardNavigation() = run {
-    composable(Destination.DashboardScreen){
+    composable(Destination.DashboardScreen) {
         DashboardScreen()
     }
 }
@@ -60,7 +60,7 @@ fun DashboardContent(
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route
-    ){
+    ) {
         homeMainNavigation()
         quranMainNavigation()
         prayerMainNavigation()

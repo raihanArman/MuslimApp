@@ -1,12 +1,9 @@
 package com.raydev.data.mapper
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.raydev.data.database.entity.SurahEntity
 import com.raydev.shared.database.entity.LanguageString
-import com.raydev.shared.database.entity.SurahEntity
 import com.raydev.shared.model.Surah
-import com.raydev.shared.util.FileUtils
 import com.raydev.shared.util.getArabicCalligraphy
 
 /**
@@ -20,11 +17,14 @@ fun SurahEntity.mapToModel(context: Context) = Surah(
     revelation = revelation,
     verses = verses,
     page = page,
-    translation = ArrayList(translation.map {
-        LanguageString(
-            text = it.text ?: "",
-            language = it.language ?: ""
-        )
-    }),
-    caligraphy = getArabicCalligraphy(context, id)
+    translation = ArrayList(
+        translation.map {
+            LanguageString(
+                text = it.text ?: "",
+                language = it.language ?: ""
+            )
+        }
+    ),
+    caligraphy = getArabicCalligraphy(context, id),
+    ayahCount = ayahCount
 )

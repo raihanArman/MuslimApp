@@ -2,7 +2,6 @@ package com.raihanarman.read_quran.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,13 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.raydev.shared.database.entity.LanguageString
 import com.raydev.shared.model.Ayah
 import com.raydev.shared.util.SharedDrawable
+import com.raydev.shared.util.SharedFont
 import com.raydev.shared.util.getArabic
 import com.raydev.shared.util.getText
 
@@ -45,7 +46,7 @@ fun AyahItem(
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Box(
             modifier = modifier
-                .clickable { 
+                .clickable {
                     onClick(ayah)
                 }
         ) {
@@ -87,12 +88,16 @@ fun AyahItem(
                 ) {
                     Text(
                         text = ayah.text.getArabic().replace(
-                            if (ayah.verseNumber == 1 && ayah.chapterId != 1) "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" else "",
+                            if (ayah.verseNumber == 1 && ayah.chapterId != 1) "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"
+                            else "",
                             ""
                         ),
                         fontSize = 24.sp,
                         color = Color.Black,
-                        textAlign = TextAlign.End
+                        textAlign = TextAlign.End,
+                        fontFamily = FontFamily(
+                            Font(SharedFont.uthman)
+                        )
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(

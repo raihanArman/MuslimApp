@@ -17,8 +17,8 @@ data class PrayerTime(
 
 fun PrayerTime.checkPrayerTimeIsNotEmpty(): Boolean {
     return !this.fajr.isNullOrEmpty() &&
-            !this.dhuhr.isNullOrEmpty() &&
-            !this.asr.isNullOrEmpty() &&
-            !this.maghrib.isNullOrEmpty() &&
-            !this.isya.isNullOrEmpty()
+        !this.dhuhr.isNullOrEmpty() &&
+        !this.asr.isNullOrEmpty() &&
+        !this.maghrib.isNullOrEmpty() &&
+        !this.isya.isNullOrEmpty()
 }

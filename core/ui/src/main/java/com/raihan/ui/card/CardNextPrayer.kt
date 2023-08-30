@@ -20,7 +20,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raydev.shared.model.NextPrayerTime
-import com.raydev.shared.model.PrayerTime
 
 /**
  * @author Raihan Arman
@@ -51,7 +50,12 @@ fun CardNextPrayer(
             content?.invoke()
             Text(text = "Shalat selanjutnya", color = Color.White, fontSize = 12.sp)
             Spacer(modifier = Modifier.height(5.dp))
-            Text(text = nextPrayerTime.textPrayerTime+" WIB", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = nextPrayerTime.textPrayerTime + " WIB",
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
             Spacer(modifier = Modifier.height(5.dp))
             Text(text = nextPrayer, color = Color.White, fontSize = 12.sp)
         }

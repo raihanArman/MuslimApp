@@ -9,15 +9,11 @@ import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.navigation.Destination
 import com.raydev.shared.model.BookmarkQuran
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -31,7 +27,7 @@ class ReadQuranViewModel(
     private val stateHandle: SavedStateHandle,
     private val bookmarkAyahUseCase: BookmarkAyahUseCase,
     private val lastReadRepository: LastReadRepository,
-): BaseViewModel() {
+) : BaseViewModel() {
     init {
         getSurah()
         val surahId = stateHandle.get<String>(Destination.ReadQuranScreen.SURAH_ID_KEY) ?: ""
@@ -44,13 +40,6 @@ class ReadQuranViewModel(
 
     private val _event: MutableSharedFlow<ReadQuranEvent> = MutableSharedFlow()
     val event = _event.asSharedFlow()
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val ayahBySurahIdFlow = _state.filter {
-        it.surahId != null
-    }.flatMapLatest {
-        ayahBySurah.invoke(it.surahId!!)
-    }.distinctUntilChanged()
 
     private fun setTabSelected(id: Int) {
         launch {
@@ -104,7 +93,7 @@ class ReadQuranViewModel(
 
     fun onEvent(event: ReadQuranEvent) {
         launch {
-            when(event) {
+            when (event) {
                 ReadQuranEvent.Initial -> {}
                 is ReadQuranEvent.OnClickTabSurah -> {
                     _state.update { state ->
@@ -212,5 +201,4 @@ class ReadQuranViewModel(
             }
         }
     }
-
 }

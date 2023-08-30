@@ -8,16 +8,14 @@ import org.koin.dsl.module
  * @author Raihan Arman
  * @date 12/08/23
  */
-object ReadQuranModule {
-    val readQuranModule = module {
-        viewModel { params ->
-            ReadQuranViewModel(
-                surahUseCase = get(),
-                ayahBySurah = get(),
-                stateHandle = params.get(),
-                bookmarkAyahUseCase = get(),
-                lastReadRepository = get()
-            )
-        }
+val readQuranModule = module {
+    viewModel { params ->
+        ReadQuranViewModel(
+            surahUseCase = get(),
+            ayahBySurah = get(),
+            stateHandle = params.get(),
+            bookmarkAyahUseCase = get(),
+            lastReadRepository = get()
+        )
     }
 }

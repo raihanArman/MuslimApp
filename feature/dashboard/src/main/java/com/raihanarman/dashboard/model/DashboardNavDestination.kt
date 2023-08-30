@@ -2,7 +2,6 @@ package com.raihanarman.dashboard.model
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.raihanarman.dashboard.R
@@ -39,7 +38,8 @@ val destinationList = listOf(
         type = DashboardBottomBarItemType.QURAN,
         label = "Quran",
         route = "quran_main"
-    ),DashboardBottomBarItem(
+    ),
+    DashboardBottomBarItem(
         icon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_baseline_favorite_border_24),

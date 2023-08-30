@@ -17,7 +17,7 @@ import com.raydev.shared.model.PrayerTime
 fun PrayerSection(
     modifier: Modifier = Modifier,
     prayerTime: PrayerTime,
-    nextPrayerTime: NextPrayerTime
+    nextPrayerTime: NextPrayerTime,
 ) {
     val nextPrayer = nextPrayerTime.textPrayerTime
     Row(

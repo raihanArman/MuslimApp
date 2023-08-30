@@ -35,22 +35,22 @@ fun BadgeLocation(
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.primary)
     ) {
-       Row(
-           modifier = Modifier
-               .padding(horizontal = 8.dp, vertical = 5.dp)
-       ) {
-           Icon(
-               modifier = Modifier.size(15.dp),
-               imageVector = Icons.Outlined.LocationOn,
-               contentDescription = null,
-               tint = Color.White
-           )
-           Spacer(modifier = Modifier.width(5.dp))
-           Text(
-               text = location,
-               color = Color.White,
-               fontSize = 10.sp
-           )
-       }
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 5.dp)
+        ) {
+            Icon(
+                modifier = Modifier.size(15.dp),
+                imageVector = Icons.Outlined.LocationOn,
+                contentDescription = null,
+                tint = Color.White
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Text(
+                text = location,
+                color = Color.White,
+                fontSize = 10.sp
+            )
+        }
     }
 }

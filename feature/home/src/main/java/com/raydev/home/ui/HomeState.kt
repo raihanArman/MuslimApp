@@ -10,9 +10,9 @@ import com.raydev.shared.model.QuranLastRead
  */
 data class HomeState(
     val location: String? = null,
-    val prayerTime: PrayerTime ?= null,
-    val nextPrayerTime: NextPrayerTime ?= null,
-    val hijrDate: String?= null,
+    val prayerTime: PrayerTime ? = null,
+    val nextPrayerTime: NextPrayerTime ? = null,
+    val hijrDate: String? = null,
     val currentdate: String? = null,
-    val lastRead: QuranLastRead ?= null
+    val lastRead: QuranLastRead ? = null
 )

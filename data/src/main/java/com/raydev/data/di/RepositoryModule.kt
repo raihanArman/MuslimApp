@@ -11,35 +11,32 @@ import com.raydev.domain.repository.QuranRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-object RepositoryModule {
-    var repositortModule = module {
-        factory<QuranRepository> {
-            QuranRepositoryImpl(
-                get(),get(), get(), get(), get(), get(), androidContext()
-            )
-        }
+var repositoryModule = module {
+    factory<QuranRepository> {
+        QuranRepositoryImpl(
+            get(), get(), get(), get(), get(), androidContext()
+        )
+    }
 
-        single<PrayerRepository>{
-            PrayerRepositoryImpl(
-                get(),
-                get()
-            )
-        }
+    single<PrayerRepository> {
+        PrayerRepositoryImpl(
+            get(),
+            get()
+        )
+    }
 
-        single<BookmarkRepository> {
-            BookmarkRepositoryImpl(
-                androidContext(),
-                get(),
-                get(),
-                get()
-            )
-        }
+    single<BookmarkRepository> {
+        BookmarkRepositoryImpl(
+            androidContext(),
+            get(),
+            get(),
+            get()
+        )
+    }
 
-        single<LastReadRepository> {
-            LastReadRepositoryImpl(
-                get(),
-            )
-        }
-
+    single<LastReadRepository> {
+        LastReadRepositoryImpl(
+            get(),
+        )
     }
 }

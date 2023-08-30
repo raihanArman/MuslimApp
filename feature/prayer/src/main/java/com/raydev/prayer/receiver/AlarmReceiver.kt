@@ -20,9 +20,10 @@ import com.raydev.prayer.R
 import com.raydev.prayer.ReminderParams
 import com.raydev.prayer.service.AlarmService
 
-
-class AlarmReceiver: BroadcastReceiver() {
-    private val TAG = "AlarmReceiver"
+class AlarmReceiver : BroadcastReceiver() {
+    companion object {
+        private const val TAG = "AlarmReceiver"
+    }
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d(TAG, "onReceive: receive alarm")
 
@@ -30,11 +31,10 @@ class AlarmReceiver: BroadcastReceiver() {
 
         val message = intent?.getStringExtra(ReminderParams.KEY_MESSAGE)
         sendNotification(context, message)
-
     }
 
-    fun sendNotification(context: Context?, message: String?){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+    fun sendNotification(context: Context?, message: String?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
             val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
             val importance = NotificationManager.IMPORTANCE_HIGH
@@ -42,7 +42,7 @@ class AlarmReceiver: BroadcastReceiver() {
             channel.description = description
             channel.vibrationPattern = longArrayOf(0, 1000, 500, 1000)
             channel.enableVibration(true)
-            channel.lockscreenVisibility = Notification.FLAG_FOREGROUND_SERVICE;
+            channel.lockscreenVisibility = Notification.FLAG_FOREGROUND_SERVICE
 
             // Add the channel
             val notificationManager =
@@ -51,9 +51,8 @@ class AlarmReceiver: BroadcastReceiver() {
             notificationManager?.createNotificationChannel(channel)
         }
 
-
         val intent = Intent(context, CancelServiceReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context,1,intent,PendingIntent.FLAG_MUTABLE)
+        val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_MUTABLE)
 
         val answerAction: NotificationCompat.Action =
             NotificationCompat.Action.Builder(R.drawable.download, "Matikan", pendingIntent)
@@ -72,5 +71,4 @@ class AlarmReceiver: BroadcastReceiver() {
         // Show the notification
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build())
     }
-
 }

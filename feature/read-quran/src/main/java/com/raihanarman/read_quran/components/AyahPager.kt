@@ -1,8 +1,5 @@
 package com.raihanarman.read_quran.components
 
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,7 +15,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.raihanarman.read_quran.ui.ReadQuranEvent
-import com.raihanarman.read_quran.ui.ReadQuranState
 import com.raydev.shared.model.Ayah
 import com.raydev.shared.model.Surah
 
@@ -39,7 +35,7 @@ fun AyahPager(
 ) {
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
-            onEvent(ReadQuranEvent.OnClickTabSurah(page+1))
+            onEvent(ReadQuranEvent.OnClickTabSurah(page + 1))
         }
     }
 
@@ -67,11 +63,13 @@ fun AyahPager(
                         else MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                     )
                 ) {
-                    onEvent(ReadQuranEvent.OnClickAyah(
-                        surah = surahSelected,
-                        ayah = it,
-                        ayahIndexSelected = index
-                    ))
+                    onEvent(
+                        ReadQuranEvent.OnClickAyah(
+                            surah = surahSelected,
+                            ayah = it,
+                            ayahIndexSelected = index
+                        )
+                    )
                 }
             }
         }

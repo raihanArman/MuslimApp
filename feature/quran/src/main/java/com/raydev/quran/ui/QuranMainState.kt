@@ -7,5 +7,6 @@ import com.raydev.shared.model.Surah
  * @date 10/08/23
  */
 data class QuranMainState(
-    val listSurah: List<Surah> ?= null
+    val listSurah: List<Surah> ? = null,
+    val isOpenJumpDialog: Boolean = false
 )

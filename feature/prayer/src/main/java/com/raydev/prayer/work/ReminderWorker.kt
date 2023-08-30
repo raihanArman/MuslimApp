@@ -10,13 +10,15 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.raydev.prayer.ReminderParams
 import com.raydev.prayer.receiver.AlarmReceiver
-import java.util.*
+import java.util.Calendar
 
 class ReminderWorker(
     private val context: Context,
     workerParameters: WorkerParameters
-): CoroutineWorker(context, workerParameters) {
-    private val TAG = "ReminderWorker"
+) : CoroutineWorker(context, workerParameters) {
+    companion object {
+        private const val TAG = "ReminderWorker"
+    }
     override suspend fun doWork(): Result {
         val hours = inputData.getInt(ReminderParams.KEY_HOURS, 0)
         val minutes = inputData.getInt(ReminderParams.KEY_MINUTE, 0)
@@ -27,14 +29,13 @@ class ReminderWorker(
         if (enable) {
             stopAlarm(reqCode)
             triggerAlarm(hours, minutes, reqCode, message)
-        }
-        else
+        } else
             stopAlarm(reqCode)
 
         return Result.success()
     }
 
-    fun triggerAlarm(hours: Int, minutes: Int, reqCode: Int, message: String?){
+    fun triggerAlarm(hours: Int, minutes: Int, reqCode: Int, message: String?) {
         Log.d(TAG, "triggerAlarm: $hours, $minutes")
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hours)
@@ -42,9 +43,9 @@ class ReminderWorker(
         calendar.set(Calendar.SECOND, 0)
 
         val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        if(Calendar.getInstance().after(calendar)){
+        if (Calendar.getInstance().after(calendar)) {
             // Move to tomorrow
-            calendar.add(Calendar.DATE, 1);
+            calendar.add(Calendar.DATE, 1)
         }
 
         val intent = Intent(context, AlarmReceiver::class.java)
@@ -62,7 +63,6 @@ class ReminderWorker(
             ),
         )
         Log.d(TAG, "triggerAlarm: set alarm")
-
     }
 
     fun stopAlarm(reqCode: Int) {
@@ -74,7 +74,7 @@ class ReminderWorker(
                 reqCode,
                 Intent(applicationContext, AlarmReceiver::class.java),
                 FLAG_MUTABLE
-            ))
+            )
+        )
     }
-
 }

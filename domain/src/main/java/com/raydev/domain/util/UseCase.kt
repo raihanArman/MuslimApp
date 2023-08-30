@@ -7,6 +7,4 @@ interface UseCase<Type, Params> {
     fun call(params: Params): Flow<ResponseState<Type>>
 }
 
-class NoParams{
-
-}
+class NoParams

@@ -13,5 +13,4 @@ class AppExecutors @VisibleForTesting constructor(
     )
 
     fun diskIO(): Executor = diskIO
-
 }

@@ -1,6 +1,5 @@
 package com.raihanarman.bookmark.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,22 +30,18 @@ import org.koin.androidx.compose.getViewModel
  * @date 26/08/23
  */
 fun NavGraphBuilder.bookmarkNavigation() = run {
-    composable(Destination.BookmarkScreen){
+    composable(Destination.BookmarkScreen) {
         val viewModel: BookmarkViewModel = getViewModel()
-        val event by viewModel.event.collectAsState(BookmarkEvent.Initial)
         val state by viewModel.state.collectAsState()
         BookmarkScreen(
             onEvent = viewModel::onEvent,
-            event = event,
-            state =  state
+            state = state
         )
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BookmarkScreen(
-    event: BookmarkEvent,
     state: BookmarkState,
     onEvent: (BookmarkEvent) -> Unit
 ) {
@@ -78,10 +73,12 @@ fun BookmarkScreen(
                     state.data?.let {
                         items(it) {
                             TileBookmark(bookmarkQuran = it) { bookmark ->
-                                onEvent(BookmarkEvent.OnNavigateToReadQuran(
-                                    surahId = bookmark.surah?.id ?: 0,
-                                    ayahId = bookmark.ayah?.verseNumber ?: 0
-                                ))
+                                onEvent(
+                                    BookmarkEvent.OnNavigateToReadQuran(
+                                        surahId = bookmark.surah?.id ?: 0,
+                                        ayahId = bookmark.ayah?.verseNumber ?: 0
+                                    )
+                                )
                             }
                         }
                     }

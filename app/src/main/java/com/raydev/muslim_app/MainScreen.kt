@@ -51,10 +51,10 @@ fun NavigationEffects(
     val activity = (LocalContext.current as? Activity)
     LaunchedEffect(activity, navHostController, navigationChannel) {
         navigationChannel.receiveAsFlow().collect { intent ->
-            if (activity?.isFinishing == true){
+            if (activity?.isFinishing == true) {
                 return@collect
             }
-            when(intent) {
+            when (intent) {
                 is NavigationIntent.NavigateBack -> {
                     if (intent.route != null) {
                         navHostController.popBackStack(intent.route!!, intent.inclusive)
@@ -66,7 +66,7 @@ fun NavigationEffects(
                     navHostController.navigate(intent.route) {
                         launchSingleTop = intent.isSingleTop
                         intent.popUpToRoute?.let { popUpToRoute ->
-                            popUpTo(popUpToRoute){
+                            popUpTo(popUpToRoute) {
                                 inclusive = intent.inclusive
                             }
                         }

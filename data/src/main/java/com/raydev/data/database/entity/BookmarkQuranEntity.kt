@@ -14,7 +14,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class BookmarkQuranEntity(
     @PrimaryKey(autoGenerate = false)
-    val id:Int?=null,
+    val id: Int? = null,
     @ColumnInfo(name = "surahId")
     var surahId: Int,
     @ColumnInfo(name = "ayahId")

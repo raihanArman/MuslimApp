@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class SearchCityUseCase(
     private val prayerRepository: PrayerRepository
 ) {
-    operator fun invoke(city: String): Flow<ResponseState<List<City>>>{
+    operator fun invoke(city: String): Flow<ResponseState<List<City>>> {
         return prayerRepository.searchCity(city)
     }
 }

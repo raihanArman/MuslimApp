@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class MainViewModel(
     private val appNavigator: AppNavigator,
     private val repository: PrayerRepository
-): BaseViewModel() {
+) : BaseViewModel() {
     val navigationChannel = appNavigator.navigationChannel
 
     init {

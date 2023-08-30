@@ -1,10 +1,13 @@
 package com.raydev.quran.ui.components
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.raihan.ui.app_bar.AppBarCustom
 import com.raydev.shared.util.SharedDrawable
 
@@ -15,13 +18,24 @@ import com.raydev.shared.util.SharedDrawable
 @Composable
 fun HeaderQuran(
     modifier: Modifier = Modifier,
-    onNavigateToBookmark: () -> Unit
+    onMenuClicked: (HeaderQuranMenu) -> Unit
 ) {
     AppBarCustom(
         modifier = modifier,
         title = "Al Quran",
         action = {
-            IconButton(onClick = onNavigateToBookmark) {
+            IconButton(onClick = {
+                onMenuClicked(HeaderQuranMenu.OnOpenFilterDialog)
+            }) {
+                Icon(
+                    painter = painterResource(id = SharedDrawable.baseline_low_priority_24),
+                    contentDescription = null
+                )
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            IconButton(onClick = {
+                onMenuClicked(HeaderQuranMenu.OnNavigateToBookmark)
+            }) {
                 Icon(
                     painter = painterResource(id = SharedDrawable.baseline_bookmarks_24),
                     contentDescription = null
@@ -29,4 +43,9 @@ fun HeaderQuran(
             }
         }
     )
+}
+
+sealed interface HeaderQuranMenu {
+    object OnNavigateToBookmark : HeaderQuranMenu
+    object OnOpenFilterDialog : HeaderQuranMenu
 }

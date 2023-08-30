@@ -1,8 +1,6 @@
 package com.raydev.data.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,7 +17,7 @@ interface BookmarkQuranDao {
     fun getBookmarks(): Flow<List<BookmarkQuranEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveBookmark(bookmark:BookmarkQuranEntity)
+    suspend fun saveBookmark(bookmark: BookmarkQuranEntity)
     @Query("DELETE FROM bookmark_quran WHERE :surahId = surahId AND :ayahId = ayahId")
     suspend fun deleteBookmark(surahId: Int, ayahId: Int)
     @Query("SELECT * FROM bookmark_quran WHERE :surahId = surahId AND :ayahId = ayahId")

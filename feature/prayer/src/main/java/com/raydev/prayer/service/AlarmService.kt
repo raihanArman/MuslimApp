@@ -10,12 +10,10 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import com.raydev.prayer.R
 
-
 class AlarmService : Service() {
     internal lateinit var player: MediaPlayer
     var pattern = longArrayOf(0, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000)
     var mAmplitudes = intArrayOf(0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0)
-
 
     override fun onCreate() {
         super.onCreate()

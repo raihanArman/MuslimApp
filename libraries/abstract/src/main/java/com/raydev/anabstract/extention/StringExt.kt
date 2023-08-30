@@ -5,9 +5,10 @@ import android.text.format.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
-fun String.toDate() : String {
+fun String.toDate(): String {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
         val date = LocalDate.parse(this, formatter)
@@ -17,20 +18,19 @@ fun String.toDate() : String {
     } else {
         val parser = SimpleDateFormat("yyyy-MM-dd") // yyyy-MM-dd'T'HH:mm:ss
         val formatter = SimpleDateFormat("dd MMM")
-        return  formatter.format(parser.parse(this))
+        return formatter.format(parser.parse(this))
     }
-
 }
 
-fun String.toNumberPhoneFormat(): String{
+fun String.toNumberPhoneFormat(): String {
     val phoneFull = this.substring(0)
     return "+62$phoneFull"
 }
 
-fun Date.toDateFormatDaysFullname(): String{
+fun Date.toDateFormatDaysFullname(): String {
     return DateFormat.format("EEEE, dd MMMM yyyy", this).toString()
 }
 
-fun Date.toDateFormatApiParameter(): String{
+fun Date.toDateFormatApiParameter(): String {
     return DateFormat.format("yyyy/MM/dd", this).toString()
 }

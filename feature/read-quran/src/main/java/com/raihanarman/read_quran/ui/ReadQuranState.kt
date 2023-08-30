@@ -9,14 +9,14 @@ import com.raydev.shared.model.Surah
  */
 data class ReadQuranState(
     val isLoadTabLayout: Boolean = false,
-    val tabsSelected: Int ?= null,
-    val surahId: Int ?= null,
-    val listAyah: List<Ayah> ?= null,
-    val listSurah: List<Surah> ?= null,
+    val tabsSelected: Int ? = null,
+    val surahId: Int ? = null,
+    val listAyah: List<Ayah> ? = null,
+    val listSurah: List<Surah> ? = null,
     val bottomSheetIsOpen: Boolean = false,
     val ayahIndexSelected: Int = -1,
-    val ayahSelected: Ayah ?= null,
-    val surahSelected: Surah ?= null,
+    val ayahSelected: Ayah ? = null,
+    val surahSelected: Surah ? = null,
     val isFromBookmark: Boolean = false,
-    val indexBookmark: Int ?= null
+    val indexBookmark: Int ? = null
 )
