@@ -92,34 +92,32 @@ fun ReadQuranScreen(
                     .fillMaxSize()
                     .padding(top = it.calculateTopPadding())
             ) {
-                state.listSurah?.let { surah ->
-                    state.tabsSelected?.let { surahSelected ->
-                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                            Box(modifier = Modifier.padding(vertical = 10.dp)) {
-                                SurahTabLayout(
-                                    pagerState = pagerState,
-                                    listSurah = surah,
-                                    pageSelected = surahSelected,
-                                    onClick = {
-                                        onEvent(ReadQuranEvent.OnClickTabSurah(it))
-                                    },
-                                )
-                            }
-                            state.listAyah?.let {
-                                AyahPager(
-                                    pagerState = pagerState,
-                                    lazyListState = scrollState,
-                                    listSurah = surah,
-                                    listAyah = it,
-                                    surahSelected = surah[pagerState.currentPage],
-                                    onEvent = onEvent,
-                                    onDataShow = {
-                                        isDataShow = true
-                                        onEvent(ReadQuranEvent.OnScrollToBookmark)
-                                    },
-                                    isDoneScrollingTab = doneScrollingTab
-                                )
-                            }
+                if (state.listSurah != null && state.tabsSelected != null) {
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                        Box(modifier = Modifier.padding(vertical = 10.dp)) {
+                            SurahTabLayout(
+                                pagerState = pagerState,
+                                listSurah = state.listSurah,
+                                pageSelected = state.tabsSelected,
+                                onClick = {
+                                    onEvent(ReadQuranEvent.OnClickTabSurah(it))
+                                },
+                            )
+                        }
+                        state.listAyah?.let {
+                            AyahPager(
+                                pagerState = pagerState,
+                                lazyListState = scrollState,
+                                listSurah = state.listSurah,
+                                listAyah = it,
+                                surahSelected = state.listSurah[pagerState.currentPage],
+                                onEvent = onEvent,
+                                onDataShow = {
+                                    isDataShow = true
+                                    onEvent(ReadQuranEvent.OnScrollToBookmark)
+                                },
+                                isDoneScrollingTab = doneScrollingTab
+                            )
                         }
                     }
                 }
@@ -127,28 +125,26 @@ fun ReadQuranScreen(
         }
     )
 
-    if (state.bottomSheetIsOpen) {
-        if (state.surahSelected != null && state.ayahSelected != null) {
-            QuranBottomSheet(
-                surah = state.surahSelected,
-                ayah = state.ayahSelected,
-                onClick = {
-                    when (it) {
-                        is QuranBottomSheetMenu.OnBookmark -> {
-                            onEvent(ReadQuranEvent.OnBookmarkAyah)
-                        }
-                        is QuranBottomSheetMenu.OnCopy -> {}
-                        is QuranBottomSheetMenu.OnLastRead -> {
-                            onEvent(ReadQuranEvent.OnLastReadAyah)
-                        }
-                        is QuranBottomSheetMenu.OnShare -> {}
+    if (state.bottomSheetIsOpen && state.surahSelected != null && state.ayahSelected != null) {
+        QuranBottomSheet(
+            surah = state.surahSelected,
+            ayah = state.ayahSelected,
+            onClick = {
+                when (it) {
+                    is QuranBottomSheetMenu.OnBookmark -> {
+                        onEvent(ReadQuranEvent.OnBookmarkAyah)
                     }
-                },
-                onDismiss = {
-                    onEvent(ReadQuranEvent.OnCloseBottomSheet)
+                    is QuranBottomSheetMenu.OnCopy -> {}
+                    is QuranBottomSheetMenu.OnLastRead -> {
+                        onEvent(ReadQuranEvent.OnLastReadAyah)
+                    }
+                    is QuranBottomSheetMenu.OnShare -> {}
                 }
-            )
-        }
+            },
+            onDismiss = {
+                onEvent(ReadQuranEvent.OnCloseBottomSheet)
+            }
+        )
     }
 
     if (state.isOpenJumpDialog && state.tabsSelected != null && state.listSurah != null) {
