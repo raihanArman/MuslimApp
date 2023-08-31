@@ -27,13 +27,10 @@ fun SurahTabLayout(
     listSurah: List<Surah>,
     pageSelected: Int,
     onClick: (Int) -> Unit,
-    onScrolling: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
-        println("ANANAAANOA -> $pageSelected")
-        onScrolling()
         pagerState.scrollToPage(pageSelected)
     }
 
