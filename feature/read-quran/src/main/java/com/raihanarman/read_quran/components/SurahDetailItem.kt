@@ -45,7 +45,7 @@ fun SurahDetailItem(
                     color = Color.Black
                 )
                 Text(
-                    text = "${surah.revelation} ${surah.ayahCount} Ayat",
+                    text = "${surah.revelation} ${surah.verses} Ayat",
                     fontSize = 11.sp,
                     color = Color.Black
                 )

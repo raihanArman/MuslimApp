@@ -8,5 +8,5 @@ import org.koin.dsl.module
  * @date 06/08/23
  */
 val mainModule = module {
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { MainViewModel(get(), get(), get()) }
 }

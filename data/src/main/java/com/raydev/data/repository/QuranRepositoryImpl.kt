@@ -145,7 +145,10 @@ class QuranRepositoryImpl(
                 ayahDataSource.saveAyah(juz26To30.map { it.mapToEntity() })
                 emit(ResponseState.Loading(611))
 
-                setupSurah()
+                if (ayahDataSource.getAyahCount() == 6236) {
+                    setupSurah()
+                } else
+                    return@flow
 
                 emit(ResponseState.Success(Unit))
             } catch (e: Exception) {
@@ -154,22 +157,14 @@ class QuranRepositoryImpl(
         }
     }
 
-    private fun setupSurah() = flow<ResponseState<Unit>> {
-        if (ayahDataSource.getAyahCount() == 6236) {
-            val surah = Gson().fromJson<ArrayList<SurahEntity>>(
-                FileUtils.getJsonStringFromAssets(
-                    context,
-                    "json/quran/surah.json"
-                ) {},
-                object : TypeToken<ArrayList<SurahEntity>>() {}.type,
-            )
-            surahDataSource.saveSurah(
-                surah.onEach {
-                    it.ayahCount = ayahDataSource.getAyahCountBySurahId(it.id - 1)
-                }
-            )
-            emit(ResponseState.Loading(605))
-        } else
-            return@flow
+    private suspend fun setupSurah() {
+        val surah = Gson().fromJson<ArrayList<SurahEntity>>(
+            FileUtils.getJsonStringFromAssets(
+                context,
+                "json/quran/surah.json"
+            ) {},
+            object : TypeToken<ArrayList<SurahEntity>>() {}.type,
+        )
+        surahDataSource.saveSurah(surah)
     }
 }

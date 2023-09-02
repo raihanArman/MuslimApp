@@ -86,7 +86,7 @@ class LocationManager(
         }
 
         return callbackFlow.distinctUntilChanged { old, new ->
-            old.distanceTo(new) < 10f
+            old.distanceTo(new) < 30f
         }
     }
 

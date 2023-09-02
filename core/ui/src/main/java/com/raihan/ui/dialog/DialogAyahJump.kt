@@ -32,10 +32,10 @@ fun DialogAyahJump(
             }
         },
         textFieldValue = textFieldValue,
-        textFieldPlaceHolderValue = "1 - ${surah.ayahCount}",
-        textMessage = "Masukkan ayah dari 1 - ${surah.ayahCount}",
+        textFieldPlaceHolderValue = "1 - ${surah.verses}",
+        textMessage = "Masukkan ayah dari 1 - ${surah.verses}",
         onTextFieldChange = { value ->
-            setValueAyahInput(value, surah.ayahCount) {
+            setValueAyahInput(value, surah.verses) {
                 textFieldValue = value
             }
         }

@@ -75,9 +75,9 @@ fun DialogWithSurahJump(
     LaunchedEffect(key1 = doneScrolling) {
         if (doneScrolling) {
             val surah = listSurah[focusedItemIndex]
-            maxLength = surah.ayahCount
-            textFieldPlaceHolderValue = "1 - ${surah.ayahCount}"
-            textMessage = "Masukkan nomor ayat antara 1 - ${surah.ayahCount}"
+            maxLength = surah.verses
+            textFieldPlaceHolderValue = "1 - ${surah.verses}"
+            textMessage = "Masukkan nomor ayat antara 1 - ${surah.verses}"
         }
     }
 

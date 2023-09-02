@@ -25,6 +25,5 @@ fun SurahEntity.mapToModel(context: Context) = Surah(
             )
         }
     ),
-    caligraphy = getArabicCalligraphy(context, id),
-    ayahCount = ayahCount
+    caligraphy = getArabicCalligraphy(context, id)
 )

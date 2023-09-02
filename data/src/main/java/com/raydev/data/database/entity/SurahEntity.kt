@@ -12,6 +12,5 @@ data class SurahEntity(
     val verses: Int,
     val name: String,
     val page: Int,
-    var ayahCount: Int,
     val translation: ArrayList<LanguageStringEntity>
 )
