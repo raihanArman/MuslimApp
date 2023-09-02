@@ -29,10 +29,7 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.raihan.ui.widget.BaseWidget
-import com.raydev.domain.repository.PrayerRepository
 import com.raydev.prayer.R
-import org.koin.core.component.inject
-import org.koin.java.KoinJavaComponent.inject
 
 /**
  * @author Raihan Arman
@@ -40,7 +37,6 @@ import org.koin.java.KoinJavaComponent.inject
  */
 class PrayerWidget : BaseWidget() {
 
-    private val prayerRepository: PrayerRepository by inject(PrayerRepository::class.java)
     companion object {
         const val ADDRESS_KEY_WIDGET = "com.raydev.prayer.address_key"
         const val SUBUH_TIME_KEY_WIDGET = "com.raydev.prayer.subuh_key"
@@ -126,6 +122,7 @@ class PrayerWidget : BaseWidget() {
             glanceId: GlanceId,
             parameters: ActionParameters
         ) {
+            println("TODO: goto apllication with deepLink")
         }
     }
 }
