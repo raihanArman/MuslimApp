@@ -79,10 +79,9 @@ class PrayerRepositoryImpl(
     override fun setCurrentPrayerTime(latLng: LatLng) {
         sharedPreferenceSource.userCoordinates = latLng
 
-        locationManager.getAddressLocation(latLng) {
-            it?.let { address ->
-                sharedPreferenceSource.userCity = address.locality
-            }
+        val address = locationManager.getAddressLocation(latLng)
+        address?.let {
+            sharedPreferenceSource.userCity = it.locality
         }
 
         val prayers = PrayTimeScript()

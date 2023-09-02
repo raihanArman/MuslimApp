@@ -41,16 +41,14 @@ class ReminderHelper(
     }
 
     fun setupDefaultReminder() {
-        while (true) {
-            val prayerTime = repository.getPrayerTime()
-            if (prayerTime.checkPrayerTimeIsNotEmpty()) {
-                setAlarmSubuh(prayerTime, repository.getSubuhData().ringType == RingType.SOUND)
-                setAlarmDhuhur(prayerTime, repository.getDhuhurData().ringType == RingType.SOUND)
-                setAlarmIsya(prayerTime, repository.getIsyaData().ringType == RingType.SOUND)
-                setAlarmMaghrib(prayerTime, repository.getMaghribData().ringType == RingType.SOUND)
-                setAlarmAsr(prayerTime, repository.getAsharData().ringType == RingType.SOUND)
-                break
-            }
+        val prayerTime = repository.getPrayerTime()
+        if (prayerTime.checkPrayerTimeIsNotEmpty()) {
+            setAlarmSubuh(prayerTime, repository.getSubuhData().ringType == RingType.SOUND)
+            setAlarmDhuhur(prayerTime, repository.getDhuhurData().ringType == RingType.SOUND)
+            setAlarmIsya(prayerTime, repository.getIsyaData().ringType == RingType.SOUND)
+            setAlarmMaghrib(prayerTime, repository.getMaghribData().ringType == RingType.SOUND)
+            setAlarmAsr(prayerTime, repository.getAsharData().ringType == RingType.SOUND)
+            return
         }
     }
 

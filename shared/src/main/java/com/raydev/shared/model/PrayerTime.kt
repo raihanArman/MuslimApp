@@ -16,9 +16,10 @@ data class PrayerTime(
 )
 
 fun PrayerTime.checkPrayerTimeIsNotEmpty(): Boolean {
-    return !this.fajr.isNullOrEmpty() &&
-        !this.dhuhr.isNullOrEmpty() &&
-        !this.asr.isNullOrEmpty() &&
-        !this.maghrib.isNullOrEmpty() &&
-        !this.isya.isNullOrEmpty()
+    val defaultValue = "00:00"
+    return !this.fajr.isNullOrEmpty() && !fajr.equals(defaultValue) &&
+        !this.dhuhr.isNullOrEmpty() && !dhuhr.equals(defaultValue) &&
+        !this.asr.isNullOrEmpty() && !asr.equals(defaultValue) &&
+        !this.maghrib.isNullOrEmpty() && !maghrib.equals(defaultValue) &&
+        !this.isya.isNullOrEmpty() && !isya.equals(defaultValue)
 }

@@ -6,6 +6,7 @@ import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.repository.PrayerRepository
 import com.raydev.navigation.AppNavigator
 import com.raydev.prayer.work.PrayerHelper
+import com.raydev.prayer.work.ReminderHelper
 import kotlinx.coroutines.launch
 
 /**
@@ -15,20 +16,18 @@ import kotlinx.coroutines.launch
 class MainViewModel(
     private val appNavigator: AppNavigator,
     private val repository: PrayerRepository,
-    private val prayerHelper: PrayerHelper
+    private val prayerHelper: PrayerHelper,
+    private val reminderHelper: ReminderHelper
 ) : BaseViewModel() {
     val navigationChannel = appNavigator.navigationChannel
 
-    init {
-        getLocation()
-    }
-
-    private fun getLocation() {
+    fun getLocation() {
         launch {
             LocationManager.instance.apply {
                 getLocationFlowEvent().collect { location ->
                     repository.setCurrentPrayerTime(LatLng(location.latitude, location.longitude))
                     prayerHelper.setPrayerWidget()
+                    reminderHelper.setupDefaultReminder()
                 }
             }
         }

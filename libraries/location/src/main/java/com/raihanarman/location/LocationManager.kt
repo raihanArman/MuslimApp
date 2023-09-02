@@ -110,23 +110,23 @@ class LocationManager(
         }
     }
 
-    fun getAddressLocation(currentLocation: LatLng, address: (Address?) -> Unit) {
-        try {
+    fun getAddressLocation(currentLocation: LatLng): Address? {
+        return try {
             val geocoder = Geocoder(context, Locale.getDefault())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1) {
-                    address(it.firstOrNull())
+                    it.firstOrNull()
                 }
-                return
             }
 
             try {
-                address(geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1)?.firstOrNull())
+                val address = geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1)?.firstOrNull()
+                address
             } catch (e: Exception) {
-                address(null)
+                null
             }
         } catch (e: Exception) {
-            address(null)
+            null
         }
     }
 }

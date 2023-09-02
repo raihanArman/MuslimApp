@@ -1,16 +1,16 @@
 package com.raydev.muslim_app
 
+import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import com.raydev.prayer.work.ReminderHelper
-import com.raydev.shared.util.checkPermissions
+import androidx.appcompat.app.AppCompatActivity
+import com.raydev.shared.util.checkAndRequestMultiplePermissions
 import org.koin.android.ext.android.inject
 
-class MainActivity : ComponentActivity() {
-    private val reminderHelper by inject<ReminderHelper>()
+class MainActivity : AppCompatActivity() {
+    private val viewModel: MainViewModel by inject()
     companion object {
         const val REQUEST_CODE = 123
     }
@@ -18,11 +18,20 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkPermissions(REQUEST_CODE)
+        checkAndRequestMultiplePermissions(
+            permissions = arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.POST_NOTIFICATIONS
+            ),
+            onPermissionsGranted = {
+                viewModel.getLocation()
+            },
+            onPermissionsDenied = {
+            },
+        )
         setContent {
-            MainScreen()
+            MainScreen(viewModel)
         }
-
-        reminderHelper.setupDefaultReminder()
     }
 }
