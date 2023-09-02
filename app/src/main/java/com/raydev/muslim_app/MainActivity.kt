@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.raydev.prayer.receiver.AlarmReceiver
 import com.raydev.shared.util.checkAndRequestMultiplePermissions
 import org.koin.android.ext.android.inject
 
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             ),
             onPermissionsGranted = {
                 viewModel.getLocation()
+                AlarmReceiver.createChannel(this)
             },
             onPermissionsDenied = {
             },

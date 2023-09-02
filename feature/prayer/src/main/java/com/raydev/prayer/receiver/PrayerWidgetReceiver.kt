@@ -5,15 +5,19 @@ import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.state.updateAppWidgetState
-import androidx.glance.appwidget.updateAll
+import com.raydev.domain.repository.PrayerRepository
 import com.raydev.prayer.ui.components.PrayerWidget
+import com.raydev.prayer.work.PrayerHelper
 import com.raydev.shared.model.PrayerTime
+import org.koin.java.KoinJavaComponent.inject
 
 /**
  * @author Raihan Arman
  * @date 02/09/23
  */
 class PrayerWidgetReceiver : GlanceAppWidgetReceiver() {
+    private val prayerHelper: PrayerHelper by inject(PrayerHelper::class.java)
+    private val prayerRepository: PrayerRepository by inject(PrayerRepository::class.java)
     override val glanceAppWidget: GlanceAppWidget = PrayerWidget()
 
     companion object {
@@ -28,7 +32,8 @@ class PrayerWidgetReceiver : GlanceAppWidgetReceiver() {
                 prefs[PrayerWidget.isyaKeyPreference] = prayerTime.isya ?: ""
             }
 
-            PrayerWidget().updateAll(context)
+            println("Ampass kuididid -> PrayerWidgetReceiver updateWidget")
+            PrayerWidget().update(context, glanceId)
         }
     }
 }

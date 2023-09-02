@@ -26,6 +26,7 @@ class PrayerWorker(
     override suspend fun doWork(): Result {
         if (runAttemptCount >= MAXIMUM_RETRIES) return Result.failure()
 
+        println("Ampass kuididid -> PrayerWorker doWork()")
         return try {
             val prayerTime = prayerRepository.getPrayerTime()
             if (prayerTime.checkPrayerTimeIsNotEmpty()) {
