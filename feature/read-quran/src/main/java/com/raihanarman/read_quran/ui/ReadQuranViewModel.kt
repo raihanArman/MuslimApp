@@ -6,6 +6,7 @@ import com.raydev.domain.repository.LastReadRepository
 import com.raydev.domain.usecase.quran.BookmarkAyahUseCase
 import com.raydev.domain.usecase.quran.GetAyahBySurahIdUseCase
 import com.raydev.domain.usecase.quran.GetSurahUseCase
+import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
 import com.raydev.shared.model.BookmarkQuran
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ class ReadQuranViewModel(
     private val stateHandle: SavedStateHandle,
     private val bookmarkAyahUseCase: BookmarkAyahUseCase,
     private val lastReadRepository: LastReadRepository,
+    private val appNavigator: AppNavigator
 ) : BaseViewModel() {
     init {
         getSurah()
@@ -134,6 +136,17 @@ class ReadQuranViewModel(
 
                 ReadQuranEvent.OnLastReadAyah -> {
                     onLastReadAyah()
+                }
+
+                ReadQuranEvent.OnNavigateBack -> {
+                    appNavigator.tryNavigateBack()
+                }
+                is ReadQuranEvent.OnOpenFilterDialog -> {
+                    _state.update {
+                        it.copy(
+                            isOpenJumpDialog = event.isOpen
+                        )
+                    }
                 }
             }
         }

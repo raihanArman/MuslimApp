@@ -35,8 +35,8 @@ class ReminderWorker(
         return Result.success()
     }
 
-    fun triggerAlarm(hours: Int, minutes: Int, reqCode: Int, message: String?) {
-        Log.d(TAG, "triggerAlarm: $hours, $minutes")
+    private fun triggerAlarm(hours: Int, minutes: Int, reqCode: Int, message: String?) {
+        Log.d(TAG, "triggerAlarm: $hours, $minutes, $message")
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hours)
         calendar.set(Calendar.MINUTE, minutes)
@@ -45,6 +45,7 @@ class ReminderWorker(
         val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (Calendar.getInstance().after(calendar)) {
             // Move to tomorrow
+            Log.d(TAG, "triggerAlarm: move tomorrow $message")
             calendar.add(Calendar.DATE, 1)
         }
 
@@ -65,7 +66,7 @@ class ReminderWorker(
         Log.d(TAG, "triggerAlarm: set alarm")
     }
 
-    fun stopAlarm(reqCode: Int) {
+    private fun stopAlarm(reqCode: Int) {
         Log.d(TAG, "stopAlarm: $reqCode")
         val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarm.cancel(

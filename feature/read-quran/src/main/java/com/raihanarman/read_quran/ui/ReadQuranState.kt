@@ -18,5 +18,6 @@ data class ReadQuranState(
     val ayahSelected: Ayah ? = null,
     val surahSelected: Surah ? = null,
     val isFromBookmark: Boolean = false,
-    val indexBookmark: Int ? = null
+    val indexBookmark: Int ? = null,
+    val isOpenJumpDialog: Boolean = false
 )

@@ -16,7 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.raihan.ui.dialog.DialogAyahJump
+import com.raihan.ui.dialog.DialogWithSurahJump
 import com.raydev.quran.ui.components.HeaderQuran
 import com.raydev.quran.ui.components.HeaderQuranMenu
 import com.raydev.quran.ui.components.TileSurah
@@ -87,7 +87,7 @@ fun SurahScreen(
 
     state.listSurah?.let {
         if (state.isOpenJumpDialog) {
-            DialogAyahJump(
+            DialogWithSurahJump(
                 listSurah = it,
                 onDismissDialog = {
                     onEvent(QuranMainEvent.OnOpenFilterDialog(false))

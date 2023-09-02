@@ -15,4 +15,6 @@ sealed interface ReadQuranEvent {
     object OnLastReadAyah : ReadQuranEvent
     object OnCloseBottomSheet : ReadQuranEvent
     object OnScrollToBookmark : ReadQuranEvent
+    object OnNavigateBack : ReadQuranEvent
+    data class OnOpenFilterDialog(val isOpen: Boolean) : ReadQuranEvent
 }

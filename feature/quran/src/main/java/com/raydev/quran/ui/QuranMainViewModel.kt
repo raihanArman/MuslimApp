@@ -33,6 +33,7 @@ class QuranMainViewModel(
         launch {
             useCase.invoke().collect {
                 _uiState.update { state ->
+                    println("Surah surah -> $it")
                     state.copy(listSurah = it)
                 }
             }

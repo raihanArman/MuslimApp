@@ -15,7 +15,8 @@ val readQuranModule = module {
             ayahBySurah = get(),
             stateHandle = params.get(),
             bookmarkAyahUseCase = get(),
-            lastReadRepository = get()
+            lastReadRepository = get(),
+            appNavigator = get()
         )
     }
 }

@@ -1,1 +1,5 @@
-<resources></resources>
+<resources>
+    <string name="widget_hello_world_description">Muslim App</string>
+    <string name="widget_initial_label_loading">Loading…</string>
+    <string name="glance_text">Kevisss</string>
+</resources>

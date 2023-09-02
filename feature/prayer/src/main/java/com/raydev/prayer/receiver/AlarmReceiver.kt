@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.raydev.prayer.NotificationAlarmConstants.CHANNEL_ID
@@ -23,6 +24,23 @@ import com.raydev.prayer.service.AlarmService
 class AlarmReceiver : BroadcastReceiver() {
     companion object {
         private const val TAG = "AlarmReceiver"
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun createChannel(context: Context) {
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+
+            val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
+            val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_ID, name, importance)
+            channel.description = description
+            channel.vibrationPattern = longArrayOf(0, 1000, 500, 1000)
+            channel.enableVibration(true)
+            channel.lockscreenVisibility = Notification.FLAG_FOREGROUND_SERVICE
+
+            notificationManager?.createNotificationChannel(channel)
+        }
     }
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d(TAG, "onReceive: receive alarm")
@@ -33,22 +51,9 @@ class AlarmReceiver : BroadcastReceiver() {
         sendNotification(context, message)
     }
 
-    fun sendNotification(context: Context?, message: String?) {
+    private fun sendNotification(context: Context?, message: String?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
-            val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID, name, importance)
-            channel.description = description
-            channel.vibrationPattern = longArrayOf(0, 1000, 500, 1000)
-            channel.enableVibration(true)
-            channel.lockscreenVisibility = Notification.FLAG_FOREGROUND_SERVICE
-
-            // Add the channel
-            val notificationManager =
-                context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-
-            notificationManager?.createNotificationChannel(channel)
+            context?.let { createChannel(it) }
         }
 
         val intent = Intent(context, CancelServiceReceiver::class.java)

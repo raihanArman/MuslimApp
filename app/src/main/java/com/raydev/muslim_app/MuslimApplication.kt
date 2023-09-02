@@ -47,12 +47,12 @@ class MuslimApplication : Application() {
                     repositoryModule,
                     useCaseModule,
                     navigatorModule,
+                    prayerModule,
                     mainModule,
                     splashModule,
                     homeModule,
                     quranModule,
                     readQuranModule,
-                    prayerModule,
                     bookmarkModule
                 )
             )

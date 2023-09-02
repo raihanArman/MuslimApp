@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.bundles.koin)
     implementation(libs.bundles.koin.compose)
     implementation(libs.androidx.work.manager)
+    implementation(libs.androidx.glance)
 
     implementation(project(":domain"))
     api(project(":shared"))

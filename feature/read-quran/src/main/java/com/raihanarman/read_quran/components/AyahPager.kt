@@ -31,9 +31,11 @@ fun AyahPager(
     listAyah: List<Ayah>,
     surahSelected: Surah,
     onEvent: (ReadQuranEvent) -> Unit,
-    onScrolling: () -> Unit
+    onDataShow: () -> Unit,
+    isDoneScrollingTab: Boolean
 ) {
-    LaunchedEffect(key1 = pagerState) {
+    LaunchedEffect(key1 = isDoneScrollingTab) {
+        println("isDoneScrollingTab $isDoneScrollingTab")
         snapshotFlow { pagerState.currentPage }.collect { page ->
             onEvent(ReadQuranEvent.OnClickTabSurah(page + 1))
         }
@@ -46,6 +48,11 @@ fun AyahPager(
         LazyColumn(
             state = lazyListState,
         ) {
+            item {
+                SurahDetailItem(
+                    surah = surahSelected
+                )
+            }
             itemsIndexed(
                 items = listAyah,
                 key = { _, item ->
@@ -74,6 +81,6 @@ fun AyahPager(
             }
         }
 
-        onScrolling()
+        onDataShow()
     }
 }
