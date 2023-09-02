@@ -33,7 +33,7 @@ class AlarmReceiver : BroadcastReceiver() {
         sendNotification(context, message)
     }
 
-    fun sendNotification(context: Context?, message: String?) {
+    private fun sendNotification(context: Context?, message: String?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = VERBOSE_NOTIFICATION_CHANNEL_NAME
             val description = VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION

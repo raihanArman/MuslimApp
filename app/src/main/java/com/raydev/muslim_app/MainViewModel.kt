@@ -26,8 +26,8 @@ class MainViewModel(
             LocationManager.instance.apply {
                 getLocationFlowEvent().collect { location ->
                     repository.setCurrentPrayerTime(LatLng(location.latitude, location.longitude))
-                    prayerHelper.setPrayerWidget()
                     reminderHelper.setupDefaultReminder()
+                    prayerHelper.setPrayerWidget()
                 }
             }
         }
