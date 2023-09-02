@@ -120,7 +120,11 @@ class LocationManager(
             }
 
             try {
-                val address = geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1)?.firstOrNull()
+                val address = geocoder.getFromLocation(
+                    currentLocation.latitude,
+                    currentLocation.longitude,
+                    1
+                )?.firstOrNull()
                 address
             } catch (e: Exception) {
                 null
