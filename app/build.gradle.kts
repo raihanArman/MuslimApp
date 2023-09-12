@@ -65,7 +65,7 @@ android {
         create("dev") {
             applicationId = "com.raydev.muslim_app.dev"
         }
-        create("state") {
+        create("stage") {
             applicationId = "com.raydev.muslim_app.stage"
         }
         create("prod") {
@@ -102,6 +102,7 @@ dependencies {
     implementation(project(":feature:read-quran"))
     implementation(project(":feature:home"))
     implementation(project(":feature:bookmark"))
+    implementation(project(":feature:qibla"))
 
     implementation(libs.bundles.maps)
     implementation(libs.bundles.koin)

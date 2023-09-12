@@ -55,8 +55,8 @@ class ReminderHelper(
     fun setAlarmSubuh(prayerTime: PrayerTime, isRing: Boolean) {
         val subuh = prayerTime.fajr!!.split(":")
         enableReminder(
-            hours = subuh[0].toTimeInteger(),
-            minutes = subuh[1].toTimeInteger(),
+            hours = 10,
+            minutes = 7,
             reqCode = 77,
             enable = isRing,
             "Waktu sholat shubuh telah tiba"

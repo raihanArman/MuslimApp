@@ -26,11 +26,31 @@
         android:theme="@style/Theme.MyApplication">
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <data android:host="muslimapp.com"
+                    android:scheme="https"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="muslimapp.com"
+                    android:scheme="https"
+                    android:pathPrefix="/prayer"/>
+                <!-- note that the leading "/" is required for pathPrefix-->
             </intent-filter>
         </activity>
     </application>
