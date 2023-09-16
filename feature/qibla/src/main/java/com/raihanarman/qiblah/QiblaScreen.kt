@@ -1,13 +1,9 @@
 package com.raihanarman.qiblah
 
-import android.content.Context
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,9 +31,7 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import com.raihan.ui.bottom_sheet.BaseBottomSheet
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sin
+import com.raihanarman.qiblah.util.QiblaHelper
 
 /**
  * @author Raihan Arman
@@ -52,96 +46,46 @@ fun QiblaScreen(
     onDismiss: () -> Unit
 ) {
     var oldAzimuth = 0f
-    var magnetometerData by remember { mutableStateOf(FloatArray(3)) }
-    var accelerometerData by remember { mutableStateOf(FloatArray(3)) }
 
     var azimuth by remember { mutableStateOf(0f) }
-    val animatedAzimuth by animateFloatAsState(targetValue = -azimuth, label = "")
+    val animatedAzimuth by animateFloatAsState(targetValue = -azimuth, label = "", animationSpec = tween(800))
     val azimuthThreshold = 20.0
 
     var qiblaDirection by remember { mutableStateOf(0f) }
 
-    val sensorManager = LocalView.current.context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    val qiblaHelper = QiblaHelper(
+        context = LocalView.current.context,
+        currentLatitude = currentLatitude
+    )
 
-    val magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-    val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-
-    fun getAzimuth(): Float {
-        val rotationMatrix = FloatArray(9)
-        val inclinationMatrix = FloatArray(9)
-        val orientationValues = FloatArray(3)
-
-        SensorManager.getRotationMatrix(rotationMatrix, inclinationMatrix, accelerometerData, magnetometerData)
-        SensorManager.getOrientation(rotationMatrix, orientationValues)
-
-        // Calculate azimuth (Qibla direction)
-        val azimuthRadians = atan2(orientationValues[0], orientationValues[2])
-        return Math.toDegrees(azimuthRadians.toDouble()).toFloat()
-    }
-
-    fun getQiblaDirection(): Float {
-        val kaabaLng =
-            39.826206 // ka'bah Position https://www.latlong.net/place/kaaba-mecca-saudi-arabia-12639.html
-        val kaabaLat =
-            Math.toRadians(21.422487) // ka'bah Position https://www.latlong.net/place/kaaba-mecca-saudi-arabia-12639.html
-        val myLatRad = Math.toRadians(currentLatitude)
-        val longDiff = Math.toRadians(kaabaLng - 107.446274)
-        val y = sin(longDiff) * cos(kaabaLat)
-        val x =
-            cos(myLatRad) * sin(kaabaLat) - sin(myLatRad) * cos(kaabaLat) * cos(
-                longDiff
-            )
-        return ((Math.toDegrees(atan2(y, x)) + 360) % 360).toFloat()
-    }
-
-    fun updateAzimuth() {
-        val newAzimuth = getAzimuth()
+    fun updateAzimuth(newAzimuth: Float, qibla: Float) {
         val azimuthChange = Math.abs(newAzimuth - oldAzimuth)
         if (azimuthChange >= azimuthThreshold) {
             // Azimuth change is significant; update the compass or trigger actions
             // Update previousAzimuth with newAzimuth
-            println("AMAMAMAMAMA -> updateAzimuth")
             oldAzimuth = newAzimuth
             azimuth = newAzimuth
 
-            qiblaDirection = getQiblaDirection()
             // Perform actions or update the UI as needed
+            qiblaDirection = qibla
         }
     }
 
     DisposableEffect(Unit) {
-        val magnetometerListener = object : SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent?) {
-                event?.values?.copyInto(magnetometerData)
-                updateAzimuth()
+        val qiblaListener = object : QiblaHelper.QiblaListener {
+            override fun onNewAzimuth(azimuth: Float, qiblaDirection: Float) {
+                updateAzimuth(azimuth, qiblaDirection)
             }
 
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
-        }
-
-        val accelerometerListener = object : SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent?) {
-                event?.values?.copyInto(accelerometerData)
-                updateAzimuth()
+            override fun onAccuracyChanged(accuracy: Int) {
             }
-
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
         }
 
-        sensorManager.registerListener(
-            magnetometerListener,
-            magnetometer,
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
-        sensorManager.registerListener(
-            accelerometerListener,
-            accelerometer,
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
+        qiblaHelper.register()
+        qiblaHelper.setListener(qiblaListener)
 
         onDispose {
-            sensorManager.unregisterListener(magnetometerListener)
-            sensorManager.unregisterListener(accelerometerListener)
+            qiblaHelper.unregister()
         }
     }
 
