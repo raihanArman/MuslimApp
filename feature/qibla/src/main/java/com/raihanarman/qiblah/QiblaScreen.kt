@@ -3,7 +3,6 @@ package com.raihanarman.qiblah
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,10 +27,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import com.raihan.ui.bottom_sheet.BaseBottomSheet
-import com.raihanarman.qiblah.util.QiblaHelper
+import com.raihanarman.qiblah.util.rememberQibla
 
 /**
  * @author Raihan Arman
@@ -45,45 +43,22 @@ fun QiblaScreen(
     currentLatitude: Double,
     onDismiss: () -> Unit
 ) {
-    var oldAzimuth = 0f
+    var azimuth by remember {
+        mutableStateOf(0f)
+    }
 
-    var azimuth by remember { mutableStateOf(0f) }
-    val animatedAzimuth by animateFloatAsState(targetValue = -azimuth, label = "", animationSpec = tween(800))
-    val azimuthThreshold = 20.0
+    var qiblaDirection by remember {
+        mutableStateOf(0f)
+    }
 
-    var qiblaDirection by remember { mutableStateOf(0f) }
+    val animatedAzimuth by animateFloatAsState(targetValue = -azimuth, label = "")
 
-    val qiblaHelper = QiblaHelper(
-        context = LocalView.current.context,
-        currentLatitude = currentLatitude
-    )
-
-    fun updateAzimuth(newAzimuth: Float, qibla: Float) {
-        val azimuthChange = Math.abs(newAzimuth - oldAzimuth)
-        if (azimuthChange >= azimuthThreshold) {
-            // Azimuth change is significant; update the compass or trigger actions
-            // Update previousAzimuth with newAzimuth
-            oldAzimuth = newAzimuth
-            azimuth = newAzimuth
-
-            // Perform actions or update the UI as needed
-            qiblaDirection = qibla
-        }
+    val qiblaHelper = rememberQibla(currentLatitude = currentLatitude) { newAzimuth, qibla ->
+        azimuth = newAzimuth
+        qiblaDirection = qibla
     }
 
     DisposableEffect(Unit) {
-        val qiblaListener = object : QiblaHelper.QiblaListener {
-            override fun onNewAzimuth(azimuth: Float, qiblaDirection: Float) {
-                updateAzimuth(azimuth, qiblaDirection)
-            }
-
-            override fun onAccuracyChanged(accuracy: Int) {
-            }
-        }
-
-        qiblaHelper.register()
-        qiblaHelper.setListener(qiblaListener)
-
         onDispose {
             qiblaHelper.unregister()
         }

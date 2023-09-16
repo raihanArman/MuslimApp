@@ -5,6 +5,11 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalView
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -107,5 +112,28 @@ class QiblaHelper(
     interface QiblaListener {
         fun onNewAzimuth(azimuth: Float, qiblaDirection: Float)
         fun onAccuracyChanged(accuracy: Int)
+    }
+}
+
+@Composable
+fun rememberQibla(
+    currentLatitude: Double,
+    value: (azimuth: Float, qibla: Float) -> Unit
+): QiblaHelper {
+    val context = LocalView.current.context
+    return remember {
+        val qiblaListener = object : QiblaHelper.QiblaListener {
+            override fun onNewAzimuth(azimuth: Float, qiblaDirection: Float) {
+                value(azimuth, qiblaDirection)
+            }
+
+            override fun onAccuracyChanged(accuracy: Int) {
+            }
+        }
+
+        QiblaHelper(context = context, currentLatitude = currentLatitude).apply {
+            register()
+            setListener(qiblaListener)
+        }
     }
 }
