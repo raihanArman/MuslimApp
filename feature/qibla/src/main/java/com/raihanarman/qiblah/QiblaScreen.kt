@@ -36,6 +36,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import com.raihan.ui.bottom_sheet.BaseBottomSheet
 import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * @author Raihan Arman
@@ -52,9 +54,12 @@ fun QiblaScreen(
     var oldAzimuth = 0f
     var magnetometerData by remember { mutableStateOf(FloatArray(3)) }
     var accelerometerData by remember { mutableStateOf(FloatArray(3)) }
+
     var azimuth by remember { mutableStateOf(0f) }
     val animatedAzimuth by animateFloatAsState(targetValue = -azimuth, label = "")
-    val azimuthThreshold = 5.0
+    val azimuthThreshold = 20.0
+
+    var qiblaDirection by remember { mutableStateOf(0f) }
 
     val sensorManager = LocalView.current.context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -74,6 +79,21 @@ fun QiblaScreen(
         return Math.toDegrees(azimuthRadians.toDouble()).toFloat()
     }
 
+    fun getQiblaDirection(): Float {
+        val kaabaLng =
+            39.826206 // ka'bah Position https://www.latlong.net/place/kaaba-mecca-saudi-arabia-12639.html
+        val kaabaLat =
+            Math.toRadians(21.422487) // ka'bah Position https://www.latlong.net/place/kaaba-mecca-saudi-arabia-12639.html
+        val myLatRad = Math.toRadians(currentLatitude)
+        val longDiff = Math.toRadians(kaabaLng - 107.446274)
+        val y = sin(longDiff) * cos(kaabaLat)
+        val x =
+            cos(myLatRad) * sin(kaabaLat) - sin(myLatRad) * cos(kaabaLat) * cos(
+                longDiff
+            )
+        return ((Math.toDegrees(atan2(y, x)) + 360) % 360).toFloat()
+    }
+
     fun updateAzimuth() {
         val newAzimuth = getAzimuth()
         val azimuthChange = Math.abs(newAzimuth - oldAzimuth)
@@ -83,6 +103,8 @@ fun QiblaScreen(
             println("AMAMAMAMAMA -> updateAzimuth")
             oldAzimuth = newAzimuth
             azimuth = newAzimuth
+
+            qiblaDirection = getQiblaDirection()
             // Perform actions or update the UI as needed
         }
     }
@@ -135,6 +157,7 @@ fun QiblaScreen(
                 modifier = Modifier
                     .size(200.dp)
                     .background(Color.Gray, CircleShape)
+                    .rotate(animatedAzimuth)
             ) {
                 Text(
                     text = "Qibla",
@@ -145,15 +168,11 @@ fun QiblaScreen(
                     text = "🕋",
                     modifier = Modifier
                         .fillMaxSize()
-                        .rotate(animatedAzimuth),
+                        .rotate(qiblaDirection),
                     color = Color.Black
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-//            Text(
-//                text = "Your Location: ${userLocation.latitude}, ${userLocation.longitude}",
-//                style = TextStyle(fontSize = 16.sp)
-//            )
         }
     }
 }
