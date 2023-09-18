@@ -30,8 +30,8 @@ class QiblaHelper(
 
     private val mGravity = FloatArray(3)
     private val mGeomagnetic = FloatArray(3)
-    private val R = FloatArray(9)
-    private val I = FloatArray(9)
+    private val r = FloatArray(9)
+    private val i = FloatArray(9)
 
     private fun getAzimuth(event: SensorEvent): Float {
         val alpha = 0.97f
@@ -47,12 +47,12 @@ class QiblaHelper(
             mGeomagnetic[2] = alpha * mGeomagnetic[2] + (1 - alpha) * event.values[2]
         }
         val success = SensorManager.getRotationMatrix(
-            R, I, mGravity,
+            r, i, mGravity,
             mGeomagnetic
         )
         if (success) {
             val orientation = FloatArray(3)
-            SensorManager.getOrientation(R, orientation)
+            SensorManager.getOrientation(r, orientation)
             azimuth = Math.toDegrees(orientation[0].toDouble()).toFloat() // orientation
             azimuth = (azimuth + 0f + 360) % 360
         }

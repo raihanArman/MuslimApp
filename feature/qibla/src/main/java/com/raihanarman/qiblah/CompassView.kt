@@ -48,9 +48,6 @@ fun CompassView(
             val date = Date(time())
             val cal = Calendar.getInstance()
             cal.time = date
-            val hours = cal.get(Calendar.HOUR_OF_DAY)
-            val minutes = cal.get(Calendar.MINUTE)
-            val seconds = cal.get(Calendar.SECOND)
 
             drawCircle(
                 style = Stroke(
@@ -96,10 +93,10 @@ fun CompassView(
                     y = (circleRadius * sin(angelInRad) + circleCenter.y).toFloat()
                 )
 
-                val end = Offset(
-                    x = (circleRadius * cos(angelInRad) + circleCenter.x).toFloat(),
-                    y = (circleRadius * sin(angelInRad) + lineLength + circleCenter.y).toFloat()
-                )
+//                val end = Offset(
+//                    x = (circleRadius * cos(angelInRad) + circleCenter.x).toFloat(),
+//                    y = (circleRadius * sin(angelInRad) + lineLength + circleCenter.y).toFloat()
+//                )
 
                 rotate(
                     angelInDegrees,
