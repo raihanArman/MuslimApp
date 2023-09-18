@@ -22,7 +22,6 @@ import com.raydev.prayer.service.AlarmService
 
 class AlarmReceiver : BroadcastReceiver() {
     companion object {
-        private const val TAG = "AlarmReceiver"
         const val ALARM_MESSAGE = "ALARM_MESSAGE"
 
         fun createChannel(context: Context) {
