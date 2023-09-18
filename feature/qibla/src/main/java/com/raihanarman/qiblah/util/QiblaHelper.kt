@@ -128,6 +128,7 @@ fun rememberQibla(
             }
 
             override fun onAccuracyChanged(accuracy: Int) {
+                println("check accurate $accuracy")
             }
         }
 

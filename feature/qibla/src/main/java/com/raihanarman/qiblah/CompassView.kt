@@ -85,8 +85,8 @@ fun CompassView(
             for (i in 0 until 60) {
                 val angelInDegrees = i * 360f / 60
                 val angelInRad = angelInDegrees * PI / 180f + PI / 2f
-                val lineLength = if (i % 5 == 0) largeLineLength else littleLineLength
-                val lineThickness = if (i % 5 == 0) 5f else 2f
+//                val lineLength = if (i % 5 == 0) largeLineLength else littleLineLength
+//                val lineThickness = if (i % 5 == 0) 5f else 2f
 
                 val start = Offset(
                     x = (circleRadius * cos(angelInRad) + circleCenter.x).toFloat(),
