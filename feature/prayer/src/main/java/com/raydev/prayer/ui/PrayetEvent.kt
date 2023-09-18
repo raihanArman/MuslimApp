@@ -11,4 +11,5 @@ sealed interface PrayetEvent {
     data class SetRingingAshar(val value: Int) : PrayetEvent
     data class SetRingingMaghrib(val value: Int) : PrayetEvent
     data class SetRingingIsya(val value: Int) : PrayetEvent
+    data class OnOpenQiblahDialog(val isOpen: Boolean) : PrayetEvent
 }

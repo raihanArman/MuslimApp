@@ -22,6 +22,7 @@ dependencies {
     implementation(project(":libraries:prayer"))
     implementation(project(":libraries:shared_preference"))
     implementation(project(":libraries:location"))
+    implementation(project(":libraries:here-api"))
 
     implementation(libs.bundles.koin)
     implementation(libs.bundles.retrofit)

@@ -32,4 +32,6 @@ interface PrayerRepository {
     fun getPrayerTime(): PrayerTime
     fun getNextPrayerTime(prayerTime: PrayerTime): NextPrayerTime
     fun getCurrentHijrDate(): String
+
+    fun getUserCoordinate(): LatLng
 }

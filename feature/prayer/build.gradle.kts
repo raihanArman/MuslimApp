@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.koin.compose)
+    implementation(libs.bundles.maps)
     implementation(libs.androidx.work.manager)
     implementation(libs.androidx.glance)
 
@@ -35,4 +36,5 @@ dependencies {
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
     implementation(project(":core:ui"))
+    implementation(project(":feature:qibla"))
 }

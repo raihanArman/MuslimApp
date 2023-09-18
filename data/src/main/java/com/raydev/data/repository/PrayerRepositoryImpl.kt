@@ -145,4 +145,6 @@ class PrayerRepositoryImpl(
         val day = cal.get(Calendar.DAY_OF_MONTH)
         return "$day $month $year"
     }
+
+    override fun getUserCoordinate(): LatLng = sharedPreferenceSource.userCoordinates
 }

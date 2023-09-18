@@ -15,4 +15,6 @@ data class PrayerState(
     val asharRing: Boolean = false,
     val maghribRing: Boolean = false,
     val isyaRing: Boolean = false,
+    val isOpenQiblahDialog: Boolean = false,
+    val userLatitude: Double = 0.0
 )

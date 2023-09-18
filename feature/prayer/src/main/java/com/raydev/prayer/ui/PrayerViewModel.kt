@@ -33,7 +33,18 @@ class PrayerViewModel(
     init {
         getPrayerTime()
         getPrayerRing()
+        getUserLatitude()
         buildNextPrayerTime()
+    }
+
+    private fun getUserLatitude() {
+        launch {
+            _state.update {
+                it.copy(
+                    userLatitude = repository.getUserCoordinate().latitude
+                )
+            }
+        }
     }
 
     private fun getPrayerRing() {
@@ -92,6 +103,14 @@ class PrayerViewModel(
                 }
                 is PrayetEvent.SetRingingSubuh -> {
                     setRingingSubuh(event.value)
+                }
+
+                is PrayetEvent.OnOpenQiblahDialog -> {
+                    _state.update {
+                        it.copy(
+                            isOpenQiblahDialog = event.isOpen
+                        )
+                    }
                 }
             }
             _event.emit(event)

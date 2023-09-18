@@ -10,6 +10,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.raydev.prayer.ReminderParams
 import com.raydev.prayer.receiver.AlarmReceiver
+import com.raydev.prayer.receiver.AlarmReceiver.Companion.ALARM_MESSAGE
 import java.util.Calendar
 
 class ReminderWorker(
@@ -50,7 +51,7 @@ class ReminderWorker(
         }
 
         val intent = Intent(context, AlarmReceiver::class.java)
-        intent.putExtra(ReminderParams.KEY_MESSAGE, message)
+        intent.putExtra(ALARM_MESSAGE, message)
 
         alarm.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -60,10 +61,9 @@ class ReminderWorker(
                 context,
                 reqCode,
                 intent,
-                FLAG_MUTABLE
+                FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             ),
         )
-        Log.d(TAG, "triggerAlarm: set alarm")
     }
 
     private fun stopAlarm(reqCode: Int) {
@@ -74,7 +74,7 @@ class ReminderWorker(
                 applicationContext,
                 reqCode,
                 Intent(applicationContext, AlarmReceiver::class.java),
-                FLAG_MUTABLE
+                FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
         )
     }

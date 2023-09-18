@@ -1,3 +1,8 @@
+
+import java.io.FileInputStream
+import java.text.SimpleDateFormat
+import java.util.*
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -17,42 +22,58 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    signingConfigs {
-        create("release") {
+//    signingConfigs {
+//        create("release") {
 //            storeFile = file(RELEASE_STORE_FILE)
 //            storePassword = RELEASE_STORE_PASSWORD
 //            keyAlias = RELEASE_KEY_ALIAS
 //            keyPassword = RELEASE_KEY_PASSWORD
-            // Optional, specify signing versions used
+//             Optional, specify signing versions used
 //            v1SigningEnabled =  true
 //            v2SigningEnabled = true
-        }
-    }
+//        }
+//    }
+
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
 //            signingConfig = signingConfigs.release
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
-//        applicationVariants.all{
-//            variant ->
-//                variant.outputs.each{
-//                    output->
-//                        project.ext { appName = "MuslimApp ${variant.versionName} (${variant.versionCode})" }
-//                        def formattedDate = new Date().format('yyyy-MM-dd-HH-mm-ss')
-//                        def newName = output.outputFile.name
-//                        newName = newName.replace("app-", "$project.ext.appName-")
-//                        newName = newName.replace("-debug", " - debug - " + formattedDate)
-//                        newName = newName.replace("-release", " - release - " + formattedDate)
-//                        output.outputFileName  = newName
-//                }
-//        }
+        getByName("debug") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        applicationVariants.all {
+            this.outputs.forEach { output ->
+                val cal = Calendar.getInstance()
+                val dateFormat = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("id"))
+                val formattedDate = dateFormat.format(cal.time)
+
+                var newName = output.outputFile.name
+                newName = newName.replace("app-", "$project.ext.appName-")
+                newName = newName.replace("-debug", " - debug - " + formattedDate)
+                newName = newName.replace("-release", " - release - " + formattedDate)
+
+                val originalApk = this@all.outputs.firstOrNull()?.outputFile
+                val outputDir = originalApk?.parentFile
+                val newApk = File(outputDir, newName)
+                originalApk?.renameTo(newApk)
+
+//                output.outputFile = originalApk
+            }
+        }
     }
 
-    flavorDimensions.add("dev")
+    flavorDimensions.add("default")
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -62,14 +83,19 @@ android {
     }
 
     productFlavors {
+        val string = "String"
+        val stringLower = "string"
         create("dev") {
-            applicationId = "com.raydev.muslim_app.dev"
+            applicationId = DevConfigField.applicationId
+            buildConfigField(string, "HERE_API_KEY", getLocalProperty("HERE_API_KEY").toString())
         }
-        create("state") {
-            applicationId = "com.raydev.muslim_app.stage"
+        create("stage") {
+            applicationId = StageConfigField.applicationId
+            buildConfigField(string, "HERE_API_KEY", getLocalProperty("HERE_API_KEY").toString())
         }
         create("prod") {
-            applicationId = "com.raydev.muslim_app"
+            applicationId = ProdConfigField.applicationId
+            buildConfigField(string, "HERE_API_KEY", getLocalProperty("HERE_API_KEY").toString())
         }
     }
 
@@ -91,6 +117,7 @@ dependencies {
     implementation(project(":libraries:network"))
     implementation(project(":libraries:cache"))
     implementation(project(":libraries:location"))
+    implementation(project(":libraries:here-api"))
     implementation(project(":libraries:workmanager"))
     implementation(project(":core:navigation"))
     implementation(project(":data"))
@@ -102,6 +129,7 @@ dependencies {
     implementation(project(":feature:read-quran"))
     implementation(project(":feature:home"))
     implementation(project(":feature:bookmark"))
+    implementation(project(":feature:qibla"))
 
     implementation(libs.bundles.maps)
     implementation(libs.bundles.koin)
@@ -117,4 +145,10 @@ dependencies {
     testImplementation(project(":libraries:abstract"))
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+}
+
+fun getLocalProperty(key: String): Any {
+    val localProperties = Properties()
+    localProperties.load(FileInputStream(rootProject.file("local.properties")))
+    return localProperties[key] ?: ""
 }

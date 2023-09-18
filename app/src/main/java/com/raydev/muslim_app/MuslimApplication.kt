@@ -3,6 +3,7 @@ package com.raydev.muslim_app
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.raihanarman.bookmark.di.bookmarkModule
+import com.raihanarman.here_api.hereNetworkModule
 import com.raihanarman.location.di.locationModule
 import com.raihanarman.read_quran.di.readQuranModule
 import com.raihanarman.splash.splashModule
@@ -40,6 +41,7 @@ class MuslimApplication : Application() {
                     workerModule,
                     sharedPrefModule,
                     locationModule,
+                    hereNetworkModule,
                     apiModule,
                     remoteDataSourceModule,
                     localDataSourceModule,

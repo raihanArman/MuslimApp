@@ -14,7 +14,7 @@ import org.koin.core.component.inject
  * @author Raihan Arman
  * @date 02/09/23
  */
-class PrayerWorker(
+class PrayerWidgetWorker(
     private val context: Context,
     workParams: WorkerParameters,
 ) : CoroutineWorker(context, workParams), KoinComponent {
@@ -26,7 +26,6 @@ class PrayerWorker(
     override suspend fun doWork(): Result {
         if (runAttemptCount >= MAXIMUM_RETRIES) return Result.failure()
 
-        println("Ampass kuididid -> PrayerWorker doWork()")
         return try {
             val prayerTime = prayerRepository.getPrayerTime()
             if (prayerTime.checkPrayerTimeIsNotEmpty()) {
