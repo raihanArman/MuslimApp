@@ -1,7 +1,7 @@
 package com.raydev.prayer.di
 
 import com.raydev.prayer.ui.PrayerViewModel
-import com.raydev.prayer.work.PrayerHelper
+import com.raydev.prayer.work.PrayerWidgetHelper
 import com.raydev.prayer.work.ReminderHelper
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -13,6 +13,6 @@ import org.koin.dsl.module
  */
 val prayerModule = module {
     single { ReminderHelper(androidContext()) }
-    single { PrayerHelper(androidContext()) }
+    single { PrayerWidgetHelper(androidContext()) }
     viewModel { PrayerViewModel(get(), get()) }
 }

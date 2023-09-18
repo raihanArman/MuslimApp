@@ -5,7 +5,7 @@ import com.raihanarman.location.LocationManager
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.repository.PrayerRepository
 import com.raydev.navigation.AppNavigator
-import com.raydev.prayer.work.PrayerHelper
+import com.raydev.prayer.work.PrayerWidgetHelper
 import com.raydev.prayer.work.ReminderHelper
 import kotlinx.coroutines.launch
 
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class MainViewModel(
     private val appNavigator: AppNavigator,
     private val repository: PrayerRepository,
-    private val prayerHelper: PrayerHelper,
+    private val prayerHelper: PrayerWidgetHelper,
     private val reminderHelper: ReminderHelper
 ) : BaseViewModel() {
     val navigationChannel = appNavigator.navigationChannel

@@ -9,12 +9,12 @@ import androidx.work.WorkManager
  * @author Raihan Arman
  * @date 02/09/23
  */
-class PrayerHelper(
+class PrayerWidgetHelper(
     context: Context
 ) {
     private val workManager: WorkManager = WorkManager.getInstance(context)
     fun setPrayerWidget() {
-        val prayerWorker = OneTimeWorkRequestBuilder<PrayerWorker>()
+        val prayerWorker = OneTimeWorkRequestBuilder<PrayerWidgetWorker>()
             .build()
 
         workManager.enqueueUniqueWork(

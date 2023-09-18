@@ -10,7 +10,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.raydev.prayer.NotificationAlarmConstants.CHANNEL_ID
@@ -19,12 +18,12 @@ import com.raydev.prayer.NotificationAlarmConstants.NOTIFICATION_TITLE
 import com.raydev.prayer.NotificationAlarmConstants.VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
 import com.raydev.prayer.NotificationAlarmConstants.VERBOSE_NOTIFICATION_CHANNEL_NAME
 import com.raydev.prayer.R
-import com.raydev.prayer.ReminderParams
 import com.raydev.prayer.service.AlarmService
 
 class AlarmReceiver : BroadcastReceiver() {
     companion object {
         private const val TAG = "AlarmReceiver"
+        const val ALARM_MESSAGE = "ALARM_MESSAGE"
 
         fun createChannel(context: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -45,15 +44,13 @@ class AlarmReceiver : BroadcastReceiver() {
         }
     }
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d(TAG, "onReceive: receive alarm")
-
         context?.startService(Intent(context, AlarmService::class.java))
 
-        val message = intent?.getStringExtra(ReminderParams.KEY_MESSAGE)
+        val message = intent?.getStringExtra(ALARM_MESSAGE) ?: "Waktu shalat telah tiba!"
         sendNotification(context, message)
     }
 
-    private fun sendNotification(context: Context?, message: String?) {
+    private fun sendNotification(context: Context?, message: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context?.let { createChannel(it) }
         }
@@ -77,7 +74,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
             .setSmallIcon(R.drawable.download)
             .setContentTitle(NOTIFICATION_TITLE)
-            .setContentText(message ?: "Waktu shalat telah tiba!")
+            .setContentText(message)
             .setContentIntent(nestedIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
