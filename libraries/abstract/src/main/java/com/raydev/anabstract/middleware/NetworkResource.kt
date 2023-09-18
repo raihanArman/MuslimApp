@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
  * @author Raihan Arman
  * @date 18/09/23
  */
-abstract class NetworkResource<T : BaseModel>() {
+abstract class NetworkResource<T : BaseModel> {
 
     fun asFlow(): Flow<ResponseState<T>> = flow {
         // check if should fetch data from remote or not
