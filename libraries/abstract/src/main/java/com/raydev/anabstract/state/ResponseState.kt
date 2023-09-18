@@ -11,7 +11,7 @@ sealed class ResponseState <out T>(
     val data: T? = null,
     val message: String ? = null
 ) {
-    data class Success<T>(val success: T?) : ResponseState<T>(success)
+    data class Success<T>(val model: T?) : ResponseState<T>(model)
     data class Loading<T>(val loadingProgress: Int ? = null) : ResponseState<T>()
     data class Error(val errorMessage: String?) : ResponseState<Nothing>()
     object Empty : ResponseState<Nothing>()
