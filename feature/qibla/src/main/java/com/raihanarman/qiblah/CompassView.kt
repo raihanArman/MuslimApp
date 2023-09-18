@@ -79,8 +79,8 @@ fun CompassView(
                 center = circleCenter
             )
 
-            val littleLineLength = circleRadius * 0.1f
-            val largeLineLength = circleRadius * 0.2f
+//            val littleLineLength = circleRadius * 0.1f
+//            val largeLineLength = circleRadius * 0.2f
 
             for (i in 0 until 60) {
                 val angelInDegrees = i * 360f / 60
