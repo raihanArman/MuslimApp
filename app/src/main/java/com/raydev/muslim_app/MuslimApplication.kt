@@ -41,7 +41,7 @@ class MuslimApplication : Application() {
                     workerModule,
                     sharedPrefModule,
                     locationModule,
-                    hereNetworkModule,
+                    hereNetworkModule(BuildConfig.HERE_API_KEY),
                     apiModule,
                     remoteDataSourceModule,
                     localDataSourceModule,

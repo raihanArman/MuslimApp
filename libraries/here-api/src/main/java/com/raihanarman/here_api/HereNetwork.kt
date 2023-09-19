@@ -11,12 +11,12 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @date 18/09/23
  */
 
-val hereNetworkModule = module {
+fun hereNetworkModule(apiKey: String) = module {
     single(named("here_okhttp")) {
         val okhttp = get<OkHttpClient>().newBuilder().addInterceptor { chain ->
             val originalRequest = chain.request()
             val url = originalRequest.url.newBuilder()
-                .addQueryParameter("apiKey", "")
+                .addQueryParameter("apiKey", apiKey)
                 .build()
 
             val newRequest = originalRequest.newBuilder().url(url).build()
