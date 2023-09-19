@@ -2,8 +2,12 @@ package com.raydev.home.ui
 
 import android.os.CountDownTimer
 import com.raydev.anabstract.base.BaseViewModel
+import com.raydev.anabstract.util.onFailure
+import com.raydev.anabstract.util.onLoading
+import com.raydev.anabstract.util.onSuccess
 import com.raydev.domain.repository.LastReadRepository
 import com.raydev.domain.repository.PrayerRepository
+import com.raydev.domain.usecase.GetNearbyMosqueUseCase
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
 import com.raydev.shared.util.getCurrentDate
@@ -23,6 +27,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val repository: PrayerRepository,
     private val lastReadRepository: LastReadRepository,
+    private val nearbyMosqueUseCase: GetNearbyMosqueUseCase,
     private val appNavigator: AppNavigator
 ) : BaseViewModel() {
 
@@ -38,6 +43,38 @@ class HomeViewModel(
         getPrayerTime()
         buildNextPrayerTime()
         getLastRead()
+        getNearbyMosque()
+    }
+
+    private fun getNearbyMosque() {
+        launch {
+            nearbyMosqueUseCase.invoke().collect {
+                it.onSuccess {
+                    _state.update {
+                        it.copy(
+                            mosqueData = this?.data,
+                            isLoading = false
+                        )
+                    }
+                }
+
+                it.onLoading {
+                    _state.update {
+                        it.copy(
+                            isLoading = true
+                        )
+                    }
+                }
+
+                it.onFailure {
+                    _state.update {
+                        it.copy(
+                            isLoading = false
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun getLastRead() {

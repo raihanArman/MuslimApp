@@ -1,5 +1,6 @@
 package com.raydev.domain.di
 
+import com.raydev.domain.usecase.GetNearbyMosqueUseCase
 import com.raydev.domain.usecase.prayer.GetAsharDataUseCase
 import com.raydev.domain.usecase.prayer.GetCurrentPrayerTimeUseCase
 import com.raydev.domain.usecase.prayer.GetDhuhurDataUseCase
@@ -106,5 +107,9 @@ var useCaseModule = module {
 
     factory {
         BookmarkAyahUseCase(get())
+    }
+
+    factory {
+        GetNearbyMosqueUseCase(get())
     }
 }

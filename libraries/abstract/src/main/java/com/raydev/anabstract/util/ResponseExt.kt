@@ -19,7 +19,7 @@ fun <T> ResponseState<T>.onLoading(action: () -> Unit) {
     }
 }
 
-fun <T> ResponseState<T>.onFailure(action: String.() -> Unit) {
+fun <T> ResponseState<T>.onFailure(action: String?.() -> Unit) {
     if (this is ResponseState.Error) {
         action.invoke(errorMessage)
     }
