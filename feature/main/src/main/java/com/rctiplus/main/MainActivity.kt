@@ -1,6 +1,9 @@
-package com.raydev.muslim_app
+package com.rctiplus.main
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -14,6 +17,14 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by inject()
     companion object {
         const val REQUEST_CODE = 123
+
+        fun goToMain(activity: Activity, withFinishAction: Boolean = false) {
+            val intent = Intent(activity, MainActivity::class.java)
+            activity.startActivity(intent)
+            if (withFinishAction) {
+                activity.finish()
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

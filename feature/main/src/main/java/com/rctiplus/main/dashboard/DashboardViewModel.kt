@@ -1,4 +1,4 @@
-package com.raydev.muslim_app.dashboard
+package com.rctiplus.main.dashboard
 
 /**
  * @author Raihan Arman

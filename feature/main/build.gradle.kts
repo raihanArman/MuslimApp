@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.raihanarman.splash"
+    namespace = "com.raihanarman.main"
     compileSdk = 33
 
     defaultConfig {
@@ -26,13 +26,20 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.koin.compose)
-    implementation(libs.androidx.splash)
+    implementation(libs.bundles.accompanist)
+    implementation(libs.bundles.maps)
     implementation(project(":domain"))
     implementation(project(":shared"))
     implementation(project(":core:navigation"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:workmanager"))
-    implementation(project(":feature:main"))
+    implementation(project(":libraries:location"))
+    implementation(project(":feature:read-quran"))
+    implementation(project(":feature:bookmark"))
+    implementation(project(":feature:dashboard"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:quran"))
+    implementation(project(":feature:prayer"))
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

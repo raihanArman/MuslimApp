@@ -124,6 +124,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":feature:quran"))
     implementation(project(":feature:prayer"))
+    implementation(project(":feature:main"))
     implementation(project(":feature:dashboard"))
     implementation(project(":feature:splash"))
     implementation(project(":feature:read-quran"))

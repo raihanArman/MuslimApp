@@ -1,4 +1,4 @@
-package com.raydev.muslim_app
+package com.rctiplus.main
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

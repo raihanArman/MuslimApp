@@ -3,6 +3,7 @@ package com.raihanarman.splash
 import androidx.lifecycle.viewModelScope
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.anabstract.state.ResponseState
+import com.raydev.domain.repository.QuranRepository
 import com.raydev.domain.usecase.quran.SetupQuranUseCase
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
  * @date 06/08/23
  */
 class SplashViewModel(
-    private val setupQuranUseCase: SetupQuranUseCase,
+    private val repository: QuranRepository,
     private val navigator: AppNavigator
 ) : BaseViewModel() {
 
@@ -28,20 +29,30 @@ class SplashViewModel(
     val observeEvent = _observeEvent.asSharedFlow()
 
     init {
-        setupQuran()
+        checkDataQuran()
     }
 
     private fun setupQuran() {
         viewModelScope.launch {
-            setupQuranUseCase.invoke().collect {
+            repository.setupQuran().collect {
                 _observeSetupQuran.value = it
                 when (it) {
                     is ResponseState.Success -> {
-//                        getSurah()
+                        onEvent(SplashEvent.OnNavigateToMain)
                     }
 
                     else -> {}
                 }
+            }
+        }
+    }
+
+    private fun checkDataQuran() {
+        launch {
+            if (repository.checkDataIsExists()) {
+                onEvent(SplashEvent.OnNavigateToMain)
+            } else {
+                setupQuran()
             }
         }
     }

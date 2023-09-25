@@ -1,4 +1,4 @@
-package com.raydev.muslim_app
+package com.rctiplus.main
 
 import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -9,11 +9,10 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.raihanarman.bookmark.ui.bookmarkNavigation
 import com.raihanarman.read_quran.ui.readQuranNavigation
-import com.raihanarman.splash.splashNavigation
-import com.raydev.muslim_app.dashboard.dashboardNavigation
 import com.raydev.navigation.Destination
 import com.raydev.navigation.NavHostApp
 import com.raydev.navigation.NavigationIntent
+import com.rctiplus.main.dashboard.dashboardNavigation
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import org.koin.androidx.compose.koinViewModel
@@ -34,9 +33,8 @@ fun MainScreen(
     )
     NavHostApp(
         navController = navController,
-        startDestination = Destination.SplashScreen
+        startDestination = Destination.DashboardScreen
     ) {
-        splashNavigation()
         dashboardNavigation()
         readQuranNavigation()
         bookmarkNavigation()

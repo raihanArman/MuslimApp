@@ -1,4 +1,4 @@
-package com.raydev.muslim_app
+package com.rctiplus.main
 
 import com.google.android.gms.maps.model.LatLng
 import com.raihanarman.location.LocationManager

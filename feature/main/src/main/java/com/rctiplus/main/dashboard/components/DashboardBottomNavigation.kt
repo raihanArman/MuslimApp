@@ -1,4 +1,4 @@
-package com.raydev.muslim_app.dashboard.components
+package com.rctiplus.main.dashboard.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.BottomNavigation

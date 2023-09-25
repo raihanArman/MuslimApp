@@ -1,4 +1,4 @@
-package com.raydev.muslim_app.dashboard.model
+package com.rctiplus.main.dashboard.model
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
