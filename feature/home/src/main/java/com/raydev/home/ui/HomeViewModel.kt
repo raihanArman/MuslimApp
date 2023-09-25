@@ -116,6 +116,8 @@ class HomeViewModel(
                         )
                     )
                 }
+
+                else -> {}
             }
         }
     }

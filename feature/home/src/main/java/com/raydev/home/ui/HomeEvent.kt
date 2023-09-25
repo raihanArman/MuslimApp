@@ -9,4 +9,8 @@ import com.raydev.shared.model.QuranLastRead
 sealed interface HomeEvent {
     object Initial : HomeEvent
     data class OnNavigateToReadQuran(val lastRead: QuranLastRead) : HomeEvent
+    object OnClickDoaAndDzikir : HomeEvent
+    object OnClickJadwalPuasa : HomeEvent
+    object OnClickCeramah : HomeEvent
+    object OnClickBuku : HomeEvent
 }

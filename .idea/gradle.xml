@@ -20,10 +20,14 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature" />
-            <option value="$PROJECT_DIR$/feature/book" />
             <option value="$PROJECT_DIR$/feature/bookmark" />
             <option value="$PROJECT_DIR$/feature/dashboard" />
             <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/home-menu" />
+            <option value="$PROJECT_DIR$/feature/home-menu/book" />
+            <option value="$PROJECT_DIR$/feature/home-menu/ceramah" />
+            <option value="$PROJECT_DIR$/feature/home-menu/doa" />
+            <option value="$PROJECT_DIR$/feature/home-menu/puasa" />
             <option value="$PROJECT_DIR$/feature/main" />
             <option value="$PROJECT_DIR$/feature/prayer" />
             <option value="$PROJECT_DIR$/feature/qibla" />

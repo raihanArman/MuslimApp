@@ -17,6 +17,9 @@ jobs:
         with:
           java-version: 1.11
 
+      - name: Get local.properties from secret
+        run: echo "${{secret.LOCAL_PROPERTIES }}" > $GITHUB_WORKSPACE/local.properties
+
       - name: Build Project
         run: ./gradlew assemble
 

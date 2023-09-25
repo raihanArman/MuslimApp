@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import com.raihan.ui.PrayerSection
 import com.raydev.home.ui.components.CardLastReadQuran
 import com.raydev.home.ui.components.CardMainInformation
+import com.raydev.home.ui.components.HomeMenuSection
 import com.raydev.home.ui.components.TileMosque
 import org.koin.androidx.compose.getViewModel
 
@@ -61,6 +62,10 @@ fun HomeScreen(
                     prayerTime = prayerTime,
                     nextPrayerTime = nextPrayerTime
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+                HomeMenuSection(onClick = {
+                    onEvent(it)
+                })
                 Spacer(modifier = Modifier.height(16.dp))
                 state.lastRead?.let {
                     CardLastReadQuran(lastRead = it) {
