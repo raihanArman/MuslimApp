@@ -22,8 +22,8 @@ jobs:
 
       - name: Decrypt and write GOOGLE_SERVICES_JSON
         run: |
-          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > app/google-services.json
-        working-directory: ./app
+          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > $GITHUB_WORKSPACE/app/google-services.json
+        working-directory: $GITHUB_WORKSPACE
 
       - name: Build Project
         run: ./gradlew assemble
