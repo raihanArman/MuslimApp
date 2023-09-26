@@ -8,6 +8,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -137,6 +138,11 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.accompanist)
     implementation(libs.bundles.koin.compose)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(platform(libs.firebase.crashlystic))
+
 //    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
