@@ -56,12 +56,6 @@ jobs:
           echo "DATE=$DATE"
         shell: bash
 
-      - name: Validate Firebase Data
-        run: |
-          echo "FIREBASE CONTENT = ${{ secrets.CREDENTIAL_FILE_CONTENT }}"
-          echo "FIREBASE APP ID = ${{ secrets.FIREBASE_APP_ID }}"
-        shell: bash
-
       - name: Upload APK to Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -76,7 +70,7 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
+          appId: ${{ secrets.FIREBASE_APP_ID_DEV }}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
@@ -85,7 +79,7 @@ jobs:
         if: github.ref == 'refs/heads/prod'
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
+          appId: ${{ secrets.FIREBASE_APP_ID_PROD }}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           file: app/build/outputs/apk/prod/release/app-prod-release.apk
