@@ -48,10 +48,11 @@ jobs:
       - name: Get the current date
         id: date
         run: |
-          echo "DATE=$(date +'%d %B %Y %H:%M')" >> $GITHUB_ENV
+          DATE=$(date +'%Y-%m-%d')
+          echo "DATE=$DATE" >> $GITHUB_ENV
 
       - name: Upload APK to Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ github.ref_name }}-${{ github.run_number }}-${{ env.DATE }}.apk
           path: |
