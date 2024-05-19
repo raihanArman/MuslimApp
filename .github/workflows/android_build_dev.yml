@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set Up JDK
         uses: actions/setup-java@v3
@@ -55,8 +55,8 @@ jobs:
         with:
           name: ${{ github.ref_name }}-${{ github.run_number }}-${{ env.DATE }}.apk
           path: |
-            app/dev/debug/app-dev-debug.apk
-            app/prod/release/app-prod-release.apk
+            app/build/outputs/apk/dev/debug/app-dev-debug.apk
+            app/build/outputs/apk/prod/release/app-prod-release.apk
         env:
           DATE: ${{ steps.date.outputs.date }}
 
