@@ -45,6 +45,9 @@ jobs:
             ./gradlew testProdReleaseUnitTest
           fi
 
+      - name: Static Analysis
+        run: ./gradlew ktlintCheck detekt
+
       - name: Get the current date
         id: date
         run: |
@@ -63,5 +66,20 @@ jobs:
         env:
           DATE: ${{ steps.date.outputs.date }}
 
-      - name: Static Analysis
-        run: ./gradlew ktlintCheck detekt
+      - name: Upload artifact to Firebase Distribution (Dev)
+        if: github.ref == 'refs/heads/dev'
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
+          file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+
+      - name: Upload artifact to Firebase Distribution (Prod)
+        if: github.ref == 'refs/heads/prod'
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
+          file: app/build/outputs/apk/prod/release/app-prod-release.apk
