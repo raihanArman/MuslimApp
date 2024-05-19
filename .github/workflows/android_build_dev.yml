@@ -1,0 +1,56 @@
+name: Android Build
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+
+      - name: Get local.properties from secret
+        run: echo "${{ secrets.LOCAL_PROPERTIES }}" > $GITHUB_WORKSPACE/local.properties
+
+      - name: Create google-services.json
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            echo ${{ secrets.GOOGLE_SERVICES_JSON_DEV }} | base64 --decode > $GITHUB_WORKSPACE/app/google-services.json
+          elif [ "${{ github.ref }}" == "refs/heads/prod" ]; then
+            echo ${{ secrets.GOOGLE_SERVICES_JSON_PROD }} | base64 --decode > $GITHUB_WORKSPACE/app/google-services.json
+          fi
+
+      - name: Build APK
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            ./gradlew assembleDevDebug
+          elif [ "${{ github.ref }}" == "refs/heads/prod" ]; then
+            ./gradlew assembleProdRelease
+          fi 
+
+      - name: Run Tests
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            ./gradlew testDevDebugUnitTest
+          elif [ "${{ github.ref }}" == "refs/heads/prod" ]; then
+            ./gradlew testProdReleaseUnitTest
+          fi
+
+      - name: Upload APK to Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-${{ github.ref_name }}.apk
+          path: |
+            app/build/outputs/apk/dev/debug/app-dev-debug.apk
+            app/build/outputs/apk/prod/release/app-prod-release.apk    
+
+      - name: Static Analysis
+        run: ./gradlew ktlintCheck detekt
