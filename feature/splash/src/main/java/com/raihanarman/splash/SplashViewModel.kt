@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.anabstract.state.ResponseState
 import com.raydev.domain.repository.QuranRepository
-import com.raydev.domain.usecase.quran.SetupQuranUseCase
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
 import kotlinx.coroutines.flow.MutableSharedFlow
