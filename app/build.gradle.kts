@@ -1,8 +1,5 @@
 
 import java.io.FileInputStream
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 import java.util.Properties
 
 plugins {
@@ -55,25 +52,25 @@ android {
             )
         }
 
-        applicationVariants.all {
-            this.outputs.forEach { output ->
-                val cal = Calendar.getInstance()
-                val dateFormat = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("id"))
-                val formattedDate = dateFormat.format(cal.time)
+//        applicationVariants.all {
+//            this.outputs.forEach { output ->
+//                val cal = Calendar.getInstance()
+//                val dateFormat = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("id"))
+//                val formattedDate = dateFormat.format(cal.time)
 
-                var newName = output.outputFile.name
-                newName = newName.replace("app-", "$project.ext.appName-")
-                newName = newName.replace("-debug", " - debug - " + formattedDate)
-                newName = newName.replace("-release", " - release - " + formattedDate)
-
-                val originalApk = this@all.outputs.firstOrNull()?.outputFile
-                val outputDir = originalApk?.parentFile
-                val newApk = File(outputDir, newName)
-                originalApk?.renameTo(newApk)
+//                var newName = output.outputFile.name
+//                newName = newName.replace("app-", "$project.ext.appName-")
+//                newName = newName.replace("-debug", " - debug - " + formattedDate)
+//                newName = newName.replace("-release", " - release - " + formattedDate)
+//
+//                val originalApk = this@all.outputs.firstOrNull()?.outputFile
+//                val outputDir = originalApk?.parentFile
+//                val newApk = File(outputDir, newName)
+//                originalApk?.renameTo(newApk)
 
 //                output.outputFile = originalApk
-            }
-        }
+//            }
+//        }
     }
 
     flavorDimensions.add("default")

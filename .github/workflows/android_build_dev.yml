@@ -10,11 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Set Up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'
           java-version: 1.11
 
       - name: Get local.properties from secret
@@ -50,7 +51,7 @@ jobs:
           echo "DATE=$(date +'%d %B %Y %H:%M')" >> $GITHUB_ENV
 
       - name: Upload APK to Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ github.ref_name }}-${{ github.run_number }}-${{ env.DATE }}.apk
           path: |
@@ -58,15 +59,6 @@ jobs:
             app/prod/release/app-prod-release.apk
         env:
           DATE: ${{ steps.date.outputs.date }}
-
-#
-#                  - name: Upload APK to Artifact
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: ${{ github.ref_name }}-${{ github.run_number }}-${{ env.DATE }}.apk
-#          path: |
-#            app/${{ env.FLAVOR }}/${{ env.BUILD_TYPE }}/app-${{ env.FLAVOR }}-${{ env.BUILD_TYPE }}.apk
-
 
       - name: Static Analysis
         run: ./gradlew ktlintCheck detekt
