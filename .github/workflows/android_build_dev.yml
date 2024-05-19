@@ -44,18 +44,29 @@ jobs:
             ./gradlew testProdReleaseUnitTest
           fi
 
+      - name: Get the current date
+        id: date
+        run: |
+          echo "DATE=$(date +'%d %B %Y %H:%M')" >> $GITHUB_ENV
+
       - name: Upload APK to Artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ github.ref_name }}-${{ github.run_number }}-${{ env.DATE }}.apk
           path: |
-            app/${{ env.FLAVOR }}/${{ env.BUILD_TYPE }}/app-${{ env.FLAVOR }}-${{ env.BUILD_TYPE }}.apk
+            app/dev/debug/app-dev-debug.apk
+            app/prod/release/app-prod-release.apk
         env:
           DATE: ${{ steps.date.outputs.date }}
 
-      - name: Get the current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%d %B %Y %H:%M')"
+#
+#                  - name: Upload APK to Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: ${{ github.ref_name }}-${{ github.run_number }}-${{ env.DATE }}.apk
+#          path: |
+#            app/${{ env.FLAVOR }}/${{ env.BUILD_TYPE }}/app-${{ env.FLAVOR }}-${{ env.BUILD_TYPE }}.apk
+
 
       - name: Static Analysis
         run: ./gradlew ktlintCheck detekt
