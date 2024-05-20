@@ -31,6 +31,11 @@ androidx-splash = "1.0.1"
 gson = "2.6.2"
 coroutines-android = "1.6.4"
 google-service = "4.3.15"
+mockkAndroid = "1.13.3"
+turbine = "1.0.0"
+
+#Firestore
+firebase-firestore = "24.0.0"
 
 #Maps
 android-maps-utils = "2.4.0"
@@ -39,6 +44,9 @@ play-services-location = "20.0.0"
 
 #Firebase
 firebase-bom = "32.3.1"
+junit = "4.13.2"
+junit-version = "1.1.5"
+espresso-core = "3.5.1"
 
 [libraries]
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-androidx-compose" }
@@ -102,6 +110,17 @@ firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-cm = { module = "com.google.firebase:firebase-messaging-ktx" }
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-crashlystic = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-version" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
+# Test Framework
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroid" }
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockkAndroid" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+
+# Firebase
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebase-firestore" }
 
 [bundles]
 androidx = [
