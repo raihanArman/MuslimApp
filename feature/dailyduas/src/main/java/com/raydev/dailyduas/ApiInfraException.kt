@@ -6,3 +6,5 @@ package com.raydev.dailyduas
  */
 
 class ConnectivityException : Exception()
+class PermissionDeniedException : Exception()
+class UnexpectedException : Exception()

@@ -1,6 +1,8 @@
 package com.raydev.dailyduas
 
 import app.cash.turbine.test
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -30,14 +32,29 @@ class DailyDuasFirestoreClient(
         return flow {
             try {
                 service.getDailyDuas()
-            } catch (e: Exception) {
-                emit(FirestoreClientResult.Failure(ConnectivityException()))
+            } catch (exception: Exception) {
+                when (exception) {
+                    is IOException -> {
+                        emit(FirestoreClientResult.Failure(ConnectivityException()))
+                    }
+                    is FirebaseFirestoreException -> {
+                        when (exception.code) {
+                            FirebaseFirestoreException.Code.PERMISSION_DENIED -> {
+                                emit(FirestoreClientResult.Failure(PermissionDeniedException()))
+                            }
+                            else -> {}
+                        }
+                    }
+                    else -> {
+                        emit(FirestoreClientResult.Failure(UnexpectedException()))
+                    }
+                }
             }
         }
     }
 }
 class DailyDuasFirestoreClientTest {
-    private val service = mockk<DailyDuasFirestoreService>()
+    private val service = mockk<DailyDuasFirestoreService>(relaxed = true)
     private lateinit var sut: DailyDuasFirestoreClient
 
     @Before
@@ -62,10 +79,59 @@ class DailyDuasFirestoreClientTest {
             awaitComplete()
         }
 
-        coVerify {
+        coVerify(exactly = 1) {
             service.getDailyDuas()
         }
 
         confirmVerified(service)
     }
+
+    @Test
+    fun testGetFailsOnUnexpected() = runBlocking {
+        coEvery {
+            service.getDailyDuas()
+        } throws Exception()
+
+        sut.getDailyDuas().test {
+            when (val received = awaitItem()) {
+                is FirestoreClientResult.Failure -> {
+                    assertEquals(UnexpectedException()::class.java, received.exception::class.java)
+                }
+                else -> {}
+            }
+
+            awaitComplete()
+        }
+
+        coVerify(exactly = 1) {
+            service.getDailyDuas()
+        }
+
+        confirmVerified(service)
+    }
+
+//    @Test
+//    fun testGetFailsOnPermissionDenied() = runBlocking {
+//        coEvery { service.getDailyDuas() } throws FirebaseFirestoreException(
+//            "Permission denied",
+//            FirebaseFirestoreException.Code.PERMISSION_DENIED
+//        )
+//
+//        sut.getDailyDuas().test {
+//            when(val received = awaitItem()) {
+//                is FirestoreClientResult.Failure -> {
+//                    assertEquals(PermissionDeniedException()::class.java, received.exception::class.java)
+//                }
+//                else -> {}
+//            }
+//
+//            awaitComplete()
+//        }
+//
+//        coVerify(exactly = 1) {
+//            service.getDailyDuas()
+//        }
+//
+//        confirmVerified(service)
+//    }
 }

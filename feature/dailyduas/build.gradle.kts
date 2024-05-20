@@ -37,9 +37,13 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.android.material)
 
+    // Firebase
+    implementation(libs.firebase.firestore.ktx)
+
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
     testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
 
 //    testImplementation(libs.kotlinx.coroutines.test)
 

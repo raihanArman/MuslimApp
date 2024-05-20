@@ -30,12 +30,15 @@ android-material = "1.9.0"
 androidx-splash = "1.0.1"
 gson = "2.6.2"
 coroutines-android = "1.6.4"
-google-service = "4.3.15"
-mockkAndroid = "1.13.3"
-turbine = "1.0.0"
+google-service = "4.4.1"
+mockkAndroid = "1.13.10"
+turbine = "1.1.0"
+
+# Asynchronous
+coroutines = "1.7.3"
 
 #Firestore
-firebase-firestore = "24.0.0"
+firebase-firestore = "25.0.0"
 
 #Maps
 android-maps-utils = "2.4.0"
@@ -103,6 +106,7 @@ maps-utils = { module = "com.google.maps.android:android-maps-utils", version.re
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines-android" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
@@ -120,7 +124,7 @@ mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockkAndroid" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 # Firebase
-firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebase-firestore" }
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore", version.ref = "firebase-firestore" }
 
 [bundles]
 androidx = [
