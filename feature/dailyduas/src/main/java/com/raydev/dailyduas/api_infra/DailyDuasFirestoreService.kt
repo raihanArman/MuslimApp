@@ -1,4 +1,6 @@
-package com.raydev.dailyduas
+package com.raydev.dailyduas.api_infra
+
+import com.raydev.dailyduas.api_infra.DailyDuasResponse
 
 /**
  * @author Raihan Arman

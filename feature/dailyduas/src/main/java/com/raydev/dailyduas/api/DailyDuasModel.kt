@@ -1,4 +1,4 @@
-package com.raydev.dailyduas
+package com.raydev.dailyduas.api
 
 /**
  * @author Raihan Arman

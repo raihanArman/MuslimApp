@@ -1,14 +1,21 @@
 package com.raydev.dailyduas
 
 import app.cash.turbine.test
+import com.raydev.dailyduas.api.ConnectivityException
+import com.raydev.dailyduas.api.DailyDuasModel
+import com.raydev.dailyduas.api.FirestoreClient
+import com.raydev.dailyduas.api.FirestoreClientResult
+import com.raydev.dailyduas.api.GetDailyDuasFirestoreUseCase
+import com.raydev.dailyduas.api.UnexpectedException
+import com.raydev.dailyduas.domain.Connectivity
+import com.raydev.dailyduas.domain.DailyDuas
+import com.raydev.dailyduas.domain.FirestoreDomainResult
+import com.raydev.dailyduas.domain.Unexpected
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -18,52 +25,6 @@ import org.junit.Test
  * @author Raihan Arman
  * @date 20/05/24
  */
-sealed class FirestoreDomainResult {
-    data class Success(val root: List<DailyDuas>) : FirestoreDomainResult()
-    data class Failure(val exception: Exception) : FirestoreDomainResult()
-}
-
-interface FirestoreClient {
-    fun getDailyDuas(): Flow<FirestoreClientResult>
-}
-
-class GetDailyDuasFirestoreUseCase(
-    private val client: FirestoreClient
-) {
-    fun getDailyDuas(): Flow<FirestoreDomainResult> {
-        return flow {
-            client.getDailyDuas().collect { result ->
-                when (result) {
-                    is FirestoreClientResult.Failure -> {
-                        when (result.exception) {
-                            is ConnectivityException -> {
-                                emit(FirestoreDomainResult.Failure(Connectivity()))
-                            }
-                            else -> {
-                                emit(FirestoreDomainResult.Failure(Unexpected()))
-                            }
-                        }
-                    }
-                    is FirestoreClientResult.Success -> {
-                        emit(
-                            FirestoreDomainResult.Success(
-                                result.root.map {
-                                    it.toDomainModels()
-                                }
-                            )
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    fun DailyDuasModel.toDomainModels() = DailyDuas(
-        id = this.id,
-        title = this.title,
-        content = this.content
-    )
-}
 
 class GetDailyDuasFirestoreUseCaseTest {
     private val client = mockk<FirestoreClient>()

@@ -1,15 +1,18 @@
 package com.raydev.dailyduas
 
 import app.cash.turbine.test
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.FirebaseFirestoreException.Code.PERMISSION_DENIED
+import com.raydev.dailyduas.api.ConnectivityException
+import com.raydev.dailyduas.api.DailyDuasModel
+import com.raydev.dailyduas.api.FirestoreClientResult
+import com.raydev.dailyduas.api.UnexpectedException
+import com.raydev.dailyduas.api_infra.DailyDuasFirestoreClient
+import com.raydev.dailyduas.api_infra.DailyDuasFirestoreService
+import com.raydev.dailyduas.api_infra.DailyDuasResponse
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -20,52 +23,6 @@ import java.io.IOException
  * @date 20/05/24
  */
 
-sealed class FirestoreClientResult {
-    data class Success(val root: List<DailyDuasModel>) : FirestoreClientResult()
-    data class Failure(val exception: Exception) : FirestoreClientResult()
-}
-
-class DailyDuasFirestoreClient(
-    private val service: DailyDuasFirestoreService
-) {
-    fun getDailyDuas(): Flow<FirestoreClientResult> {
-        return flow {
-            try {
-                val result = service.getDailyDuas()
-                emit(
-                    FirestoreClientResult.Success(
-                        result.map {
-                            it.toModels()
-                        }
-                    )
-                )
-            } catch (exception: Exception) {
-                when (exception) {
-                    is IOException -> {
-                        emit(FirestoreClientResult.Failure(ConnectivityException()))
-                    }
-                    is FirebaseFirestoreException -> {
-                        when (exception.code) {
-                            FirebaseFirestoreException.Code.PERMISSION_DENIED -> {
-                                emit(FirestoreClientResult.Failure(PermissionDeniedException()))
-                            }
-                            else -> {}
-                        }
-                    }
-                    else -> {
-                        emit(FirestoreClientResult.Failure(UnexpectedException()))
-                    }
-                }
-            }
-        }
-    }
-
-    fun DailyDuasResponse.toModels() = DailyDuasModel(
-        id = this.id.orEmpty(),
-        title = this.title.orEmpty(),
-        content = this.content.orEmpty()
-    )
-}
 class DailyDuasFirestoreClientTest {
     private val service = mockk<DailyDuasFirestoreService>(relaxed = true)
     private lateinit var sut: DailyDuasFirestoreClient

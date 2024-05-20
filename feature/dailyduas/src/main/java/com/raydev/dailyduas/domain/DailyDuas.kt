@@ -1,4 +1,4 @@
-package com.raydev.dailyduas
+package com.raydev.dailyduas.domain
 
 /**
  * @author Raihan Arman
