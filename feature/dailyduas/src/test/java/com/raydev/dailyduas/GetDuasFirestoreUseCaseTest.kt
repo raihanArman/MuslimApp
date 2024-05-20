@@ -18,9 +18,9 @@ import org.junit.Test
  * @author Raihan Arman
  * @date 20/05/24
  */
-sealed class FirestoreResult {
-    data class Success(val root: List<DailyDuas>) : FirestoreResult()
-    data class Failure(val exception: Exception) : FirestoreResult()
+sealed class FirestoreDomainResult {
+    data class Success(val root: List<DailyDuas>) : FirestoreDomainResult()
+    data class Failure(val exception: Exception) : FirestoreDomainResult()
 }
 
 interface FirestoreClient {
@@ -30,25 +30,39 @@ interface FirestoreClient {
 class GetDailyDuasFirestoreUseCase(
     private val client: FirestoreClient
 ) {
-    fun getDailyDuas(): Flow<FirestoreResult> {
+    fun getDailyDuas(): Flow<FirestoreDomainResult> {
         return flow {
             client.getDailyDuas().collect { result ->
                 when (result) {
                     is FirestoreClientResult.Failure -> {
                         when (result.exception) {
                             is ConnectivityException -> {
-                                emit(FirestoreResult.Failure(Connectivity()))
+                                emit(FirestoreDomainResult.Failure(Connectivity()))
                             }
                             else -> {
-                                emit(FirestoreResult.Failure(Unexpected()))
+                                emit(FirestoreDomainResult.Failure(Unexpected()))
                             }
                         }
                     }
-                    else -> {}
+                    is FirestoreClientResult.Success -> {
+                        emit(
+                            FirestoreDomainResult.Success(
+                                result.root.map {
+                                    it.toDomainModels()
+                                }
+                            )
+                        )
+                    }
                 }
             }
         }
     }
+
+    fun DailyDuasModel.toDomainModels() = DailyDuas(
+        id = this.id,
+        title = this.title,
+        content = this.content
+    )
 }
 
 class GetDailyDuasFirestoreUseCaseTest {
@@ -115,7 +129,7 @@ class GetDailyDuasFirestoreUseCaseTest {
 
         sut.getDailyDuas().test {
             when (val received = awaitItem()) {
-                is FirestoreResult.Failure -> {
+                is FirestoreDomainResult.Failure -> {
                     assertEquals(Connectivity()::class.java, received.exception::class.java)
                 }
                 else -> {}
@@ -139,7 +153,7 @@ class GetDailyDuasFirestoreUseCaseTest {
 
         sut.getDailyDuas().test {
             when (val received = awaitItem()) {
-                is FirestoreResult.Failure -> {
+                is FirestoreDomainResult.Failure -> {
                     assertEquals(Unexpected()::class.java, received.exception::class.java)
                 }
                 else -> {}
@@ -153,5 +167,55 @@ class GetDailyDuasFirestoreUseCaseTest {
         }
 
         confirmVerified()
+    }
+
+    @Test
+    fun testLoadDeliversSuccess() = runBlocking {
+        val models = listOf(
+            DailyDuasModel(
+                id = "1",
+                title = "test",
+                content = "test"
+            ),
+            DailyDuasModel(
+                id = "1",
+                title = "test",
+                content = "test"
+            )
+        )
+
+        val domainModel = listOf(
+            DailyDuas(
+                id = "1",
+                title = "test",
+                content = "test"
+            ),
+            DailyDuas(
+                id = "1",
+                title = "test",
+                content = "test"
+            )
+        )
+
+        every {
+            client.getDailyDuas()
+        } returns flowOf(FirestoreClientResult.Success(models))
+
+        sut.getDailyDuas().test {
+            when (val received = awaitItem()) {
+                is FirestoreDomainResult.Success -> {
+                    assertEquals(domainModel, received.root)
+                }
+                else -> {}
+            }
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.getDailyDuas()
+        }
+
+        confirmVerified(client)
     }
 }
