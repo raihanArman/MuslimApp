@@ -21,7 +21,7 @@ import java.io.IOException
  */
 
 sealed class FirestoreClientResult {
-    data class Success(val root: List<DailyDuasResponse>) : FirestoreClientResult()
+    data class Success(val root: List<DailyDuasModel>) : FirestoreClientResult()
     data class Failure(val exception: Exception) : FirestoreClientResult()
 }
 
@@ -31,7 +31,14 @@ class DailyDuasFirestoreClient(
     fun getDailyDuas(): Flow<FirestoreClientResult> {
         return flow {
             try {
-                service.getDailyDuas()
+                val result = service.getDailyDuas()
+                emit(
+                    FirestoreClientResult.Success(
+                        result.map {
+                            it.toModels()
+                        }
+                    )
+                )
             } catch (exception: Exception) {
                 when (exception) {
                     is IOException -> {
@@ -52,6 +59,12 @@ class DailyDuasFirestoreClient(
             }
         }
     }
+
+    fun DailyDuasResponse.toModels() = DailyDuasModel(
+        id = this.id.orEmpty(),
+        title = this.title.orEmpty(),
+        content = this.content.orEmpty()
+    )
 }
 class DailyDuasFirestoreClientTest {
     private val service = mockk<DailyDuasFirestoreService>(relaxed = true)
@@ -78,6 +91,41 @@ class DailyDuasFirestoreClientTest {
         )
     }
 
+    @Test
+    fun testGetSuccessResponse() = runBlocking {
+        val responses = listOf(
+            DailyDuasResponse(
+                id = "1",
+                title = "test",
+                content = "test"
+            ),
+            DailyDuasResponse(
+                id = "1",
+                title = "test",
+                content = "test"
+            )
+        )
+
+        val models = listOf(
+            DailyDuasModel(
+                id = "1",
+                title = "test",
+                content = "test"
+            ),
+            DailyDuasModel(
+                id = "1",
+                title = "test",
+                content = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            expectedResult = FirestoreClientResult.Success(models),
+            receivedResult = responses
+        )
+    }
+
     private fun expect(
         sut: DailyDuasFirestoreClient,
         receivedResult: Any? = null,
@@ -88,6 +136,12 @@ class DailyDuasFirestoreClientTest {
                 coEvery {
                     service.getDailyDuas()
                 } throws IOException()
+            }
+
+            expectedResult is FirestoreClientResult.Success -> {
+                coEvery {
+                    service.getDailyDuas()
+                } returns receivedResult as List<DailyDuasResponse>
             }
 
             else -> {
@@ -102,7 +156,9 @@ class DailyDuasFirestoreClientTest {
                 is FirestoreClientResult.Failure -> {
                     assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
-                else -> {}
+                is FirestoreClientResult.Success -> {
+                    assertEquals(expectedResult, received)
+                }
             }
 
             awaitComplete()
