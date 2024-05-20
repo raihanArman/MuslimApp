@@ -39,6 +39,9 @@ class GetDailyDuasFirestoreUseCase(
                             is ConnectivityException -> {
                                 emit(FirestoreResult.Failure(Connectivity()))
                             }
+                            else -> {
+                                emit(FirestoreResult.Failure(Unexpected()))
+                            }
                         }
                     }
                     else -> {}
@@ -126,5 +129,29 @@ class GetDailyDuasFirestoreUseCaseTest {
         }
 
         confirmVerified(client)
+    }
+
+    @Test
+    fun testLoadDeliversUnexpectedError() = runBlocking {
+        every {
+            client.getDailyDuas()
+        } returns flowOf(FirestoreClientResult.Failure(UnexpectedException()))
+
+        sut.getDailyDuas().test {
+            when (val received = awaitItem()) {
+                is FirestoreResult.Failure -> {
+                    assertEquals(Unexpected()::class.java, received.exception::class.java)
+                }
+                else -> {}
+            }
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.getDailyDuas()
+        }
+
+        confirmVerified()
     }
 }
