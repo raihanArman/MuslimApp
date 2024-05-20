@@ -123,50 +123,22 @@ class GetDailyDuasFirestoreUseCaseTest {
 
     @Test
     fun testLoadDeliversConnectivityError() = runBlocking {
-        every {
-            client.getDailyDuas()
-        } returns flowOf(FirestoreClientResult.Failure(ConnectivityException()))
-
-        sut.getDailyDuas().test {
-            when (val received = awaitItem()) {
-                is FirestoreDomainResult.Failure -> {
-                    assertEquals(Connectivity()::class.java, received.exception::class.java)
-                }
-                else -> {}
-            }
-
-            awaitComplete()
-        }
-
-        verify(exactly = 1) {
-            client.getDailyDuas()
-        }
-
-        confirmVerified(client)
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Failure(ConnectivityException()),
+            expectedResult = FirestoreDomainResult.Failure(Connectivity()),
+            exactly = 1
+        )
     }
 
     @Test
     fun testLoadDeliversUnexpectedError() = runBlocking {
-        every {
-            client.getDailyDuas()
-        } returns flowOf(FirestoreClientResult.Failure(UnexpectedException()))
-
-        sut.getDailyDuas().test {
-            when (val received = awaitItem()) {
-                is FirestoreDomainResult.Failure -> {
-                    assertEquals(Unexpected()::class.java, received.exception::class.java)
-                }
-                else -> {}
-            }
-
-            awaitComplete()
-        }
-
-        verify(exactly = 1) {
-            client.getDailyDuas()
-        }
-
-        confirmVerified()
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Failure(UnexpectedException()),
+            expectedResult = FirestoreDomainResult.Failure(Unexpected()),
+            exactly = 1
+        )
     }
 
     @Test
@@ -197,22 +169,38 @@ class GetDailyDuasFirestoreUseCaseTest {
             )
         )
 
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Success(models),
+            expectedResult = FirestoreDomainResult.Success(domainModel),
+            exactly = 1
+        )
+    }
+
+    private fun expect(
+        sut: GetDailyDuasFirestoreUseCase,
+        receivedResult: FirestoreClientResult,
+        expectedResult: Any,
+        exactly: Int = -1
+    ) = runBlocking {
         every {
             client.getDailyDuas()
-        } returns flowOf(FirestoreClientResult.Success(models))
+        } returns flowOf(receivedResult)
 
         sut.getDailyDuas().test {
             when (val received = awaitItem()) {
-                is FirestoreDomainResult.Success -> {
-                    assertEquals(domainModel, received.root)
+                is FirestoreDomainResult.Failure -> {
+                    assertEquals(expectedResult::class.java, received::class.java)
                 }
-                else -> {}
+                is FirestoreDomainResult.Success -> {
+                    assertEquals(expectedResult, received)
+                }
             }
 
             awaitComplete()
         }
 
-        verify(exactly = 1) {
+        verify(exactly = exactly) {
             client.getDailyDuas()
         }
 
