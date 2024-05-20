@@ -126,6 +126,15 @@ class DailyDuasFirestoreClientTest {
         )
     }
 
+    @Test
+    fun testGetsSuccessWithEmptyResponse() = runBlocking {
+        expect(
+            sut = sut,
+            expectedResult = FirestoreClientResult.Success(emptyList()),
+            receivedResult = emptyList<DailyDuasResponse>()
+        )
+    }
+
     private fun expect(
         sut: DailyDuasFirestoreClient,
         receivedResult: Any? = null,
