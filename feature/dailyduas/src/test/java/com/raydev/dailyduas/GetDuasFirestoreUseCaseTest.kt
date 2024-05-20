@@ -5,7 +5,9 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -20,8 +22,9 @@ sealed class FirestoreResult {
     data class Success(val root: List<DailyDuas>) : FirestoreResult()
     data class Failure(val exception: Exception) : FirestoreResult()
 }
+
 interface FirestoreClient {
-    fun getDailyDuas(): Flow<FirestoreResult>
+    fun getDailyDuas(): Flow<FirestoreClientResult>
 }
 
 class GetDailyDuasFirestoreUseCase(
@@ -29,7 +32,18 @@ class GetDailyDuasFirestoreUseCase(
 ) {
     fun getDailyDuas(): Flow<FirestoreResult> {
         return flow {
-            client.getDailyDuas()
+            client.getDailyDuas().collect { result ->
+                when (result) {
+                    is FirestoreClientResult.Failure -> {
+                        when (result.exception) {
+                            is ConnectivityException -> {
+                                emit(FirestoreResult.Failure(Connectivity()))
+                            }
+                        }
+                    }
+                    else -> {}
+                }
+            }
         }
     }
 }
@@ -84,6 +98,30 @@ class GetDailyDuasFirestoreUseCaseTest {
         }
 
         verify(exactly = 2) {
+            client.getDailyDuas()
+        }
+
+        confirmVerified(client)
+    }
+
+    @Test
+    fun testLoadDeliversConnectivityError() = runBlocking {
+        every {
+            client.getDailyDuas()
+        } returns flowOf(FirestoreClientResult.Failure(ConnectivityException()))
+
+        sut.getDailyDuas().test {
+            when (val received = awaitItem()) {
+                is FirestoreResult.Failure -> {
+                    assertEquals(Connectivity()::class.java, received.exception::class.java)
+                }
+                else -> {}
+            }
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
             client.getDailyDuas()
         }
 
