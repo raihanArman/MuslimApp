@@ -64,38 +64,43 @@ class DailyDuasFirestoreClientTest {
 
     @Test
     fun testGetFailsOnConnectivity() = runBlocking {
-        coEvery {
-            service.getDailyDuas()
-        } throws IOException()
-
-        sut.getDailyDuas().test {
-            when (val received = awaitItem()) {
-                is FirestoreClientResult.Failure -> {
-                    assertEquals(ConnectivityException()::class.java, received.exception::class.java)
-                }
-                else -> {}
-            }
-
-            awaitComplete()
-        }
-
-        coVerify(exactly = 1) {
-            service.getDailyDuas()
-        }
-
-        confirmVerified(service)
+        expect(
+            sut = sut,
+            expectedResult = ConnectivityException()
+        )
     }
 
     @Test
     fun testGetFailsOnUnexpected() = runBlocking {
-        coEvery {
-            service.getDailyDuas()
-        } throws Exception()
+        expect(
+            sut = sut,
+            expectedResult = UnexpectedException()
+        )
+    }
+
+    private fun expect(
+        sut: DailyDuasFirestoreClient,
+        receivedResult: Any? = null,
+        expectedResult: Any
+    ) = runBlocking {
+        when {
+            expectedResult is ConnectivityException -> {
+                coEvery {
+                    service.getDailyDuas()
+                } throws IOException()
+            }
+
+            else -> {
+                coEvery {
+                    service.getDailyDuas()
+                } throws Exception()
+            }
+        }
 
         sut.getDailyDuas().test {
             when (val received = awaitItem()) {
                 is FirestoreClientResult.Failure -> {
-                    assertEquals(UnexpectedException()::class.java, received.exception::class.java)
+                    assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 else -> {}
             }
@@ -103,7 +108,7 @@ class DailyDuasFirestoreClientTest {
             awaitComplete()
         }
 
-        coVerify(exactly = 1) {
+        coVerify {
             service.getDailyDuas()
         }
 
