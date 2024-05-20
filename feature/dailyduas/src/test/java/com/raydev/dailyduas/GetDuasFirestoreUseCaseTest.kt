@@ -68,4 +68,25 @@ class GetDailyDuasFirestoreUseCaseTest {
 
         confirmVerified(client)
     }
+
+    @Test
+    fun testLoadTwiceRequestData() = runBlocking {
+        every {
+            client.getDailyDuas()
+        } returns flowOf()
+
+        sut.getDailyDuas().test {
+            awaitComplete()
+        }
+
+        sut.getDailyDuas().test {
+            awaitComplete()
+        }
+
+        verify(exactly = 2) {
+            client.getDailyDuas()
+        }
+
+        confirmVerified(client)
+    }
 }
