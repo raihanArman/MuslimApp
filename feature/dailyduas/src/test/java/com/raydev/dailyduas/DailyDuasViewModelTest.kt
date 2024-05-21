@@ -192,7 +192,19 @@ class DailyDuasViewModelTest {
             sut = sut,
             result = FirestoreDomainResult.Success(domainModels()),
             expectedFailed = null,
-            expectedLoading = false
+            expectedLoading = false,
+            expectedData = domainModels()
+        )
+    }
+
+    @Test
+    fun testLoadShowsWithEmptyData() = runBlocking {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Success(emptyList()),
+            expectedFailed = null,
+            expectedLoading = false,
+            expectedData = emptyList()
         )
     }
 
@@ -213,7 +225,8 @@ class DailyDuasViewModelTest {
         sut: DailyDuasViewModel,
         result: FirestoreDomainResult,
         expectedLoading: Boolean,
-        expectedFailed: String?
+        expectedFailed: String?,
+        expectedData: List<DailyDuas>? = null
     ) = runBlocking {
         every {
             useCase.getDailyDuas()
@@ -225,7 +238,7 @@ class DailyDuasViewModelTest {
             val received = awaitItem()
             if (expectedFailed == null) {
                 assertEquals(expectedLoading, received.isLoading)
-                assertEquals(domainModels(), received.data)
+                assertEquals(expectedData, received.data)
                 assertEquals(expectedFailed, received.errorMessage)
             } else {
                 assertEquals(expectedLoading, received.isLoading)
