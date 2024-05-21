@@ -40,6 +40,8 @@ dependencies {
     // Firebase
     implementation(libs.firebase.firestore.ktx)
 
+    implementation(libs.lifecycle.viewmodel)
+
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
     testImplementation(libs.turbine)
