@@ -6,6 +6,7 @@ import app.cash.turbine.test
 import com.raydev.dailyduas.domain.Connectivity
 import com.raydev.dailyduas.domain.FirestoreDomainResult
 import com.raydev.dailyduas.domain.GetDuasUseCase
+import com.raydev.dailyduas.domain.Unexpected
 import com.raydev.dailyduas.presentation.viewmodel.DailyDuasState
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -55,6 +56,13 @@ class DailyDuasViewModel(
                                 _uiState.update {
                                     it.copy(
                                         errorMessage = "Tidak ada internet"
+                                    )
+                                }
+                            }
+                            is Unexpected -> {
+                                _uiState.update {
+                                    it.copy(
+                                        errorMessage = "Tidak ditemukan"
                                     )
                                 }
                             }
@@ -158,6 +166,27 @@ class DailyDuasViewModelTest {
         sut.uiState.take(1).test {
             val received = awaitItem()
             assertEquals("Tidak ada internet", received.errorMessage)
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            useCase.getDailyDuas()
+        }
+
+        confirmVerified(useCase)
+    }
+
+    @Test
+    fun testLoadFailedUnexpectedShowsUnexpectedError() = runBlocking {
+        every {
+            useCase.getDailyDuas()
+        } returns flowOf(FirestoreDomainResult.Failure(Unexpected()))
+
+        sut.load()
+
+        sut.uiState.take(1).test {
+            val received = awaitItem()
+            assertEquals("Tidak ditemukan", received.errorMessage)
             awaitComplete()
         }
 
