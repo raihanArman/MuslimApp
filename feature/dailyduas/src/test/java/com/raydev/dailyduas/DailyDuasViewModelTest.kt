@@ -79,4 +79,20 @@ class DailyDuasViewModelTest {
 
         confirmVerified(useCase)
     }
+
+    @Test
+    fun testLoadTwiceRequestData() {
+        every {
+            useCase.getDailyDuas()
+        } returns flowOf()
+
+        sut.load()
+        sut.load()
+
+        verify(exactly = 2) {
+            useCase.getDailyDuas()
+        }
+
+        confirmVerified(useCase)
+    }
 }
