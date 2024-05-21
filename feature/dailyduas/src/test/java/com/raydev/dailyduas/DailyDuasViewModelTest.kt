@@ -3,6 +3,8 @@ package com.raydev.dailyduas
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
+import com.raydev.dailyduas.domain.Connectivity
+import com.raydev.dailyduas.domain.FirestoreDomainResult
 import com.raydev.dailyduas.domain.GetDuasUseCase
 import com.raydev.dailyduas.presentation.viewmodel.DailyDuasState
 import io.mockk.MockKAnnotations
@@ -10,6 +12,7 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +47,22 @@ class DailyDuasViewModel(
                     isLoading = true
                 )
             }
-            useCase.getDailyDuas()
+            useCase.getDailyDuas().collect { result ->
+                when (result) {
+                    is FirestoreDomainResult.Failure -> {
+                        when (result.exception) {
+                            is Connectivity -> {
+                                _uiState.update {
+                                    it.copy(
+                                        errorMessage = "Tidak ada internet"
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    is FirestoreDomainResult.Success -> {}
+                }
+            }
         }
     }
 }
@@ -127,5 +145,26 @@ class DailyDuasViewModelTest {
         verify(exactly = 1) {
             useCase.getDailyDuas()
         }
+    }
+
+    @Test
+    fun testLoadFailedConnectivityShowsConnectivityError() = runBlocking {
+        every {
+            useCase.getDailyDuas()
+        } returns flowOf(FirestoreDomainResult.Failure(Connectivity()))
+
+        sut.load()
+
+        sut.uiState.take(1).test {
+            val received = awaitItem()
+            assertEquals("Tidak ada internet", received.errorMessage)
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            useCase.getDailyDuas()
+        }
+
+        confirmVerified(useCase)
     }
 }
