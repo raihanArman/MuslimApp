@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
 import com.raydev.dailyduas.domain.Connectivity
+import com.raydev.dailyduas.domain.DailyDuas
 import com.raydev.dailyduas.domain.FirestoreDomainResult
 import com.raydev.dailyduas.domain.GetDuasUseCase
 import com.raydev.dailyduas.domain.Unexpected
@@ -70,7 +71,15 @@ class DailyDuasViewModel(
                             }
                         }
                     }
-                    is FirestoreDomainResult.Success -> {}
+                    is FirestoreDomainResult.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                data = result.root,
+                                errorMessage = null
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -177,11 +186,34 @@ class DailyDuasViewModelTest {
         )
     }
 
+    @Test
+    fun testLoadShowsData() = runBlocking {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Success(domainModels()),
+            expectedFailed = null,
+            expectedLoading = false
+        )
+    }
+
+    fun domainModels() = listOf(
+        DailyDuas(
+            id = "1",
+            title = "test",
+            content = "test"
+        ),
+        DailyDuas(
+            id = "1",
+            title = "test",
+            content = "test"
+        )
+    )
+
     private fun expect(
         sut: DailyDuasViewModel,
         result: FirestoreDomainResult,
         expectedLoading: Boolean,
-        expectedFailed: String
+        expectedFailed: String?
     ) = runBlocking {
         every {
             useCase.getDailyDuas()
@@ -191,8 +223,14 @@ class DailyDuasViewModelTest {
 
         sut.uiState.take(1).test {
             val received = awaitItem()
-            assertEquals(expectedLoading, received.isLoading)
-            assertEquals(expectedFailed, received.errorMessage)
+            if (expectedFailed == null) {
+                assertEquals(expectedLoading, received.isLoading)
+                assertEquals(domainModels(), received.data)
+                assertEquals(expectedFailed, received.errorMessage)
+            } else {
+                assertEquals(expectedLoading, received.isLoading)
+                assertEquals(expectedFailed, received.errorMessage)
+            }
             awaitComplete()
         }
 
