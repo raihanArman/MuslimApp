@@ -55,14 +55,16 @@ class DailyDuasViewModel(
                             is Connectivity -> {
                                 _uiState.update {
                                     it.copy(
-                                        errorMessage = "Tidak ada internet"
+                                        errorMessage = "Tidak ada internet",
+                                        isLoading = false
                                     )
                                 }
                             }
                             is Unexpected -> {
                                 _uiState.update {
                                     it.copy(
-                                        errorMessage = "Tidak ditemukan"
+                                        errorMessage = "Tidak ditemukan",
+                                        isLoading = false
                                     )
                                 }
                             }
@@ -157,36 +159,40 @@ class DailyDuasViewModelTest {
 
     @Test
     fun testLoadFailedConnectivityShowsConnectivityError() = runBlocking {
-        every {
-            useCase.getDailyDuas()
-        } returns flowOf(FirestoreDomainResult.Failure(Connectivity()))
-
-        sut.load()
-
-        sut.uiState.take(1).test {
-            val received = awaitItem()
-            assertEquals("Tidak ada internet", received.errorMessage)
-            awaitComplete()
-        }
-
-        verify(exactly = 1) {
-            useCase.getDailyDuas()
-        }
-
-        confirmVerified(useCase)
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Failure(Connectivity()),
+            expectedFailed = "Tidak ada internet",
+            expectedLoading = false
+        )
     }
 
     @Test
     fun testLoadFailedUnexpectedShowsUnexpectedError() = runBlocking {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Failure(Unexpected()),
+            expectedFailed = "Tidak ditemukan",
+            expectedLoading = false
+        )
+    }
+
+    private fun expect(
+        sut: DailyDuasViewModel,
+        result: FirestoreDomainResult,
+        expectedLoading: Boolean,
+        expectedFailed: String
+    ) = runBlocking {
         every {
             useCase.getDailyDuas()
-        } returns flowOf(FirestoreDomainResult.Failure(Unexpected()))
+        } returns flowOf(result)
 
         sut.load()
 
         sut.uiState.take(1).test {
             val received = awaitItem()
-            assertEquals("Tidak ditemukan", received.errorMessage)
+            assertEquals(expectedLoading, received.isLoading)
+            assertEquals(expectedFailed, received.errorMessage)
             awaitComplete()
         }
 
