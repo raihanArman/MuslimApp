@@ -39,8 +39,18 @@ dependencies {
 
     // Firebase
     implementation(libs.firebase.firestore.ktx)
-
     implementation(libs.lifecycle.viewmodel)
+
+    // Compose
+    implementation(libs.bundles.compose)
+
+    // Koin
+    implementation(libs.bundles.koin)
+    implementation(libs.bundles.koin.compose)
+
+    // Core Module
+    implementation(project(":core:ui"))
+    implementation(project(":core:navigation"))
 
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
