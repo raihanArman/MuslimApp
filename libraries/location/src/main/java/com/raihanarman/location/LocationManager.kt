@@ -15,11 +15,13 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.Locale
@@ -87,7 +89,7 @@ class LocationManager(
 
         return callbackFlow.distinctUntilChanged { old, new ->
             old.distanceTo(new) < 30f
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     fun getAddressLocation(currentLocation: Location, address: (Address?) -> Unit) {

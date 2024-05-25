@@ -275,7 +275,7 @@ formatting:
     insertFinalNewLine: true
   ImportOrdering:
     active: false
-    autoCorrect: true
+    autoCorrect: false
     layout: '*,java.**,javax.**,kotlin.**,^'
   Indentation:
     active: false

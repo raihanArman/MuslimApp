@@ -10,4 +10,5 @@ interface QuranRepository {
     fun getSurahAyah(): Flow<List<Surah>>
     fun getAyahBySurahId(surahId: Int): Flow<List<Ayah>>
     fun setupQuran(): Flow<ResponseState<Unit>>
+    suspend fun checkDataIsExists(): Boolean
 }

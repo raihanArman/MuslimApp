@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.map
 
 class QuranRepositoryImpl(
     private val ayahDataSource: AyatLocalDataSource,
-    private val ayatLineDataSource: AyatLineLocalDataSource,
+    private val ayahLineDataSource: AyatLineLocalDataSource,
     private val surahDataSource: SurahLocalDataSource,
     private val bookmarkQuranDataSource: BookmarkQuranDataSource,
     private val sharedPreferenceSource: SharedPreferenceSource,
@@ -72,9 +72,9 @@ class QuranRepositoryImpl(
         return flow {
             try {
                 ayahDataSource.deleteAyah()
-                ayatLineDataSource.delete()
+                ayahLineDataSource.delete()
                 for (i in 1..604) {
-                    ayatLineDataSource.saveAyahLine(
+                    ayahLineDataSource.saveAyahLine(
                         Gson().fromJson<ArrayList<AyahLine>>(
                             FileUtils.getJsonStringFromAssets(
                                 context,
@@ -155,6 +155,10 @@ class QuranRepositoryImpl(
                 emit(ResponseState.Error(e.message))
             }
         }
+    }
+
+    override suspend fun checkDataIsExists(): Boolean {
+        return ayahDataSource.getAyahCount() > 0
     }
 
     private suspend fun setupSurah() {

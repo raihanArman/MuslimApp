@@ -31,7 +31,7 @@ include(
     ":app",
     ":feature:prayer",
     ":feature:quran",
-    ":feature:book",
+    ":feature:home-menu:book",
     ":feature:home",
     ":data",
     ":domain",
@@ -53,3 +53,8 @@ include(":core:ui")
 include(":feature:bookmark")
 include(":feature:qibla")
 include(":libraries:here-api")
+include(":feature:main")
+include(":feature:home-menu:puasa")
+include(":feature:home-menu:doa")
+include(":feature:home-menu:ceramah")
+include(":feature:dailyduas")

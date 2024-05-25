@@ -1,6 +1,6 @@
 package com.raihanarman.qiblah
 
-import org.junit.Assert.*
+import junit.framework.Assert.assertEquals
 import org.junit.Test
 
 /**

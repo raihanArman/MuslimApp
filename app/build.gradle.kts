@@ -1,13 +1,13 @@
 
 import java.io.FileInputStream
-import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Properties
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -52,25 +52,25 @@ android {
             )
         }
 
-        applicationVariants.all {
-            this.outputs.forEach { output ->
-                val cal = Calendar.getInstance()
-                val dateFormat = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("id"))
-                val formattedDate = dateFormat.format(cal.time)
+//        applicationVariants.all {
+//            this.outputs.forEach { output ->
+//                val cal = Calendar.getInstance()
+//                val dateFormat = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("id"))
+//                val formattedDate = dateFormat.format(cal.time)
 
-                var newName = output.outputFile.name
-                newName = newName.replace("app-", "$project.ext.appName-")
-                newName = newName.replace("-debug", " - debug - " + formattedDate)
-                newName = newName.replace("-release", " - release - " + formattedDate)
-
-                val originalApk = this@all.outputs.firstOrNull()?.outputFile
-                val outputDir = originalApk?.parentFile
-                val newApk = File(outputDir, newName)
-                originalApk?.renameTo(newApk)
+//                var newName = output.outputFile.name
+//                newName = newName.replace("app-", "$project.ext.appName-")
+//                newName = newName.replace("-debug", " - debug - " + formattedDate)
+//                newName = newName.replace("-release", " - release - " + formattedDate)
+//
+//                val originalApk = this@all.outputs.firstOrNull()?.outputFile
+//                val outputDir = originalApk?.parentFile
+//                val newApk = File(outputDir, newName)
+//                originalApk?.renameTo(newApk)
 
 //                output.outputFile = originalApk
-            }
-        }
+//            }
+//        }
     }
 
     flavorDimensions.add("default")
@@ -124,6 +124,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":feature:quran"))
     implementation(project(":feature:prayer"))
+    implementation(project(":feature:main"))
     implementation(project(":feature:dashboard"))
     implementation(project(":feature:splash"))
     implementation(project(":feature:read-quran"))
@@ -136,6 +137,11 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.accompanist)
     implementation(libs.bundles.koin.compose)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(platform(libs.firebase.crashlystic))
+
 //    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")

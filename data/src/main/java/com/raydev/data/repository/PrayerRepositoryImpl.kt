@@ -125,7 +125,6 @@ class PrayerRepositoryImpl(
         )
         sharedPreferenceSource.praytime = prayerTime
         _flowPrayerTime.value = prayerTime
-        println("AMPASSS KUDDDAAA -> ${_flowPrayerTime.value}")
     }
 
     override fun getPrayerTime(): PrayerTime = sharedPreferenceSource.praytime

@@ -1,0 +1,85 @@
+name: Android Build
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 11
+
+      - name: Get local.properties from secret
+        run: echo "${{ secrets.LOCAL_PROPERTIES }}" > $GITHUB_WORKSPACE/local.properties
+
+      - name: Create google-services.json
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            echo ${{ secrets.GOOGLE_SERVICES_JSON_DEV }} | base64 --decode > $GITHUB_WORKSPACE/app/src/dev/google-services.json
+          elif [ "${{ github.ref }}" == "refs/heads/prod" ]; then
+            echo ${{ secrets.GOOGLE_SERVICES_JSON_PROD }} | base64 --decode > $GITHUB_WORKSPACE/app/src/prod/google-services.json
+          fi
+
+      - name: Build APK
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            ./gradlew assembleDevDebug
+          elif [ "${{ github.ref }}" == "refs/heads/prod" ]; then
+            ./gradlew assembleProdRelease
+          fi 
+
+      - name: Run Tests
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            ./gradlew testDevDebugUnitTest
+          elif [ "${{ github.ref }}" == "refs/heads/prod" ]; then
+            ./gradlew testProdReleaseUnitTest
+          fi
+
+      - name: Static Analysis
+        run: ./gradlew ktlintCheck detekt
+
+      - name: Get the current date
+        id: date
+        run: |
+          DATE=$(date +'%d %B %Y %H:%M')
+          echo "DATE=$DATE" >> $GITHUB_ENV
+          echo "DATE=$DATE"
+        shell: bash
+
+      - name: Upload APK to Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.ref_name }}-${{ github.run_number }}-${{ env.DATE }}.apk
+          path: |
+            app/build/outputs/apk/dev/debug/app-dev-debug.apk
+            app/build/outputs/apk/prod/release/app-prod-release.apk
+        env:
+          DATE: ${{ steps.date.outputs.date }}
+
+      - name: Upload artifact to Firebase Distribution (Dev)
+        if: github.ref == 'refs/heads/dev'
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_DEV }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
+          file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+
+      - name: Upload artifact to Firebase Distribution (Prod)
+        if: github.ref == 'refs/heads/prod'
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_PROD }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
+          file: app/build/outputs/apk/prod/release/app-prod-release.apk

@@ -9,11 +9,11 @@ import retrofit2.Retrofit
 
 val apiModule = module {
     single {
-        get<Retrofit>().create(QuranService::class.java)
+        get<Retrofit>(named("here_network")).create(QuranService::class.java)
     }
 
     single {
-        get<Retrofit>().create(PrayerService::class.java)
+        get<Retrofit>(named("here_network")).create(PrayerService::class.java)
     }
 
     single {

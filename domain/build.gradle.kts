@@ -19,6 +19,7 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":libraries:abstract"))
     implementation(project(":libraries:prayer"))
+    implementation(project(":libraries:location"))
     implementation(libs.bundles.koin)
 
     implementation(libs.gson)

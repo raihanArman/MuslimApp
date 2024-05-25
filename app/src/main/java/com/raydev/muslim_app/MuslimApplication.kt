@@ -21,6 +21,7 @@ import com.raydev.prayer.di.prayerModule
 import com.raydev.quran.di.quranModule
 import com.raydev.shared_preference.sharedPrefModule
 import com.raydev.workmanager.di.workerModule
+import com.rctiplus.main.mainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -41,7 +42,7 @@ class MuslimApplication : Application() {
                     workerModule,
                     sharedPrefModule,
                     locationModule,
-                    hereNetworkModule,
+                    hereNetworkModule(BuildConfig.HERE_API_KEY),
                     apiModule,
                     remoteDataSourceModule,
                     localDataSourceModule,

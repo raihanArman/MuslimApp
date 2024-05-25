@@ -27,9 +27,18 @@ sqlite-ktx = "2.3.1"
 androidx-core = "1.10.1"
 androidx-appcompat = "1.6.1"
 android-material = "1.9.0"
-androidx-splash = "1.0.0"
+androidx-splash = "1.0.1"
 gson = "2.6.2"
 coroutines-android = "1.6.4"
+google-service = "4.4.1"
+mockkAndroid = "1.13.10"
+turbine = "1.1.0"
+
+# Asynchronous
+coroutines = "1.7.3"
+
+#Firestore
+firebase-firestore = "25.0.0"
 
 #Maps
 android-maps-utils = "2.4.0"
@@ -37,7 +46,13 @@ play-services-maps = "18.1.0"
 play-services-location = "20.0.0"
 
 #Firebase
-firebase-bom = "32.2.2"
+firebase-bom = "32.3.1"
+junit = "4.13.2"
+junit-version = "1.1.5"
+espresso-core = "3.5.1"
+
+# Lifecycle
+viewmodel = "2.8.0"
 
 [libraries]
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-androidx-compose" }
@@ -94,12 +109,28 @@ maps-utils = { module = "com.google.maps.android:android-maps-utils", version.re
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines-android" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-cm = { module = "com.google.firebase:firebase-messaging-ktx" }
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-crashlystic = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-version" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
+# Test Framework
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroid" }
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockkAndroid" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+
+# Firebase
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore", version.ref = "firebase-firestore" }
+
+# Lifecycle
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
 
 [bundles]
 androidx = [
@@ -174,3 +205,4 @@ android_application = { id = "com.android.application", version.ref = "android" 
 android_library = { id = "com.android.library", version.ref = "android" }
 kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+google_service = { id = "com.google.gms.google-services", version.ref = "google-service" }
