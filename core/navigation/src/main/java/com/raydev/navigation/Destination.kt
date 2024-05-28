@@ -19,6 +19,7 @@ sealed class Destination(protected val route: String, vararg params: String) {
     object DashboardScreen : NoArgumentsDestination("dashboard")
 
     object BookmarkScreen : NoArgumentsDestination("bookmark")
+    object DailyDuasScreen : NoArgumentsDestination("dailyduas")
     object ReadQuranScreen : Destination("read_quran", "surah_id", "verse_number") {
         const val SURAH_ID_KEY = "surah_id"
         const val VERSE_NUMBER = "verse_number"
