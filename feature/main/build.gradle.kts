@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.raihanarman.main"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:quran"))
     implementation(project(":feature:prayer"))
+    implementation(project(":feature:dailyduas"))
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

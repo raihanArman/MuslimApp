@@ -7,7 +7,7 @@ android {
     compileSdk = 33
     namespace = "com.raihanarman.dashboard"
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

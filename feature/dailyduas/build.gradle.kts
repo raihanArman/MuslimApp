@@ -8,7 +8,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 23
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -30,6 +30,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
+    }
 }
 
 dependencies {
@@ -39,7 +47,7 @@ dependencies {
 
     // Firebase
     implementation(libs.firebase.firestore.ktx)
-    implementation(libs.lifecycle.viewmodel)
+//    implementation(libs.lifecycle.viewmodel)
 
     // Compose
     implementation(libs.bundles.compose)

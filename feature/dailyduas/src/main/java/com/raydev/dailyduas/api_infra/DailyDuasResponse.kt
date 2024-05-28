@@ -5,7 +5,7 @@ package com.raydev.dailyduas.api_infra
  * @date 20/05/24
  */
 data class DailyDuasResponse(
-    val id: String?,
-    val title: String?,
-    val content: String?
+    val id: String? = null,
+    val title: String? = null,
+    val content: String? = null
 )

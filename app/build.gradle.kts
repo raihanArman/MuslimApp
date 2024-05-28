@@ -11,12 +11,12 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.raydev.muslim_app"
         minSdk = 23
-        targetSdk = 32
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -131,6 +131,9 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:bookmark"))
     implementation(project(":feature:qibla"))
+    implementation(project(":feature:dailyduas"))
+
+//    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
 
     implementation(libs.bundles.maps)
     implementation(libs.bundles.koin)
