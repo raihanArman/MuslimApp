@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.raihanarman.bookmark.ui.bookmarkNavigation
 import com.raihanarman.read_quran.ui.readQuranNavigation
+import com.raydev.dailyduas.presentation.dailyDuasNavigation
 import com.raydev.navigation.Destination
 import com.raydev.navigation.NavHostApp
 import com.raydev.navigation.NavigationIntent
@@ -38,6 +39,7 @@ fun MainScreen(
         dashboardNavigation()
         readQuranNavigation()
         bookmarkNavigation()
+        dailyDuasNavigation()
     }
 }
 

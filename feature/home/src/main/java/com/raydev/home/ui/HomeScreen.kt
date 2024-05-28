@@ -21,6 +21,9 @@ import com.raydev.home.ui.components.CardLastReadQuran
 import com.raydev.home.ui.components.CardMainInformation
 import com.raydev.home.ui.components.HomeMenuSection
 import com.raydev.home.ui.components.TileMosque
+import com.raydev.navigation.AppNavigator
+import com.raydev.navigation.Destination
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
 /**
@@ -31,9 +34,11 @@ fun NavGraphBuilder.homeMainNavigation() = run {
     composable("home") {
         val viewModel: HomeViewModel = getViewModel()
         val state by viewModel.state.collectAsState()
+        val navigator: AppNavigator = get<AppNavigator>()
         HomeScreen(
             onEvent = viewModel::onEvent,
-            state = state
+            state = state,
+            navigator = navigator
         )
     }
 }
@@ -41,7 +46,8 @@ fun NavGraphBuilder.homeMainNavigation() = run {
 @Composable
 fun HomeScreen(
     state: HomeState,
-    onEvent: (HomeEvent) -> Unit
+    onEvent: (HomeEvent) -> Unit,
+    navigator: AppNavigator
 ) {
     Column(
         modifier = Modifier
@@ -63,8 +69,13 @@ fun HomeScreen(
                     nextPrayerTime = nextPrayerTime
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                HomeMenuSection(onClick = {
-                    onEvent(it)
+                HomeMenuSection(onClick = { event ->
+                    when (event) {
+                        HomeEvent.OnClickDoaHarian -> {
+                            navigator.tryNavigateTo(Destination.DailyDuasScreen())
+                        }
+                        else -> {}
+                    }
                 })
                 Spacer(modifier = Modifier.height(16.dp))
                 state.lastRead?.let {

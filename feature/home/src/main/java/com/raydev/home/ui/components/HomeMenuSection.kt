@@ -26,10 +26,10 @@ fun HomeMenuSection(
         verticalAlignment = Alignment.Top
     ) {
         CardMenu(title = "Doa-doa", image = SharedDrawable.baseline_menu_book_24) {
-            onClick(HomeEvent.OnClickDoaAndDzikir)
+            onClick(HomeEvent.OnClickDoaHarian)
         }
         CardMenu(title = "Dzikir Pagi & Petang", image = SharedDrawable.baseline_menu_book_24) {
-            onClick(HomeEvent.OnClickJadwalPuasa)
+            onClick(HomeEvent.OnClickDzikirPagiPetang)
         }
         CardMenu(title = "Ceramah Pendek", image = SharedDrawable.baseline_menu_book_24) {
             onClick(HomeEvent.OnClickCeramah)
