@@ -7,6 +7,7 @@ import com.raihanarman.here_api.hereNetworkModule
 import com.raihanarman.location.di.locationModule
 import com.raihanarman.read_quran.di.readQuranModule
 import com.raihanarman.splash.splashModule
+import com.raydev.dailyduas.di.dailyDuasModule
 import com.raydev.data.di.DataSourceModule.localDataSourceModule
 import com.raydev.data.di.DataSourceModule.remoteDataSourceModule
 import com.raydev.data.di.DataSourceModule.sharedPreferenceSourceModule
@@ -56,8 +57,8 @@ class MuslimApplication : Application() {
                     homeModule,
                     quranModule,
                     readQuranModule,
-                    bookmarkModule
-                )
+                    bookmarkModule,
+                ) + dailyDuasModule
             )
         }
     }
