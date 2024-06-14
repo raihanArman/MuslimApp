@@ -7,5 +7,6 @@ package com.raydev.dailyduas.domain
 data class DailyDuas(
     val id: String,
     val title: String,
-    val content: String
+    val content: String,
+    val translate: String,
 )

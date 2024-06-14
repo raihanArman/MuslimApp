@@ -46,6 +46,7 @@ class GetDailyDuasFirestoreUseCase(
     fun DailyDuasModel.toDomainModels() = DailyDuas(
         id = this.id,
         title = this.title,
-        content = this.content
+        content = this.content,
+        translate = this.translate
     )
 }

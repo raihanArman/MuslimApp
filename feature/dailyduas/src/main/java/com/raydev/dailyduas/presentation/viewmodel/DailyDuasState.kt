@@ -9,5 +9,6 @@ import com.raydev.dailyduas.domain.DailyDuas
 data class DailyDuasState(
     val isLoading: Boolean = false,
     val errorMessage: String ? = null,
-    val data: List<DailyDuas> ? = null
+    val data: List<DailyDuas> ? = null,
+    val expandedItemId: String? = null
 )

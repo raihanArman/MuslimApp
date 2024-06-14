@@ -67,7 +67,7 @@ fun DailyDuasScreen(navigator: AppNavigator) {
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(6.dp)
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
                             state.data?.let { dailyDuasList ->
                                 items(
@@ -78,8 +78,12 @@ fun DailyDuasScreen(navigator: AppNavigator) {
                                 ) { dailyDuas ->
                                     TileDailyDuas(
                                         title = dailyDuas.title,
-                                        content = dailyDuas.content
-                                    )
+                                        content = dailyDuas.content,
+                                        translate = dailyDuas.translate,
+                                        isExpanded = dailyDuas.id == state.expandedItemId
+                                    ) {
+                                        viewModel.toggleExpand(dailyDuas.id)
+                                    }
                                 }
                             }
                         }

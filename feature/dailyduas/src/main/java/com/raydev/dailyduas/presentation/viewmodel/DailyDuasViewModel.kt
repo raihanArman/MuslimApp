@@ -64,4 +64,13 @@ class DailyDuasViewModel(
             }
         }
     }
+
+    fun toggleExpand(itemId: String) {
+        _uiState.update { currentState ->
+            val newExpandItemId = if (currentState.expandedItemId == itemId) null else itemId
+            currentState.copy(
+                expandedItemId = newExpandItemId
+            )
+        }
+    }
 }

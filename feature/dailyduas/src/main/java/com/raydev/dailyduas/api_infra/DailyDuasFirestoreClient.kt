@@ -53,6 +53,7 @@ class DailyDuasFirestoreClient(
     fun DailyDuasResponse.toModels() = DailyDuasModel(
         id = this.id.orEmpty(),
         title = this.title.orEmpty(),
-        content = this.content.orEmpty()
+        content = this.content.orEmpty(),
+        translate = this.translate.orEmpty()
     )
 }
