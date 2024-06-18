@@ -53,12 +53,14 @@ class DailyDuasFirestoreClientTest {
             DailyDuasResponse(
                 id = "1",
                 title = "test",
-                content = "test"
+                content = "test",
+                translate = "test"
             ),
             DailyDuasResponse(
                 id = "1",
                 title = "test",
-                content = "test"
+                content = "test",
+                translate = "test"
             )
         )
 

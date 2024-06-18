@@ -35,6 +35,13 @@ class GetDzikirFirestoreClient(
     fun getDzikir(request: DzikirRequestDto): Flow<FirestoreClientResult<List<DzikirModel>>> = flow {
         try {
             val result = service.getDzikir(request.category.value)
+            emit(
+                FirestoreClientResult.Success(
+                    result.map {
+                        it.toModels()
+                    },
+                ),
+            )
         } catch (e: Exception) {
             when (e) {
                 is IOException -> {
@@ -46,6 +53,13 @@ class GetDzikirFirestoreClient(
             }
         }
     }
+
+    private fun DzikirResponse.toModels() = DzikirModel(
+        id = this.id.orEmpty(),
+        title = this.title.orEmpty(),
+        content = this.content.orEmpty(),
+        translate = this.translate.orEmpty()
+    )
 }
 
 class GetDzikirFirestoreClientTest {
@@ -75,6 +89,45 @@ class GetDzikirFirestoreClientTest {
         )
     }
 
+    @Test
+    fun testGetSuccessResponse() {
+        val responses = listOf(
+            DzikirResponse(
+                id = "1",
+                title = "test",
+                content = "test",
+                translate = "test"
+            ),
+            DzikirResponse(
+                id = "1",
+                title = "test",
+                content = "test",
+                translate = "test"
+            )
+        )
+
+        val models = listOf(
+            DzikirModel(
+                id = "1",
+                title = "test",
+                content = "test",
+                translate = "test"
+            ),
+            DzikirModel(
+                id = "1",
+                title = "test",
+                content = "test",
+                translate = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            expectedResult = FirestoreClientResult.Success(models),
+            receivedResult = responses
+        )
+    }
+
     private fun expect(
         sut: GetDzikirFirestoreClient,
         receivedResult: Any? = null,
@@ -87,6 +140,12 @@ class GetDzikirFirestoreClientTest {
                 coEvery {
                     service.getDzikir(capture(captureCategory))
                 } throws IOException()
+            }
+
+            expectedResult is FirestoreClientResult.Success<*> -> {
+                coEvery {
+                    service.getDzikir(capture(captureCategory))
+                } returns receivedResult as List<DzikirResponse>
             }
 
             else -> {
@@ -102,7 +161,9 @@ class GetDzikirFirestoreClientTest {
                 is FirestoreClientResult.Failure -> {
                     assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
-                is FirestoreClientResult.Success -> {}
+                is FirestoreClientResult.Success -> {
+                    assertEquals(expectedResult, received)
+                }
             }
 
             awaitComplete()
