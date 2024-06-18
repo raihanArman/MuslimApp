@@ -3,13 +3,18 @@ package com.randev.dzikir
 import app.cash.turbine.test
 import com.randev.dzikir.api.DzikirModel
 import com.randev.dzikir.domain.Dzikir
+import com.raydev.anabstract.exception.Connectivity
+import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
+import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -39,9 +44,19 @@ interface GetDzikirFirestoreClient {
 class GetDzikirFirestoreUseCase(
     private val client: GetDzikirFirestoreClient
 ) {
-    fun load(request: DzikirRequest): Flow<FirestoreDomainResult<List<Dzikir>>> {
-        client.getDzikir(toDtoRequest(request))
-        return flowOf()
+    fun load(request: DzikirRequest): Flow<FirestoreDomainResult<List<Dzikir>>> = flow {
+        client.getDzikir(toDtoRequest(request)).collect { result ->
+            when (result) {
+                is FirestoreClientResult.Failure -> {
+                    when (result.exception) {
+                        is ConnectivityException -> {
+                            emit(FirestoreDomainResult.Failure(Connectivity()))
+                        }
+                    }
+                }
+                is FirestoreClientResult.Success -> {}
+            }
+        }
     }
 
     private fun toDtoRequest(request: DzikirRequest) = DzikirRequestDto(
@@ -101,6 +116,31 @@ class GetDzikirFirestoreUseCaseTest {
 
         verify(exactly = 2) {
             client.getDzikir(requestDto)
+        }
+    }
+
+    @Test
+    fun testDeliversConnectivityErrorOnClientError() = runBlocking {
+        val captureRequestDto = slot<DzikirRequestDto>()
+
+        every {
+            client.getDzikir(capture(captureRequestDto))
+        } returns flowOf(FirestoreClientResult.Failure(ConnectivityException()))
+
+        sut.load(request).test {
+            assertEquals(requestDto, captureRequestDto.captured)
+            when (val received = awaitItem()) {
+                is FirestoreDomainResult.Failure -> {
+                    assertEquals(Connectivity()::class.java, received.exception::class.java)
+                }
+                is FirestoreDomainResult.Success -> {}
+            }
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.getDzikir(captureRequestDto.captured)
         }
     }
 }
