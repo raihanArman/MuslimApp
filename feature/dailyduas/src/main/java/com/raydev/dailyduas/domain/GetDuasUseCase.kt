@@ -1,17 +1,12 @@
 package com.raydev.dailyduas.domain
 
+import com.raydev.anabstract.state.FirestoreDomainResult
 import kotlinx.coroutines.flow.Flow
 
 /**
  * @author Raihan Arman
  * @date 20/05/24
  */
-
-sealed class FirestoreDomainResult {
-    data class Success(val root: List<DailyDuas>) : FirestoreDomainResult()
-    data class Failure(val exception: Exception) : FirestoreDomainResult()
-}
-
 interface GetDuasUseCase {
-    fun getDailyDuas(): Flow<FirestoreDomainResult>
+    fun getDailyDuas(): Flow<FirestoreDomainResult<List<DailyDuas>>>
 }

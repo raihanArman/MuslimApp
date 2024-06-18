@@ -1,11 +1,11 @@
 package com.raydev.dailyduas
 
 import app.cash.turbine.test
-import com.raydev.dailyduas.domain.Connectivity
+import com.raydev.anabstract.exception.Connectivity
+import com.raydev.anabstract.exception.Unexpected
+import com.raydev.anabstract.state.FirestoreDomainResult
 import com.raydev.dailyduas.domain.DailyDuas
-import com.raydev.dailyduas.domain.FirestoreDomainResult
 import com.raydev.dailyduas.domain.GetDuasUseCase
-import com.raydev.dailyduas.domain.Unexpected
 import com.raydev.dailyduas.presentation.viewmodel.DailyDuasViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -156,18 +156,20 @@ class DailyDuasViewModelTest {
         DailyDuas(
             id = "1",
             title = "test",
-            content = "test"
+            content = "test",
+            translate = "test"
         ),
         DailyDuas(
             id = "1",
             title = "test",
-            content = "test"
+            content = "test",
+            translate = "test"
         )
     )
 
     private fun expect(
         sut: DailyDuasViewModel,
-        result: FirestoreDomainResult,
+        result: FirestoreDomainResult<List<DailyDuas>>,
         expectedLoading: Boolean,
         expectedFailed: String?,
         expectedData: List<DailyDuas>? = null

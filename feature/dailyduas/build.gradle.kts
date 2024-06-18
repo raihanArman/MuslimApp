@@ -59,6 +59,7 @@ dependencies {
     // Core Module
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
+    implementation(project(":libraries:abstract"))
 
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)

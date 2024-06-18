@@ -1,16 +1,16 @@
 package com.raydev.dailyduas
 
 import app.cash.turbine.test
-import com.raydev.dailyduas.api.ConnectivityException
+import com.raydev.anabstract.exception.Connectivity
+import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.exception.Unexpected
+import com.raydev.anabstract.exception.UnexpectedException
+import com.raydev.anabstract.state.FirestoreClientResult
+import com.raydev.anabstract.state.FirestoreDomainResult
 import com.raydev.dailyduas.api.DailyDuasModel
-import com.raydev.dailyduas.api.FirestoreClient
-import com.raydev.dailyduas.api.FirestoreClientResult
 import com.raydev.dailyduas.api.GetDailyDuasFirestoreUseCase
-import com.raydev.dailyduas.api.UnexpectedException
-import com.raydev.dailyduas.domain.Connectivity
+import com.raydev.dailyduas.api_infra.DailyDuasFirestoreClient
 import com.raydev.dailyduas.domain.DailyDuas
-import com.raydev.dailyduas.domain.FirestoreDomainResult
-import com.raydev.dailyduas.domain.Unexpected
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
@@ -27,7 +27,7 @@ import org.junit.Test
  */
 
 class GetDailyDuasFirestoreUseCaseTest {
-    private val client = mockk<FirestoreClient>()
+    private val client = mockk<DailyDuasFirestoreClient>()
     private lateinit var sut: GetDailyDuasFirestoreUseCase
 
     @Before
@@ -87,7 +87,7 @@ class GetDailyDuasFirestoreUseCaseTest {
         expect(
             sut = sut,
             receivedResult = FirestoreClientResult.Failure(ConnectivityException()),
-            expectedResult = FirestoreDomainResult.Failure(Connectivity()),
+            expectedResult = FirestoreDomainResult.Failure<List<DailyDuas>>(Connectivity()),
             exactly = 1
         )
     }
@@ -97,7 +97,7 @@ class GetDailyDuasFirestoreUseCaseTest {
         expect(
             sut = sut,
             receivedResult = FirestoreClientResult.Failure(UnexpectedException()),
-            expectedResult = FirestoreDomainResult.Failure(Unexpected()),
+            expectedResult = FirestoreDomainResult.Failure<List<DailyDuas>>(Unexpected()),
             exactly = 1
         )
     }
@@ -108,12 +108,14 @@ class GetDailyDuasFirestoreUseCaseTest {
             DailyDuasModel(
                 id = "1",
                 title = "test",
-                content = "test"
+                content = "test",
+                translate = "test"
             ),
             DailyDuasModel(
                 id = "1",
                 title = "test",
-                content = "test"
+                content = "test",
+                translate = "test"
             )
         )
 
@@ -121,12 +123,14 @@ class GetDailyDuasFirestoreUseCaseTest {
             DailyDuas(
                 id = "1",
                 title = "test",
-                content = "test"
+                content = "test",
+                translate = "test"
             ),
             DailyDuas(
                 id = "1",
                 title = "test",
-                content = "test"
+                content = "test",
+                translate = "test"
             )
         )
 
@@ -143,14 +147,14 @@ class GetDailyDuasFirestoreUseCaseTest {
         expect(
             sut = sut,
             receivedResult = FirestoreClientResult.Success(emptyList()),
-            expectedResult = FirestoreDomainResult.Success(emptyList()),
+            expectedResult = FirestoreDomainResult.Success<List<DailyDuas>>(emptyList()),
             exactly = 1
         )
     }
 
     private fun expect(
         sut: GetDailyDuasFirestoreUseCase,
-        receivedResult: FirestoreClientResult,
+        receivedResult: FirestoreClientResult<List<DailyDuasModel>>,
         expectedResult: Any,
         exactly: Int = -1
     ) = runBlocking {

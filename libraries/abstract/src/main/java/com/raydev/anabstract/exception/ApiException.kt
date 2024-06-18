@@ -1,4 +1,4 @@
-package com.raydev.dailyduas.api
+package com.raydev.anabstract.exception
 
 /**
  * @author Raihan Arman

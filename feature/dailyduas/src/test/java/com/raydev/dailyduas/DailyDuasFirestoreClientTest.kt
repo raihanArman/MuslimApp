@@ -1,10 +1,9 @@
 package com.raydev.dailyduas
 
 import app.cash.turbine.test
-import com.raydev.dailyduas.api.ConnectivityException
+import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.dailyduas.api.DailyDuasModel
-import com.raydev.dailyduas.api.FirestoreClientResult
-import com.raydev.dailyduas.api.UnexpectedException
 import com.raydev.dailyduas.api_infra.DailyDuasFirestoreClient
 import com.raydev.dailyduas.api_infra.DailyDuasFirestoreService
 import com.raydev.dailyduas.api_infra.DailyDuasResponse
@@ -36,7 +35,7 @@ class DailyDuasFirestoreClientTest {
     fun testGetFailsOnConnectivity() = runBlocking {
         expect(
             sut = sut,
-            expectedResult = ConnectivityException()
+            expectedResult = com.raydev.anabstract.exception.ConnectivityException()
         )
     }
 
@@ -44,7 +43,7 @@ class DailyDuasFirestoreClientTest {
     fun testGetFailsOnUnexpected() = runBlocking {
         expect(
             sut = sut,
-            expectedResult = UnexpectedException()
+            expectedResult = com.raydev.anabstract.exception.UnexpectedException()
         )
     }
 
@@ -67,12 +66,14 @@ class DailyDuasFirestoreClientTest {
             DailyDuasModel(
                 id = "1",
                 title = "test",
-                content = "test"
+                content = "test",
+                translate = "test"
             ),
             DailyDuasModel(
                 id = "1",
                 title = "test",
-                content = "test"
+                content = "test",
+                translate = "test"
             )
         )
 
@@ -87,7 +88,7 @@ class DailyDuasFirestoreClientTest {
     fun testGetsSuccessWithEmptyResponse() = runBlocking {
         expect(
             sut = sut,
-            expectedResult = FirestoreClientResult.Success(emptyList()),
+            expectedResult = FirestoreClientResult.Success<List<DailyDuasModel>>(emptyList()),
             receivedResult = emptyList<DailyDuasResponse>()
         )
     }
@@ -104,7 +105,7 @@ class DailyDuasFirestoreClientTest {
                 } throws IOException()
             }
 
-            expectedResult is FirestoreClientResult.Success -> {
+            expectedResult is FirestoreClientResult.Success<*> -> {
                 coEvery {
                     service.getDailyDuas()
                 } returns receivedResult as List<DailyDuasResponse>

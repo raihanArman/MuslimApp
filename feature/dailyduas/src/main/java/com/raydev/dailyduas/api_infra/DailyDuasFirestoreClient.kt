@@ -1,12 +1,12 @@
 package com.raydev.dailyduas.api_infra
 
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.raydev.dailyduas.api.ConnectivityException
+import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.exception.PermissionDeniedException
+import com.raydev.anabstract.exception.UnexpectedException
+import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.dailyduas.api.DailyDuasModel
-import com.raydev.dailyduas.api.FirestoreClient
-import com.raydev.dailyduas.api.FirestoreClientResult
-import com.raydev.dailyduas.api.PermissionDeniedException
-import com.raydev.dailyduas.api.UnexpectedException
+import com.raydev.dailyduas.api.GetDailyDuasFirestoreClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
@@ -17,8 +17,8 @@ import java.io.IOException
  */
 class DailyDuasFirestoreClient(
     private val service: DailyDuasFirestoreService
-) : FirestoreClient {
-    override fun getDailyDuas(): Flow<FirestoreClientResult> {
+) : GetDailyDuasFirestoreClient {
+    override fun getDailyDuas(): Flow<FirestoreClientResult<List<DailyDuasModel>>> {
         return flow {
             try {
                 val result = service.getDailyDuas()
