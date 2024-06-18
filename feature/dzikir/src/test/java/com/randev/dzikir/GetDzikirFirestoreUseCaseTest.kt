@@ -59,10 +59,25 @@ class GetDzikirFirestoreUseCase(
                         }
                     }
                 }
-                is FirestoreClientResult.Success -> {}
+                is FirestoreClientResult.Success -> {
+                    emit(
+                        FirestoreDomainResult.Success(
+                            result.data.map {
+                                it.toDomainModels()
+                            }
+                        )
+                    )
+                }
             }
         }
     }
+
+    fun DzikirModel.toDomainModels() = Dzikir(
+        id = this.id,
+        title = this.title,
+        content = this.content,
+        translate = this.translate
+    )
 
     private fun toDtoRequest(request: DzikirRequest) = DzikirRequestDto(
         category = request.category
@@ -144,6 +159,46 @@ class GetDzikirFirestoreUseCaseTest {
         )
     }
 
+    @Test
+    fun testLoadDeliversSuccess() {
+        val models = listOf(
+            DzikirModel(
+                id = "1",
+                title = "test",
+                content = "test",
+                translate = "test"
+            ),
+            DzikirModel(
+                id = "1",
+                title = "test",
+                content = "test",
+                translate = "test"
+            )
+        )
+
+        val domainModel = listOf(
+            Dzikir(
+                id = "1",
+                title = "test",
+                content = "test",
+                translate = "test"
+            ),
+            Dzikir(
+                id = "1",
+                title = "test",
+                content = "test",
+                translate = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Success(models),
+            expectedResult = FirestoreDomainResult.Success(domainModel),
+            exactly = 1
+        )
+    }
+
     private fun expect(
         sut: GetDzikirFirestoreUseCase,
         receivedResult: FirestoreClientResult<List<DzikirModel>>,
@@ -162,7 +217,9 @@ class GetDzikirFirestoreUseCaseTest {
                 is FirestoreDomainResult.Failure -> {
                     assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
-                is FirestoreDomainResult.Success -> {}
+                is FirestoreDomainResult.Success -> {
+                    assertEquals(expectedResult, received)
+                }
             }
 
             awaitComplete()
