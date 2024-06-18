@@ -6,6 +6,7 @@ import com.randev.dzikir.api.DzikirRequestDto
 import com.randev.dzikir.api_infra.DzikirResponse
 import com.randev.dzikir.util.DzikirCategory
 import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -35,7 +36,14 @@ class GetDzikirFirestoreClient(
         try {
             val result = service.getDzikir(request.category.value)
         } catch (e: Exception) {
-            emit(FirestoreClientResult.Failure(ConnectivityException()))
+            when (e) {
+                is IOException -> {
+                    emit(FirestoreClientResult.Failure(ConnectivityException()))
+                }
+                else -> {
+                    emit(FirestoreClientResult.Failure(UnexpectedException()))
+                }
+            }
         }
     }
 }
@@ -64,6 +72,31 @@ class GetDzikirFirestoreClientTest {
             when (val received = awaitItem()) {
                 is FirestoreClientResult.Failure -> {
                     assertEquals(ConnectivityException()::class.java, received.exception::class.java)
+                }
+                is FirestoreClientResult.Success -> {}
+            }
+
+            awaitComplete()
+        }
+
+        coVerify {
+            service.getDzikir(capture(captureCategory))
+        }
+    }
+
+    @Test
+    fun testGetFailsOnUnexpected() = runBlocking {
+        val captureCategory = slot<String>()
+
+        coEvery {
+            service.getDzikir(capture(captureCategory))
+        } throws Exception()
+
+        sut.getDzikir(requestDto).test {
+            assertEquals(requestDto.category.value, captureCategory.captured)
+            when (val received = awaitItem()) {
+                is FirestoreClientResult.Failure -> {
+                    assertEquals(UnexpectedException()::class.java, received.exception::class.java)
                 }
                 is FirestoreClientResult.Success -> {}
             }
