@@ -84,4 +84,23 @@ class GetDzikirFirestoreUseCaseTest {
             client.getDzikir(requestDto)
         }
     }
+
+    @Test
+    fun testLoadRequestDataTwice() = runBlocking {
+        every {
+            client.getDzikir(requestDto)
+        } returns flowOf()
+
+        sut.load(request).test {
+            awaitComplete()
+        }
+
+        sut.load(request).test {
+            awaitComplete()
+        }
+
+        verify(exactly = 2) {
+            client.getDzikir(requestDto)
+        }
+    }
 }
