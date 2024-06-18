@@ -5,6 +5,8 @@ import com.randev.dzikir.api.DzikirModel
 import com.randev.dzikir.domain.Dzikir
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.exception.Unexpected
+import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.confirmVerified
@@ -51,6 +53,9 @@ class GetDzikirFirestoreUseCase(
                     when (result.exception) {
                         is ConnectivityException -> {
                             emit(FirestoreDomainResult.Failure(Connectivity()))
+                        }
+                        is UnexpectedException -> {
+                            emit(FirestoreDomainResult.Failure(Unexpected()))
                         }
                     }
                 }
@@ -141,6 +146,31 @@ class GetDzikirFirestoreUseCaseTest {
 
         verify(exactly = 1) {
             client.getDzikir(captureRequestDto.captured)
+        }
+    }
+
+    @Test
+    fun testDeliversUnexpectedErrorOnClientError() = runBlocking {
+        val captureRequestDto = slot<DzikirRequestDto>()
+
+        every {
+            client.getDzikir(capture(captureRequestDto))
+        } returns flowOf(FirestoreClientResult.Failure(UnexpectedException()))
+
+        sut.load(request).test {
+            assertEquals(requestDto, captureRequestDto.captured)
+            when (val received = awaitItem()) {
+                is FirestoreDomainResult.Failure -> {
+                    assertEquals(Unexpected()::class.java, received.exception::class.java)
+                }
+                is FirestoreDomainResult.Success -> {}
+            }
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.getDzikir(capture(captureRequestDto))
         }
     }
 }
