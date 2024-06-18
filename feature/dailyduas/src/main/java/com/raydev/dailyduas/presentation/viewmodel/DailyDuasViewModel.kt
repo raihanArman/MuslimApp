@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.Unexpected
-import com.raydev.dailyduas.domain.FirestoreDomainResult
+import com.raydev.anabstract.state.FirestoreDomainResult
 import com.raydev.dailyduas.domain.GetDuasUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +33,7 @@ class DailyDuasViewModel(
                 when (result) {
                     is FirestoreDomainResult.Failure -> {
                         when (result.exception) {
-                            is com.raydev.anabstract.exception.Connectivity -> {
+                            is Connectivity -> {
                                 _uiState.update {
                                     it.copy(
                                         errorMessage = "Tidak ada internet",
@@ -41,7 +41,7 @@ class DailyDuasViewModel(
                                     )
                                 }
                             }
-                            is com.raydev.anabstract.exception.Unexpected -> {
+                            is Unexpected -> {
                                 _uiState.update {
                                     it.copy(
                                         errorMessage = "Tidak ditemukan",
@@ -55,7 +55,7 @@ class DailyDuasViewModel(
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
-                                data = result.root,
+                                data = result.data,
                                 errorMessage = null
                             )
                         }

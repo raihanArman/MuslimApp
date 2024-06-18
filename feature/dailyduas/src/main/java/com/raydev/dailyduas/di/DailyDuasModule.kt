@@ -1,11 +1,10 @@
 package com.raydev.dailyduas.di
 
+import com.raydev.dailyduas.api.GetDailyDuasFirestoreClient
 import com.raydev.dailyduas.api.GetDailyDuasFirestoreUseCase
-import com.raydev.dailyduas.api.dailyDuasApiModule
 import com.raydev.dailyduas.api_infra.DailyDuasFirestoreClient
 import com.raydev.dailyduas.api_infra.DailyDuasFirestoreService
 import com.raydev.dailyduas.api_infra.DailyDuasFirestoreServiceImpl
-import com.raydev.dailyduas.api_infra.dailyDuasApiInfraModule
 import com.raydev.dailyduas.domain.GetDuasUseCase
 import com.raydev.dailyduas.presentation.dailyDuasPresentationModule
 import org.koin.dsl.module
@@ -19,7 +18,7 @@ val dailyDuasApiInfraModule = module {
         DailyDuasFirestoreServiceImpl()
     }
 
-    single<FirestoreClient> {
+    single<GetDailyDuasFirestoreClient> {
         DailyDuasFirestoreClient(get())
     }
 }
