@@ -199,6 +199,16 @@ class GetDzikirFirestoreUseCaseTest {
         )
     }
 
+    @Test
+    fun testLoadDeliversSuccessWithEmptyData() {
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Success(emptyList()),
+            expectedResult = FirestoreDomainResult.Success<List<Dzikir>>(emptyList()),
+            exactly = 1
+        )
+    }
+
     private fun expect(
         sut: GetDzikirFirestoreUseCase,
         receivedResult: FirestoreClientResult<List<DzikirModel>>,
