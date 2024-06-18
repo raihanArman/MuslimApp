@@ -64,4 +64,25 @@ class GetDzikirPriorityRemoteUseCaseTest {
 
         confirmVerified(client)
     }
+
+    @Test
+    fun testLoadRequestDataTwice() = runBlocking {
+        every {
+            client.getDzikirPriority()
+        } returns flowOf()
+
+        sut.load().test {
+            awaitComplete()
+        }
+
+        sut.load().test {
+            awaitComplete()
+        }
+
+        verify(exactly = 2) {
+            client.getDzikirPriority()
+        }
+
+        confirmVerified(client)
+    }
 }
