@@ -61,42 +61,46 @@ class GetDzikirFirestoreClientTest {
 
     @Test
     fun testGetFailsOnConnectivity() = runBlocking {
-        val captureCategory = slot<String>()
-
-        coEvery {
-            service.getDzikir(capture(captureCategory))
-        } throws IOException()
-
-        sut.getDzikir(requestDto).test {
-            assertEquals(requestDto.category.value, captureCategory.captured)
-            when (val received = awaitItem()) {
-                is FirestoreClientResult.Failure -> {
-                    assertEquals(ConnectivityException()::class.java, received.exception::class.java)
-                }
-                is FirestoreClientResult.Success -> {}
-            }
-
-            awaitComplete()
-        }
-
-        coVerify {
-            service.getDzikir(capture(captureCategory))
-        }
+        expect(
+            sut = sut,
+            expectedResult = ConnectivityException()
+        )
     }
 
     @Test
     fun testGetFailsOnUnexpected() = runBlocking {
+        expect(
+            sut = sut,
+            expectedResult = UnexpectedException()
+        )
+    }
+
+    private fun expect(
+        sut: GetDzikirFirestoreClient,
+        receivedResult: Any? = null,
+        expectedResult: Any
+    ) = runBlocking {
         val captureCategory = slot<String>()
 
-        coEvery {
-            service.getDzikir(capture(captureCategory))
-        } throws Exception()
+        when {
+            expectedResult is ConnectivityException -> {
+                coEvery {
+                    service.getDzikir(capture(captureCategory))
+                } throws IOException()
+            }
+
+            else -> {
+                coEvery {
+                    service.getDzikir(capture(captureCategory))
+                } throws Exception()
+            }
+        }
 
         sut.getDzikir(requestDto).test {
             assertEquals(requestDto.category.value, captureCategory.captured)
             when (val received = awaitItem()) {
                 is FirestoreClientResult.Failure -> {
-                    assertEquals(UnexpectedException()::class.java, received.exception::class.java)
+                    assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 is FirestoreClientResult.Success -> {}
             }
