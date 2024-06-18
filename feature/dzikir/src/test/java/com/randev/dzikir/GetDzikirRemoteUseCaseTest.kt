@@ -2,7 +2,12 @@ package com.randev.dzikir
 
 import app.cash.turbine.test
 import com.randev.dzikir.api.DzikirModel
+import com.randev.dzikir.api.DzikirRequestDto
+import com.randev.dzikir.api.GetDzikirRemoteUseCase
+import com.randev.dzikir.api.GetDzikirHttpClient
 import com.randev.dzikir.domain.Dzikir
+import com.randev.dzikir.domain.DzikirRequest
+import com.randev.dzikir.util.DzikirCategory
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.Unexpected
@@ -15,8 +20,6 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -26,71 +29,13 @@ import org.junit.Test
  * @author Raihan Arman
  * @date 18/06/24
  */
-enum class DzikirCategory(value: String) {
-    PAGI("pagi"),
-    PETANG("petang")
-}
-
-data class DzikirRequestDto(
-    val category: DzikirCategory
-)
-
-data class DzikirRequest(
-    val category: DzikirCategory
-)
-
-interface GetDzikirFirestoreClient {
-    fun getDzikir(request: DzikirRequestDto): Flow<FirestoreClientResult<List<DzikirModel>>>
-}
-
-class GetDzikirFirestoreUseCase(
-    private val client: GetDzikirFirestoreClient
-) {
-    fun load(request: DzikirRequest): Flow<FirestoreDomainResult<List<Dzikir>>> = flow {
-        client.getDzikir(toDtoRequest(request)).collect { result ->
-            when (result) {
-                is FirestoreClientResult.Failure -> {
-                    when (result.exception) {
-                        is ConnectivityException -> {
-                            emit(FirestoreDomainResult.Failure(Connectivity()))
-                        }
-                        is UnexpectedException -> {
-                            emit(FirestoreDomainResult.Failure(Unexpected()))
-                        }
-                    }
-                }
-                is FirestoreClientResult.Success -> {
-                    emit(
-                        FirestoreDomainResult.Success(
-                            result.data.map {
-                                it.toDomainModels()
-                            }
-                        )
-                    )
-                }
-            }
-        }
-    }
-
-    fun DzikirModel.toDomainModels() = Dzikir(
-        id = this.id,
-        title = this.title,
-        content = this.content,
-        translate = this.translate
-    )
-
-    private fun toDtoRequest(request: DzikirRequest) = DzikirRequestDto(
-        category = request.category
-    )
-}
-
-class GetDzikirFirestoreUseCaseTest {
-    private val client = mockk<GetDzikirFirestoreClient>()
-    private lateinit var sut: GetDzikirFirestoreUseCase
+class GetDzikirRemoteUseCaseTest {
+    private val client = mockk<GetDzikirHttpClient>()
+    private lateinit var sut: GetDzikirRemoteUseCase
 
     @Before
     fun setUp() {
-        sut = GetDzikirFirestoreUseCase(client)
+        sut = GetDzikirRemoteUseCase(client)
     }
 
     val requestDto = DzikirRequestDto(category = DzikirCategory.PAGI)
@@ -210,7 +155,7 @@ class GetDzikirFirestoreUseCaseTest {
     }
 
     private fun expect(
-        sut: GetDzikirFirestoreUseCase,
+        sut: GetDzikirRemoteUseCase,
         receivedResult: FirestoreClientResult<List<DzikirModel>>,
         expectedResult: Any,
         exactly: Int = -1
