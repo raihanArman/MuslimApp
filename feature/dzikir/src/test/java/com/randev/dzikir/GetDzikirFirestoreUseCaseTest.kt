@@ -126,42 +126,41 @@ class GetDzikirFirestoreUseCaseTest {
 
     @Test
     fun testDeliversConnectivityErrorOnClientError() = runBlocking {
-        val captureRequestDto = slot<DzikirRequestDto>()
-
-        every {
-            client.getDzikir(capture(captureRequestDto))
-        } returns flowOf(FirestoreClientResult.Failure(ConnectivityException()))
-
-        sut.load(request).test {
-            assertEquals(requestDto, captureRequestDto.captured)
-            when (val received = awaitItem()) {
-                is FirestoreDomainResult.Failure -> {
-                    assertEquals(Connectivity()::class.java, received.exception::class.java)
-                }
-                is FirestoreDomainResult.Success -> {}
-            }
-
-            awaitComplete()
-        }
-
-        verify(exactly = 1) {
-            client.getDzikir(captureRequestDto.captured)
-        }
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Failure(ConnectivityException()),
+            expectedResult = Connectivity(),
+            exactly = 1
+        )
     }
 
     @Test
     fun testDeliversUnexpectedErrorOnClientError() = runBlocking {
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Failure(UnexpectedException()),
+            expectedResult = Unexpected(),
+            exactly = 1
+        )
+    }
+
+    private fun expect(
+        sut: GetDzikirFirestoreUseCase,
+        receivedResult: FirestoreClientResult<List<DzikirModel>>,
+        expectedResult: Any,
+        exactly: Int = -1
+    ) = runBlocking {
         val captureRequestDto = slot<DzikirRequestDto>()
 
         every {
             client.getDzikir(capture(captureRequestDto))
-        } returns flowOf(FirestoreClientResult.Failure(UnexpectedException()))
+        } returns flowOf(receivedResult)
 
         sut.load(request).test {
             assertEquals(requestDto, captureRequestDto.captured)
             when (val received = awaitItem()) {
                 is FirestoreDomainResult.Failure -> {
-                    assertEquals(Unexpected()::class.java, received.exception::class.java)
+                    assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 is FirestoreDomainResult.Success -> {}
             }
@@ -169,7 +168,7 @@ class GetDzikirFirestoreUseCaseTest {
             awaitComplete()
         }
 
-        verify(exactly = 1) {
+        verify(exactly = exactly) {
             client.getDzikir(capture(captureRequestDto))
         }
     }
