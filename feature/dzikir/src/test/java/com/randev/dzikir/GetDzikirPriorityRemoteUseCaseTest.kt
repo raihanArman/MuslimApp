@@ -175,6 +175,16 @@ class GetDzikirPriorityRemoteUseCaseTest {
         )
     }
 
+    @Test
+    fun testLoadDeliversSuccessWithEmptyData() {
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Success(emptyList()),
+            expectedResult = emptyList<List<DzikirPriority>>(),
+            exactly = 1
+        )
+    }
+
     private fun expect(
         sut: GetDzikirPriorityRemoteUseCase,
         receivedResult: FirestoreClientResult<List<DzikirPriorityModel>>,
