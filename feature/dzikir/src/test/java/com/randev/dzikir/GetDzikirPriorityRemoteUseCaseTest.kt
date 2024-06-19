@@ -5,6 +5,8 @@ import com.randev.dzikir.api.DzikirPriorityModel
 import com.randev.dzikir.domain.DzikirPriority
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.exception.Unexpected
+import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.confirmVerified
@@ -34,7 +36,14 @@ class GetDzikirPriorityRemoteUseCase(
         client.getDzikirPriority().collect { result ->
             when (result) {
                 is FirestoreClientResult.Failure -> {
-                    emit(FirestoreDomainResult.Failure(Connectivity()))
+                    when (result.exception) {
+                        is ConnectivityException -> {
+                            emit(FirestoreDomainResult.Failure(Connectivity()))
+                        }
+                        is UnexpectedException -> {
+                            emit(FirestoreDomainResult.Failure(Unexpected()))
+                        }
+                    }
                 }
                 is FirestoreClientResult.Success -> {}
             }
@@ -106,6 +115,30 @@ class GetDzikirPriorityRemoteUseCaseTest {
             when (val received = awaitItem()) {
                 is FirestoreDomainResult.Failure -> {
                     assertEquals(Connectivity()::class.java, received.exception::class.java)
+                }
+                is FirestoreDomainResult.Success -> {}
+            }
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.getDzikirPriority()
+        }
+
+        confirmVerified(client)
+    }
+
+    @Test
+    fun testDeliversUnexpectedErrorOnClientError() = runBlocking {
+        every {
+            client.getDzikirPriority()
+        } returns flowOf(FirestoreClientResult.Failure(UnexpectedException()))
+
+        sut.load().test {
+            when (val received = awaitItem()) {
+                is FirestoreDomainResult.Failure -> {
+                    assertEquals(Unexpected()::class.java, received.exception::class.java)
                 }
                 is FirestoreDomainResult.Success -> {}
             }
