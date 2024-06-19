@@ -106,39 +106,39 @@ class GetDzikirPriorityRemoteUseCaseTest {
     }
 
     @Test
-    fun testDeliversConnectivityErrorOnClientError() = runBlocking {
-        every {
-            client.getDzikirPriority()
-        } returns flowOf(FirestoreClientResult.Failure(ConnectivityException()))
-
-        sut.load().test {
-            when (val received = awaitItem()) {
-                is FirestoreDomainResult.Failure -> {
-                    assertEquals(Connectivity()::class.java, received.exception::class.java)
-                }
-                is FirestoreDomainResult.Success -> {}
-            }
-
-            awaitComplete()
-        }
-
-        verify(exactly = 1) {
-            client.getDzikirPriority()
-        }
-
-        confirmVerified(client)
+    fun testDeliversConnectivityErrorOnClientError() {
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Failure(ConnectivityException()),
+            expectedResult = Connectivity(),
+            exactly = 1
+        )
     }
 
     @Test
-    fun testDeliversUnexpectedErrorOnClientError() = runBlocking {
+    fun testDeliversUnexpectedErrorOnClientError() {
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Failure(UnexpectedException()),
+            expectedResult = Unexpected(),
+            exactly = 1
+        )
+    }
+
+    private fun expect(
+        sut: GetDzikirPriorityRemoteUseCase,
+        receivedResult: FirestoreClientResult<List<DzikirPriorityModel>>,
+        expectedResult: Any,
+        exactly: Int = -1
+    ) = runBlocking {
         every {
             client.getDzikirPriority()
-        } returns flowOf(FirestoreClientResult.Failure(UnexpectedException()))
+        } returns flowOf(receivedResult)
 
         sut.load().test {
             when (val received = awaitItem()) {
                 is FirestoreDomainResult.Failure -> {
-                    assertEquals(Unexpected()::class.java, received.exception::class.java)
+                    assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 is FirestoreDomainResult.Success -> {}
             }
@@ -146,7 +146,7 @@ class GetDzikirPriorityRemoteUseCaseTest {
             awaitComplete()
         }
 
-        verify(exactly = 1) {
+        verify(exactly = exactly) {
             client.getDzikirPriority()
         }
 
