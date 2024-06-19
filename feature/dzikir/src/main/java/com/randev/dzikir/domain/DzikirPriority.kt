@@ -6,7 +6,6 @@ package com.randev.dzikir.domain
  */
 data class DzikirPriority(
     val id: String,
-    val title: String,
     val content: String,
     val translate: String,
 )

@@ -45,10 +45,24 @@ class GetDzikirPriorityRemoteUseCase(
                         }
                     }
                 }
-                is FirestoreClientResult.Success -> {}
+                is FirestoreClientResult.Success -> {
+                    emit(
+                        FirestoreDomainResult.Success(
+                            result.data.map {
+                                it.toDomainModels()
+                            }
+                        )
+                    )
+                }
             }
         }
     }
+
+    private fun DzikirPriorityModel.toDomainModels() = DzikirPriority(
+        id = this.id,
+        content = this.content,
+        translate = this.translate
+    )
 }
 
 class GetDzikirPriorityRemoteUseCaseTest {
@@ -125,6 +139,42 @@ class GetDzikirPriorityRemoteUseCaseTest {
         )
     }
 
+    @Test
+    fun testLoadDeliversSuccess() {
+        val models = listOf(
+            DzikirPriorityModel(
+                id = "1",
+                content = "test",
+                translate = "test"
+            ),
+            DzikirPriorityModel(
+                id = "1",
+                content = "test",
+                translate = "test"
+            )
+        )
+
+        val domainModel = listOf(
+            DzikirPriority(
+                id = "1",
+                content = "test",
+                translate = "test"
+            ),
+            DzikirPriority(
+                id = "1",
+                content = "test",
+                translate = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Success(models),
+            expectedResult = domainModel,
+            exactly = 1
+        )
+    }
+
     private fun expect(
         sut: GetDzikirPriorityRemoteUseCase,
         receivedResult: FirestoreClientResult<List<DzikirPriorityModel>>,
@@ -140,7 +190,9 @@ class GetDzikirPriorityRemoteUseCaseTest {
                 is FirestoreDomainResult.Failure -> {
                     assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
-                is FirestoreDomainResult.Success -> {}
+                is FirestoreDomainResult.Success -> {
+                    assertEquals(expectedResult, received.data)
+                }
             }
 
             awaitComplete()
