@@ -51,39 +51,44 @@ class GetDzikirPriorityFirestoreClientTest {
     }
 
     @Test
-    fun testGetFailsOnConnectivity() = runBlocking {
-        coEvery {
-            service.getDzikirPriority()
-        } throws IOException()
-
-        sut.getDzikirPriority().test {
-            when (val received = awaitItem()) {
-                is FirestoreClientResult.Failure -> {
-                    assertEquals(ConnectivityException()::class.java, received.exception::class.java)
-                }
-                is FirestoreClientResult.Success -> {}
-            }
-
-            awaitComplete()
-        }
-
-        coVerify {
-            service.getDzikirPriority()
-        }
-
-        confirmVerified(service)
+    fun testGetFailsOnConnectivity() {
+        expect(
+            sut = sut,
+            expectedResult = ConnectivityException()
+        )
     }
 
     @Test
-    fun testGetFailsOnUnexpected() = runBlocking {
-        coEvery {
-            service.getDzikirPriority()
-        } throws Exception()
+    fun testGetFailsOnUnexpected() {
+        expect(
+            sut = sut,
+            expectedResult = UnexpectedException()
+        )
+    }
+
+    private fun expect(
+        sut: GetDzikirPriorityFirestoreClient,
+        receivedResult: Any? = null,
+        expectedResult: Any
+    ) = runBlocking {
+        when {
+            expectedResult is ConnectivityException -> {
+                coEvery {
+                    service.getDzikirPriority()
+                } throws IOException()
+            }
+
+            else -> {
+                coEvery {
+                    service.getDzikirPriority()
+                } throws Exception()
+            }
+        }
 
         sut.getDzikirPriority().test {
             when (val received = awaitItem()) {
                 is FirestoreClientResult.Failure -> {
-                    assertEquals(UnexpectedException()::class.java, received.exception::class.java)
+                    assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 is FirestoreClientResult.Success -> {}
             }
