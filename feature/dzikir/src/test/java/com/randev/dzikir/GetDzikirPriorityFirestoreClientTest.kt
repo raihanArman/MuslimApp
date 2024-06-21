@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.randev.dzikir.api.DzikirPriorityModel
 import com.randev.dzikir.api_infra.DzikirFirestoreService
 import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -28,7 +29,14 @@ class GetDzikirPriorityFirestoreClient(
         try {
             service.getDzikirPriority()
         } catch (e: Exception) {
-            emit(FirestoreClientResult.Failure(ConnectivityException()))
+            when (e) {
+                is IOException -> {
+                    emit(FirestoreClientResult.Failure(ConnectivityException()))
+                }
+                else -> {
+                    emit(FirestoreClientResult.Failure(UnexpectedException()))
+                }
+            }
         }
     }
 }
@@ -52,6 +60,30 @@ class GetDzikirPriorityFirestoreClientTest {
             when (val received = awaitItem()) {
                 is FirestoreClientResult.Failure -> {
                     assertEquals(ConnectivityException()::class.java, received.exception::class.java)
+                }
+                is FirestoreClientResult.Success -> {}
+            }
+
+            awaitComplete()
+        }
+
+        coVerify {
+            service.getDzikirPriority()
+        }
+
+        confirmVerified(service)
+    }
+
+    @Test
+    fun testGetFailsOnUnexpected() = runBlocking {
+        coEvery {
+            service.getDzikirPriority()
+        } throws Exception()
+
+        sut.getDzikirPriority().test {
+            when (val received = awaitItem()) {
+                is FirestoreClientResult.Failure -> {
+                    assertEquals(UnexpectedException()::class.java, received.exception::class.java)
                 }
                 is FirestoreClientResult.Success -> {}
             }
