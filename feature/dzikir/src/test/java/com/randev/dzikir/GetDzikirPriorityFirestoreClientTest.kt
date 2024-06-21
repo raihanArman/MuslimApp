@@ -3,6 +3,7 @@ package com.randev.dzikir
 import app.cash.turbine.test
 import com.randev.dzikir.api.DzikirPriorityModel
 import com.randev.dzikir.api_infra.DzikirFirestoreService
+import com.randev.dzikir.api_infra.DzikirPriorityResponse
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
@@ -27,7 +28,14 @@ class GetDzikirPriorityFirestoreClient(
 ) {
     fun getDzikirPriority(): Flow<FirestoreClientResult<List<DzikirPriorityModel>>> = flow {
         try {
-            service.getDzikirPriority()
+            val result = service.getDzikirPriority()
+            emit(
+                FirestoreClientResult.Success(
+                    result.map {
+                        it.toModels()
+                    }
+                )
+            )
         } catch (e: Exception) {
             when (e) {
                 is IOException -> {
@@ -39,6 +47,12 @@ class GetDzikirPriorityFirestoreClient(
             }
         }
     }
+
+    private fun DzikirPriorityResponse.toModels() = DzikirPriorityModel(
+        id = this.id.orEmpty(),
+        content = this.content.orEmpty(),
+        translate = this.translate.orEmpty()
+    )
 }
 
 class GetDzikirPriorityFirestoreClientTest {
@@ -66,6 +80,41 @@ class GetDzikirPriorityFirestoreClientTest {
         )
     }
 
+    @Test
+    fun testGetSuccessResponse() {
+        val responses = listOf(
+            DzikirPriorityResponse(
+                id = "1",
+                content = "test",
+                translate = "test"
+            ),
+            DzikirPriorityResponse(
+                id = "1",
+                content = "test",
+                translate = "test"
+            )
+        )
+
+        val models = listOf(
+            DzikirPriorityModel(
+                id = "1",
+                content = "test",
+                translate = "test"
+            ),
+            DzikirPriorityModel(
+                id = "1",
+                content = "test",
+                translate = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            receivedResult = responses,
+            expectedResult = FirestoreClientResult.Success(models)
+        )
+    }
+
     private fun expect(
         sut: GetDzikirPriorityFirestoreClient,
         receivedResult: Any? = null,
@@ -76,6 +125,12 @@ class GetDzikirPriorityFirestoreClientTest {
                 coEvery {
                     service.getDzikirPriority()
                 } throws IOException()
+            }
+
+            expectedResult is FirestoreClientResult.Success<*> -> {
+                coEvery {
+                    service.getDzikirPriority()
+                } returns receivedResult as List<DzikirPriorityResponse>
             }
 
             else -> {
@@ -90,7 +145,9 @@ class GetDzikirPriorityFirestoreClientTest {
                 is FirestoreClientResult.Failure -> {
                     assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
-                is FirestoreClientResult.Success -> {}
+                is FirestoreClientResult.Success -> {
+                    assertEquals(expectedResult, received)
+                }
             }
 
             awaitComplete()
