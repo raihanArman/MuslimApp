@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.randev.dzikir.api.DzikirPriorityModel
 import com.randev.dzikir.api_infra.DzikirFirestoreService
 import com.randev.dzikir.api_infra.DzikirPriorityResponse
+import com.randev.dzikir.api_infra.GetDzikirPriorityFirestoreClient
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
@@ -12,8 +13,6 @@ import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -23,38 +22,6 @@ import java.io.IOException
  * @author Raihan Arman
  * @date 21/06/24
  */
-class GetDzikirPriorityFirestoreClient(
-    private val service: DzikirFirestoreService
-) {
-    fun getDzikirPriority(): Flow<FirestoreClientResult<List<DzikirPriorityModel>>> = flow {
-        try {
-            val result = service.getDzikirPriority()
-            emit(
-                FirestoreClientResult.Success(
-                    result.map {
-                        it.toModels()
-                    }
-                )
-            )
-        } catch (e: Exception) {
-            when (e) {
-                is IOException -> {
-                    emit(FirestoreClientResult.Failure(ConnectivityException()))
-                }
-                else -> {
-                    emit(FirestoreClientResult.Failure(UnexpectedException()))
-                }
-            }
-        }
-    }
-
-    private fun DzikirPriorityResponse.toModels() = DzikirPriorityModel(
-        id = this.id.orEmpty(),
-        content = this.content.orEmpty(),
-        translate = this.translate.orEmpty()
-    )
-}
-
 class GetDzikirPriorityFirestoreClientTest {
     private val service: DzikirFirestoreService = mockk()
     private lateinit var sut: GetDzikirPriorityFirestoreClient
