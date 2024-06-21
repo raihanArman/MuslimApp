@@ -115,6 +115,15 @@ class GetDzikirPriorityFirestoreClientTest {
         )
     }
 
+    @Test
+    fun testGetsSuccessWithEmptyResponse() {
+        expect(
+            sut = sut,
+            receivedResult = emptyList<DzikirPriorityResponse>(),
+            expectedResult = FirestoreClientResult.Success<List<DzikirPriorityModel>>(emptyList())
+        )
+    }
+
     private fun expect(
         sut: GetDzikirPriorityFirestoreClient,
         receivedResult: Any? = null,
