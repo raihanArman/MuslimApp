@@ -6,4 +6,5 @@ package com.randev.dzikir.api_infra
  */
 interface DzikirFirestoreService {
     suspend fun getDzikir(category: String): List<DzikirResponse>
+    suspend fun getDzikirPriority(): List<DzikirPriorityResponse>
 }
