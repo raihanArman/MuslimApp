@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
 import com.randev.dzikir.domain.DzikirPriority
 import com.raydev.anabstract.exception.Connectivity
+import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -62,6 +63,11 @@ class DzikirPriorityViewModel(
                             is Connectivity -> {
                                 _uiState.update {
                                     it.copy(isLoading = false, errorMessage = "Tidak ada internet")
+                                }
+                            }
+                            is Unexpected -> {
+                                _uiState.update {
+                                    it.copy(isLoading = false, errorMessage = "Tidak ditemukan")
                                 }
                             }
                         }
@@ -145,6 +151,16 @@ class DzikirPriorityViewModelTest {
             result = FirestoreDomainResult.Failure(Connectivity()),
             expectedLoading = false,
             expectedFailed = "Tidak ada internet"
+        )
+    }
+
+    @Test
+    fun testLoadFailedUnexpectedShowsUnexpectedError() {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Failure(Unexpected()),
+            expectedLoading = false,
+            expectedFailed = "Tidak ditemukan"
         )
     }
 
