@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
 import com.randev.dzikir.domain.DzikirPriority
+import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -25,6 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -53,7 +55,21 @@ class DzikirPriorityViewModel(
             _uiState.update {
                 it.copy(isLoading = true)
             }
-            useCase.load()
+            useCase.load().collect { result ->
+                when (result) {
+                    is FirestoreDomainResult.Failure -> {
+                        when (result.exception) {
+                            is Connectivity -> {
+                                _uiState.update {
+                                    it.copy(isLoading = false, errorMessage = "Tidak ada internet")
+                                }
+                            }
+                        }
+                    }
+                    is FirestoreDomainResult.Success -> {
+                    }
+                }
+            }
         }
     }
 }
@@ -114,6 +130,27 @@ class DzikirPriorityViewModelTest {
         sut.uiState.take(count = 1).test {
             val received = awaitItem()
             assertTrue(received.isLoading)
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            useCase.load()
+        }
+    }
+
+    @Test
+    fun testLoadFailedConnectivityShowsConnectivityError() = runBlocking {
+        every {
+            useCase.load()
+        } returns flowOf(FirestoreDomainResult.Failure(Connectivity()))
+
+        sut.load()
+
+        sut.uiState.take(count = 1).test {
+            val received = awaitItem()
+            assertEquals(false, received.isLoading)
+            assertEquals("Tidak ada internet", received.errorMessage)
+
             awaitComplete()
         }
 
