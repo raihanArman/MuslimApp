@@ -181,6 +181,17 @@ class DzikirPriorityViewModelTest {
         )
     }
 
+    @Test
+    fun testLoadShowsWithEmptyData() {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Success(emptyList()),
+            expectedLoading = false,
+            expectedData = emptyList(),
+            expectedFailed = null
+        )
+    }
+
     fun domainModels() = listOf(
         DzikirPriority(
             id = "1",
