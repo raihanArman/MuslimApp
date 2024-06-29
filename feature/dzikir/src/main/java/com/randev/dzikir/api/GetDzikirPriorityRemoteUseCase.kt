@@ -1,6 +1,7 @@
 package com.randev.dzikir.api
 
 import com.randev.dzikir.domain.DzikirPriority
+import com.randev.dzikir.domain.GetDzikirPriorityUseCase
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.Unexpected
@@ -16,8 +17,8 @@ import kotlinx.coroutines.flow.flow
  */
 class GetDzikirPriorityRemoteUseCase(
     private val client: GetDzikirPriorityHttpClient
-) {
-    fun load(): Flow<FirestoreDomainResult<List<DzikirPriority>>> = flow {
+) : GetDzikirPriorityUseCase {
+    override fun load(): Flow<FirestoreDomainResult<List<DzikirPriority>>> = flow {
         client.getDzikirPriority().collect { result ->
             when (result) {
                 is FirestoreClientResult.Failure -> {

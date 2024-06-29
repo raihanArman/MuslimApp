@@ -1,9 +1,9 @@
 package com.randev.dzikir
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
 import com.randev.dzikir.domain.DzikirPriority
+import com.randev.dzikir.domain.GetDzikirPriorityUseCase
+import com.randev.dzikir.presentation.viewmodel.DzikirPriorityViewModel
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.state.FirestoreDomainResult
@@ -16,14 +16,8 @@ import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
@@ -35,57 +29,6 @@ import org.junit.Test
  * @author Raihan Arman
  * @date 21/06/24
  */
-interface GetDzikirPriorityUseCase {
-    fun load(): Flow<FirestoreDomainResult<List<DzikirPriority>>>
-}
-
-data class DzikirPriorityState(
-    val isLoading: Boolean = false,
-    val errorMessage: String ? = null,
-    val data: List<DzikirPriority> ? = null,
-)
-
-class DzikirPriorityViewModel(
-    private val useCase: GetDzikirPriorityUseCase
-) : ViewModel() {
-    private val _uiState: MutableStateFlow<DzikirPriorityState> = MutableStateFlow(DzikirPriorityState())
-    val uiState: StateFlow<DzikirPriorityState> = _uiState.asStateFlow()
-
-    fun load() {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(isLoading = true)
-            }
-            useCase.load().collect { result ->
-                when (result) {
-                    is FirestoreDomainResult.Failure -> {
-                        when (result.exception) {
-                            is Connectivity -> {
-                                _uiState.update {
-                                    it.copy(isLoading = false, errorMessage = "Tidak ada internet")
-                                }
-                            }
-                            is Unexpected -> {
-                                _uiState.update {
-                                    it.copy(isLoading = false, errorMessage = "Tidak ditemukan")
-                                }
-                            }
-                        }
-                    }
-                    is FirestoreDomainResult.Success -> {
-                        _uiState.update {
-                            it.copy(
-                                isLoading = false,
-                                data = result.data
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 class DzikirPriorityViewModelTest {
     private val useCase: GetDzikirPriorityUseCase = mockk()
     private lateinit var sut: DzikirPriorityViewModel
