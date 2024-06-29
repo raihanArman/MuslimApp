@@ -140,16 +140,32 @@ class DzikirPriorityViewModelTest {
 
     @Test
     fun testLoadFailedConnectivityShowsConnectivityError() = runBlocking {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Failure(Connectivity()),
+            expectedLoading = false,
+            expectedFailed = "Tidak ada internet"
+        )
+    }
+
+    private fun expect(
+        sut: DzikirPriorityViewModel,
+        result: FirestoreDomainResult<List<DzikirPriority>>,
+        expectedLoading: Boolean,
+        expectedFailed: String?,
+        expectedData: List<DzikirPriority> ? = null
+    ) = runBlocking {
         every {
             useCase.load()
-        } returns flowOf(FirestoreDomainResult.Failure(Connectivity()))
+        } returns flowOf(result)
 
         sut.load()
 
         sut.uiState.take(count = 1).test {
             val received = awaitItem()
-            assertEquals(false, received.isLoading)
-            assertEquals("Tidak ada internet", received.errorMessage)
+            assertEquals(expectedLoading, received.isLoading)
+            assertEquals(expectedData, received.data)
+            assertEquals(expectedFailed, received.errorMessage)
 
             awaitComplete()
         }
@@ -157,5 +173,7 @@ class DzikirPriorityViewModelTest {
         verify(exactly = 1) {
             useCase.load()
         }
+
+        confirmVerified(useCase)
     }
 }
