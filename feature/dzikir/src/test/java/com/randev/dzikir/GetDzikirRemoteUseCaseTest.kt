@@ -1,12 +1,12 @@
 package com.randev.dzikir
 
 import app.cash.turbine.test
-import com.randev.dzikir.api.DzikirModel
-import com.randev.dzikir.api.DzikirRequestDto
-import com.randev.dzikir.api.GetDzikirRemoteUseCase
-import com.randev.dzikir.api.GetDzikirHttpClient
-import com.randev.dzikir.domain.Dzikir
-import com.randev.dzikir.domain.DzikirRequest
+import com.randev.dzikir.api.client.GetDzikirHttpClient
+import com.randev.dzikir.api.model.DzikirModel
+import com.randev.dzikir.api.request.DzikirRequestDto
+import com.randev.dzikir.api.usecase.GetDzikirRemoteUseCase
+import com.randev.dzikir.domain.model.Dzikir
+import com.randev.dzikir.domain.request.DzikirRequest
 import com.randev.dzikir.util.DzikirCategory
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException

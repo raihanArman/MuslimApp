@@ -1,11 +1,11 @@
 package com.randev.dzikir
 
 import app.cash.turbine.test
-import com.randev.dzikir.api.DzikirModel
-import com.randev.dzikir.api.DzikirRequestDto
-import com.randev.dzikir.api_infra.DzikirFirestoreService
-import com.randev.dzikir.api_infra.DzikirResponse
-import com.randev.dzikir.api_infra.GetDzikirFirestoreClient
+import com.randev.dzikir.api.model.DzikirModel
+import com.randev.dzikir.api.request.DzikirRequestDto
+import com.randev.dzikir.api_infra.client.GetDzikirFirestoreClient
+import com.randev.dzikir.api_infra.response.DzikirResponse
+import com.randev.dzikir.api_infra.service.DzikirFirestoreService
 import com.randev.dzikir.util.DzikirCategory
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.UnexpectedException

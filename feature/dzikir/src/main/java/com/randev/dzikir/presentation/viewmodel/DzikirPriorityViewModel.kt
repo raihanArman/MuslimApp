@@ -2,7 +2,7 @@ package com.randev.dzikir.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.randev.dzikir.domain.GetDzikirPriorityUseCase
+import com.randev.dzikir.domain.usecase.GetDzikirPriorityUseCase
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.state.FirestoreDomainResult

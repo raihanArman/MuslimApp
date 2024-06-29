@@ -1,10 +1,10 @@
 package com.randev.dzikir
 
 import app.cash.turbine.test
-import com.randev.dzikir.api.DzikirPriorityModel
-import com.randev.dzikir.api_infra.DzikirFirestoreService
-import com.randev.dzikir.api_infra.DzikirPriorityResponse
-import com.randev.dzikir.api_infra.GetDzikirPriorityFirestoreClient
+import com.randev.dzikir.api.model.DzikirPriorityModel
+import com.randev.dzikir.api_infra.client.GetDzikirPriorityFirestoreClient
+import com.randev.dzikir.api_infra.response.DzikirPriorityResponse
+import com.randev.dzikir.api_infra.service.DzikirFirestoreService
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult

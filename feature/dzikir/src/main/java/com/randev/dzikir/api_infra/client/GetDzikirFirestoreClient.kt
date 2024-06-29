@@ -1,7 +1,10 @@
-package com.randev.dzikir.api_infra
+package com.randev.dzikir.api_infra.client
 
-import com.randev.dzikir.api.DzikirPriorityModel
-import com.randev.dzikir.api.GetDzikirPriorityHttpClient
+import com.randev.dzikir.api.model.DzikirModel
+import com.randev.dzikir.api.request.DzikirRequestDto
+import com.randev.dzikir.api.client.GetDzikirHttpClient
+import com.randev.dzikir.api_infra.response.DzikirResponse
+import com.randev.dzikir.api_infra.service.DzikirFirestoreService
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
@@ -11,20 +14,20 @@ import java.io.IOException
 
 /**
  * @author Raihan Arman
- * @date 21/06/24
+ * @date 18/06/24
  */
-class GetDzikirPriorityFirestoreClient(
+class GetDzikirFirestoreClient(
     private val service: DzikirFirestoreService
-) : GetDzikirPriorityHttpClient {
-    override fun getDzikirPriority(): Flow<FirestoreClientResult<List<DzikirPriorityModel>>> = flow {
+) : GetDzikirHttpClient {
+    override fun getDzikir(request: DzikirRequestDto): Flow<FirestoreClientResult<List<DzikirModel>>> = flow {
         try {
-            val result = service.getDzikirPriority()
+            val result = service.getDzikir(request.category.value)
             emit(
                 FirestoreClientResult.Success(
                     result.map {
                         it.toModels()
-                    }
-                )
+                    },
+                ),
             )
         } catch (e: Exception) {
             when (e) {
@@ -38,8 +41,9 @@ class GetDzikirPriorityFirestoreClient(
         }
     }
 
-    private fun DzikirPriorityResponse.toModels() = DzikirPriorityModel(
+    private fun DzikirResponse.toModels() = DzikirModel(
         id = this.id.orEmpty(),
+        title = this.title.orEmpty(),
         content = this.content.orEmpty(),
         translate = this.translate.orEmpty()
     )

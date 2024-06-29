@@ -1,10 +1,10 @@
 package com.randev.dzikir
 
 import app.cash.turbine.test
-import com.randev.dzikir.api.DzikirPriorityModel
-import com.randev.dzikir.api.GetDzikirPriorityHttpClient
-import com.randev.dzikir.api.GetDzikirPriorityRemoteUseCase
-import com.randev.dzikir.domain.DzikirPriority
+import com.randev.dzikir.api.client.GetDzikirPriorityHttpClient
+import com.randev.dzikir.api.model.DzikirPriorityModel
+import com.randev.dzikir.api.usecase.GetDzikirPriorityRemoteUseCase
+import com.randev.dzikir.domain.model.DzikirPriority
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.Unexpected

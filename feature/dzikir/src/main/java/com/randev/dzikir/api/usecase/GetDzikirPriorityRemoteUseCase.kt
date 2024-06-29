@@ -1,7 +1,9 @@
-package com.randev.dzikir.api
+package com.randev.dzikir.api.usecase
 
-import com.randev.dzikir.domain.Dzikir
-import com.randev.dzikir.domain.DzikirRequest
+import com.randev.dzikir.api.client.GetDzikirPriorityHttpClient
+import com.randev.dzikir.api.model.DzikirPriorityModel
+import com.randev.dzikir.domain.model.DzikirPriority
+import com.randev.dzikir.domain.usecase.GetDzikirPriorityUseCase
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.Unexpected
@@ -13,13 +15,13 @@ import kotlinx.coroutines.flow.flow
 
 /**
  * @author Raihan Arman
- * @date 18/06/24
+ * @date 21/06/24
  */
-class GetDzikirRemoteUseCase(
-    private val client: GetDzikirHttpClient
-) {
-    fun load(request: DzikirRequest): Flow<FirestoreDomainResult<List<Dzikir>>> = flow {
-        client.getDzikir(toDtoRequest(request)).collect { result ->
+class GetDzikirPriorityRemoteUseCase(
+    private val client: GetDzikirPriorityHttpClient
+) : GetDzikirPriorityUseCase {
+    override fun load(): Flow<FirestoreDomainResult<List<DzikirPriority>>> = flow {
+        client.getDzikirPriority().collect { result ->
             when (result) {
                 is FirestoreClientResult.Failure -> {
                     when (result.exception) {
@@ -44,14 +46,9 @@ class GetDzikirRemoteUseCase(
         }
     }
 
-    private fun DzikirModel.toDomainModels() = Dzikir(
+    private fun DzikirPriorityModel.toDomainModels() = DzikirPriority(
         id = this.id,
-        title = this.title,
         content = this.content,
         translate = this.translate
-    )
-
-    private fun toDtoRequest(request: DzikirRequest) = DzikirRequestDto(
-        category = request.category
     )
 }

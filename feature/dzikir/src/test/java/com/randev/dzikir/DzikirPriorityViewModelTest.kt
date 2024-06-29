@@ -1,8 +1,8 @@
 package com.randev.dzikir
 
 import app.cash.turbine.test
-import com.randev.dzikir.domain.DzikirPriority
-import com.randev.dzikir.domain.GetDzikirPriorityUseCase
+import com.randev.dzikir.domain.model.DzikirPriority
+import com.randev.dzikir.domain.usecase.GetDzikirPriorityUseCase
 import com.randev.dzikir.presentation.viewmodel.DzikirPriorityViewModel
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.Unexpected

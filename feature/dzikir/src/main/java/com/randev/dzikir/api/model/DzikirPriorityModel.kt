@@ -1,4 +1,4 @@
-package com.randev.dzikir.api
+package com.randev.dzikir.api.model
 
 /**
  * @author Raihan Arman

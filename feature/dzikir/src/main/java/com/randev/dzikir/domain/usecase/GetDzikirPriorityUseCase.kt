@@ -1,5 +1,6 @@
-package com.randev.dzikir.domain
+package com.randev.dzikir.domain.usecase
 
+import com.randev.dzikir.domain.model.DzikirPriority
 import com.raydev.anabstract.state.FirestoreDomainResult
 import kotlinx.coroutines.flow.Flow
 

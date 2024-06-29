@@ -1,6 +1,8 @@
-package com.randev.dzikir.api_infra
+package com.randev.dzikir.api_infra.service
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.randev.dzikir.api_infra.response.DzikirPriorityResponse
+import com.randev.dzikir.api_infra.response.DzikirResponse
 import kotlinx.coroutines.tasks.await
 
 /**

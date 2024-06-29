@@ -1,6 +1,6 @@
 package com.randev.dzikir.presentation.viewmodel
 
-import com.randev.dzikir.domain.DzikirPriority
+import com.randev.dzikir.domain.model.DzikirPriority
 
 /**
  * @author Raihan Arman

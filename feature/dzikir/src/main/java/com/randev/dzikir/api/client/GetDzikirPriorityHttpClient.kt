@@ -1,5 +1,6 @@
-package com.randev.dzikir.api
+package com.randev.dzikir.api.client
 
+import com.randev.dzikir.api.model.DzikirPriorityModel
 import com.raydev.anabstract.state.FirestoreClientResult
 import kotlinx.coroutines.flow.Flow
 
