@@ -2,6 +2,7 @@ package com.randev.dzikir
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.cash.turbine.test
 import com.randev.dzikir.domain.DzikirPriority
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.MockKAnnotations
@@ -18,7 +19,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
@@ -46,6 +50,9 @@ class DzikirPriorityViewModel(
 
     fun load() {
         viewModelScope.launch {
+            _uiState.update {
+                it.copy(isLoading = true)
+            }
             useCase.load()
         }
     }
@@ -94,5 +101,24 @@ class DzikirPriorityViewModelTest {
         }
 
         confirmVerified(useCase)
+    }
+
+    @Test
+    fun testLoadIsLoadingState() = runBlocking {
+        every {
+            useCase.load()
+        } returns flowOf()
+
+        sut.load()
+
+        sut.uiState.take(count = 1).test {
+            val received = awaitItem()
+            assertTrue(received.isLoading)
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            useCase.load()
+        }
     }
 }
