@@ -73,6 +73,12 @@ class DzikirPriorityViewModel(
                         }
                     }
                     is FirestoreDomainResult.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                data = result.data
+                            )
+                        }
                     }
                 }
             }
@@ -163,6 +169,30 @@ class DzikirPriorityViewModelTest {
             expectedFailed = "Tidak ditemukan"
         )
     }
+
+    @Test
+    fun testLoadShowsData() {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Success(domainModels()),
+            expectedLoading = false,
+            expectedFailed = null,
+            expectedData = domainModels()
+        )
+    }
+
+    fun domainModels() = listOf(
+        DzikirPriority(
+            id = "1",
+            content = "test",
+            translate = "test"
+        ),
+        DzikirPriority(
+            id = "1",
+            content = "test",
+            translate = "test"
+        )
+    )
 
     private fun expect(
         sut: DzikirPriorityViewModel,
