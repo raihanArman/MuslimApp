@@ -34,6 +34,9 @@ google-service = "4.4.1"
 mockkAndroid = "1.13.10"
 turbine = "1.1.0"
 
+# Media3
+media3 = "1.3.1"
+
 # Asynchronous
 coroutines = "1.7.3"
 
@@ -132,6 +135,11 @@ firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore", ve
 # Lifecycle
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewmodel" }
 
+# Media3
+exoPlayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
+exoPlayerDash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "media3" }
+media3Ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
+
 [bundles]
 androidx = [
     "androidx-startup",
@@ -198,6 +206,12 @@ maps = [
     "maps-utils",
     "play-services-maps",
     "play-services-location"
+]
+
+player = [
+    "exoPlayer",
+    "exoPlayerDash",
+    "media3Ui"
 ]
 
 [plugins]
