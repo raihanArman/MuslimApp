@@ -74,6 +74,9 @@ fun HomeScreen(
                         HomeEvent.OnClickDoaHarian -> {
                             navigator.tryNavigateTo(Destination.DailyDuasScreen())
                         }
+                        HomeEvent.OnClickDzikirPagiPetang -> {
+                            navigator.tryNavigateTo(Destination.DzikirPriorityScreen())
+                        }
                         else -> {}
                     }
                 })

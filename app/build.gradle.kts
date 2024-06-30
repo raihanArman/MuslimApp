@@ -132,6 +132,7 @@ dependencies {
     implementation(project(":feature:bookmark"))
     implementation(project(":feature:qibla"))
     implementation(project(":feature:dailyduas"))
+    implementation(project(":feature:dzikir"))
 
 //    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
 
