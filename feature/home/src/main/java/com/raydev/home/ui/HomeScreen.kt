@@ -77,6 +77,9 @@ fun HomeScreen(
                         HomeEvent.OnClickDzikirPagiPetang -> {
                             navigator.tryNavigateTo(Destination.DzikirPriorityScreen())
                         }
+                        HomeEvent.OnClickCeramah -> {
+                            navigator.tryNavigateTo(Destination.ShortDakwahScreen())
+                        }
                         else -> {}
                     }
                 })

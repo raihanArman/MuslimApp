@@ -8,7 +8,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 23
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -28,12 +28,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         compose = true
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
 }
 
@@ -43,8 +47,15 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.android.material)
 
+    implementation(libs.coil)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.player)
+
+
+    // Core Module
+    implementation(project(":core:ui"))
+    implementation(project(":core:navigation"))
+    implementation(project(":libraries:abstract"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
