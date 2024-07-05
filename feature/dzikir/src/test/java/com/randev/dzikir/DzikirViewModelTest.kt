@@ -1,10 +1,12 @@
 package com.randev.dzikir
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
 import com.randev.dzikir.domain.model.Dzikir
 import com.randev.dzikir.domain.request.DzikirRequest
 import com.randev.dzikir.util.DzikirCategory
+import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -20,6 +22,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
@@ -51,10 +54,28 @@ class DzikirViewModel(
     val uiState = _uiState.asStateFlow()
 
     fun load(request: DzikirRequest) {
-        _uiState.update {
-            it.copy(isLoading = true)
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(isLoading = true)
+            }
+            useCase.load(request).collect { result ->
+                when (result) {
+                    is FirestoreDomainResult.Failure -> {
+                        when (result.exception) {
+                            is Connectivity -> {
+                                _uiState.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = "Tidak ada koneksi"
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    is FirestoreDomainResult.Success -> {}
+                }
+            }
         }
-        useCase.load(request)
     }
 }
 
@@ -110,5 +131,31 @@ class DzikirViewModelTest {
         verify(exactly = 1) {
             useCase.load(capture(captureRequest))
         }
+    }
+
+    @Test
+    fun testLoadFailedConnectivityShowsConnectivityError() = runBlocking {
+        val captureRequest = slot<DzikirRequest>()
+        every {
+            useCase.load(capture(captureRequest))
+        } returns flowOf(FirestoreDomainResult.Failure(Connectivity()))
+
+        sut.load(request)
+
+        sut.uiState.take(1).test {
+            val received = awaitItem()
+            assertEquals(captureRequest.captured, request)
+            assertEquals(false, received.isLoading)
+            assertEquals("Tidak ada koneksi", received.errorMessage)
+            assertEquals(null, received.data)
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            useCase.load(request)
+        }
+
+        confirmVerified(useCase)
     }
 }
