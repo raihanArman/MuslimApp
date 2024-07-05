@@ -176,6 +176,17 @@ class DzikirViewModelTest {
         )
     }
 
+    @Test
+    fun testLoadShowsEmptyData() {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Success(emptyList()),
+            expectedLoading = false,
+            expectedFailed = null,
+            expectedData = emptyList()
+        )
+    }
+
     private fun expect(
         sut: DzikirViewModel,
         result: FirestoreDomainResult<List<Dzikir>>,
