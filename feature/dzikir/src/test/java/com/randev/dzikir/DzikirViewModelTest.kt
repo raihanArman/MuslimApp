@@ -3,9 +3,12 @@ package com.randev.dzikir
 import androidx.lifecycle.ViewModel
 import com.randev.dzikir.domain.model.Dzikir
 import com.randev.dzikir.domain.request.DzikirRequest
+import com.randev.dzikir.util.DzikirCategory
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.MockKAnnotations
+import io.mockk.confirmVerified
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +45,8 @@ class DzikirViewModelTest {
     private val useCase = mockk<GetDzikirUseCase>()
     private lateinit var sut: DzikirViewModel
 
+    val request = DzikirRequest(category = DzikirCategory.PAGI)
+
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
@@ -57,5 +62,14 @@ class DzikirViewModelTest {
         assertFalse(uiState.isLoading)
         assertTrue(uiState.data == null)
         assert(uiState.errorMessage == null)
+    }
+
+    @Test
+    fun testInitDoesNotLoad() {
+        verify(exactly = 0) {
+            useCase.load(request)
+        }
+
+        confirmVerified(useCase)
     }
 }
