@@ -134,20 +134,35 @@ class DzikirViewModelTest {
     }
 
     @Test
-    fun testLoadFailedConnectivityShowsConnectivityError() = runBlocking {
+    fun testLoadFailedConnectivityShowsConnectivityError() {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Failure(Connectivity()),
+            expectedLoading = false,
+            expectedFailed = "Tidak ada koneksi",
+        )
+    }
+
+    private fun expect(
+        sut: DzikirViewModel,
+        result: FirestoreDomainResult<List<Dzikir>>,
+        expectedLoading: Boolean,
+        expectedFailed: String?,
+        expectedData: List<Dzikir> ? = null
+    ) = runBlocking {
         val captureRequest = slot<DzikirRequest>()
         every {
             useCase.load(capture(captureRequest))
-        } returns flowOf(FirestoreDomainResult.Failure(Connectivity()))
+        } returns flowOf(result)
 
         sut.load(request)
 
         sut.uiState.take(1).test {
             val received = awaitItem()
             assertEquals(captureRequest.captured, request)
-            assertEquals(false, received.isLoading)
-            assertEquals("Tidak ada koneksi", received.errorMessage)
-            assertEquals(null, received.data)
+            assertEquals(expectedLoading, received.isLoading)
+            assertEquals(expectedFailed, received.errorMessage)
+            assertEquals(expectedData, received.data)
 
             awaitComplete()
         }
