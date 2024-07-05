@@ -8,7 +8,7 @@ import com.randev.dzikir.api_infra.client.GetDzikirPriorityFirestoreClient
 import com.randev.dzikir.api_infra.service.DzikirFirestoreService
 import com.randev.dzikir.api_infra.service.DzikirFirestoreServiceImpl
 import com.randev.dzikir.domain.usecase.GetDzikirPriorityUseCase
-import com.randev.dzikir.presentation.viewmodel.DzikirPriorityViewModel
+import com.randev.dzikir.presentation.dzikir_priority.viewmodel.DzikirPriorityViewModel
 import org.koin.dsl.module
 
 /**

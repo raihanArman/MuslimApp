@@ -1,4 +1,4 @@
-package com.randev.dzikir.presentation.viewmodel
+package com.randev.dzikir.presentation.dzikir_priority.viewmodel
 
 import com.randev.dzikir.domain.model.DzikirPriority
 

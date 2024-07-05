@@ -1,4 +1,4 @@
-package com.randev.dzikir.presentation.ui
+package com.randev.dzikir.presentation.dzikir_priority.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,7 +32,7 @@ import com.raihan.ui.app_bar.AppBarCustom
 import com.raihan.ui.helper.OnceLaunchedEffect
 import com.raihan.ui.tile.TileDzikirPriority
 import com.randev.dzikir.R
-import com.randev.dzikir.presentation.viewmodel.DzikirPriorityViewModel
+import com.randev.dzikir.presentation.dzikir_priority.viewmodel.DzikirPriorityViewModel
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
 import com.raydev.navigation.composable

@@ -1,4 +1,4 @@
-package com.randev.dzikir.presentation.viewmodel
+package com.randev.dzikir.presentation.dzikir_priority.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +19,9 @@ import kotlinx.coroutines.launch
 class DzikirPriorityViewModel(
     private val useCase: GetDzikirPriorityUseCase
 ) : ViewModel() {
-    private val _uiState: MutableStateFlow<DzikirPriorityState> = MutableStateFlow(DzikirPriorityState())
+    private val _uiState: MutableStateFlow<DzikirPriorityState> = MutableStateFlow(
+        DzikirPriorityState()
+    )
     val uiState: StateFlow<DzikirPriorityState> = _uiState.asStateFlow()
 
     fun load() {
