@@ -72,7 +72,14 @@ class DzikirViewModel(
                             }
                         }
                     }
-                    is FirestoreDomainResult.Success -> {}
+                    is FirestoreDomainResult.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                data = result.data
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -140,6 +147,32 @@ class DzikirViewModelTest {
             result = FirestoreDomainResult.Failure(Connectivity()),
             expectedLoading = false,
             expectedFailed = "Tidak ada koneksi",
+        )
+    }
+
+    @Test
+    fun testLoadShowsData() {
+        fun domainModels() = listOf(
+            Dzikir(
+                id = "1",
+                content = "test",
+                translate = "test",
+                title = "test"
+            ),
+            Dzikir(
+                id = "1",
+                content = "test",
+                translate = "test",
+                title = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Success(domainModels()),
+            expectedLoading = false,
+            expectedFailed = null,
+            expectedData = domainModels()
         )
     }
 
