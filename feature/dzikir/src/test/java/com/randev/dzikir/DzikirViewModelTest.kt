@@ -7,6 +7,7 @@ import com.randev.dzikir.domain.model.Dzikir
 import com.randev.dzikir.domain.request.DzikirRequest
 import com.randev.dzikir.util.DzikirCategory
 import com.raydev.anabstract.exception.Connectivity
+import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -67,6 +68,14 @@ class DzikirViewModel(
                                     it.copy(
                                         isLoading = false,
                                         errorMessage = "Tidak ada koneksi"
+                                    )
+                                }
+                            }
+                            is Unexpected -> {
+                                _uiState.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = "Tidak ditemukan"
                                     )
                                 }
                             }
@@ -147,6 +156,16 @@ class DzikirViewModelTest {
             result = FirestoreDomainResult.Failure(Connectivity()),
             expectedLoading = false,
             expectedFailed = "Tidak ada koneksi",
+        )
+    }
+
+    @Test
+    fun testLoadFailedUnexpectedShowsUnexpectedError() {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Failure(Unexpected()),
+            expectedLoading = false,
+            expectedFailed = "Tidak ditemukan",
         )
     }
 
