@@ -1,8 +1,8 @@
 package com.randev.dzikir.api_infra.client
 
+import com.randev.dzikir.api.client.GetDzikirHttpClient
 import com.randev.dzikir.api.model.DzikirModel
 import com.randev.dzikir.api.request.DzikirRequestDto
-import com.randev.dzikir.api.client.GetDzikirHttpClient
 import com.randev.dzikir.api_infra.response.DzikirResponse
 import com.randev.dzikir.api_infra.service.DzikirFirestoreService
 import com.raydev.anabstract.exception.ConnectivityException
@@ -45,6 +45,7 @@ class GetDzikirFirestoreClient(
         id = this.id.orEmpty(),
         title = this.title.orEmpty(),
         content = this.content.orEmpty(),
-        translate = this.translate.orEmpty()
+        translate = this.translate.orEmpty(),
+        times = this.times.orEmpty(),
     )
 }

@@ -113,13 +113,15 @@ class DzikirViewModelTest {
                 id = "1",
                 content = "test",
                 translate = "test",
-                title = "test"
+                title = "test",
+                times = "3"
             ),
             Dzikir(
                 id = "1",
                 content = "test",
                 translate = "test",
-                title = "test"
+                title = "test",
+                times = "3"
             )
         )
 

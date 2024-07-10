@@ -52,7 +52,8 @@ class GetDzikirRemoteUseCase(
         id = this.id,
         title = this.title,
         content = this.content,
-        translate = this.translate
+        translate = this.translate,
+        times = this.times,
     )
 
     private fun toDtoRequest(request: DzikirRequest) = DzikirRequestDto(

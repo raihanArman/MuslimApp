@@ -74,13 +74,15 @@ class GetDzikirFirestoreClientTest {
                 id = "1",
                 title = "test",
                 content = "test",
-                translate = "test"
+                translate = "test",
+                times = "3"
             ),
             DzikirModel(
                 id = "1",
                 title = "test",
                 content = "test",
-                translate = "test"
+                translate = "test",
+                times = "3"
             )
         )
 
