@@ -33,7 +33,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raydev.shared.util.SharedFont
@@ -84,24 +83,23 @@ fun TileDzikir(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = content,
-                    fontSize = 14.sp,
+                    fontSize = 18.sp,
                     color = Color.Black,
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     fontFamily = FontFamily(
                         Font(SharedFont.uthman)
                     )
                 )
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = times,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
+                Spacer(modifier = Modifier.height(16.dp))
+//                Text(
+//                    text = times,
+//                    fontSize = 14.sp,
+//                    fontWeight = FontWeight.Bold,
+//                    modifier = Modifier.fillMaxWidth(),
+//                    textAlign = TextAlign.Center
+//                )
                 AnimatedVisibility(visible = isExpanded) {
                     Column {
                         Spacer(modifier = Modifier.height(10.dp))

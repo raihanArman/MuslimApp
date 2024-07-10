@@ -22,6 +22,12 @@ sealed class Destination(protected val route: String, vararg params: String) {
     object DailyDuasScreen : NoArgumentsDestination("dailyduas")
     object ShortDakwahScreen : NoArgumentsDestination("short_dakwah")
     object DzikirPriorityScreen : NoArgumentsDestination("dzikir_priority")
+    object DzikirScreen : Destination("dzikir", "category") {
+        const val CATEGORY_KEY = "category"
+        operator fun invoke(category: String): String = route.appendParams(
+            CATEGORY_KEY to category
+        )
+    }
     object ReadQuranScreen : Destination("read_quran", "surah_id", "verse_number") {
         const val SURAH_ID_KEY = "surah_id"
         const val VERSE_NUMBER = "verse_number"

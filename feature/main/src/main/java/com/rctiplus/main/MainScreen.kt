@@ -9,7 +9,8 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.raihanarman.bookmark.ui.bookmarkNavigation
 import com.raihanarman.read_quran.ui.readQuranNavigation
-import com.randev.dzikir.presentation.dzikir_priority.ui.dzikirNavigation
+import com.randev.dzikir.presentation.dzikir.ui.dzikirNavigation
+import com.randev.dzikir.presentation.dzikir_priority.ui.dzikirPriorityNavigation
 import com.raydev.dailyduas.presentation.dailyDuasNavigation
 import com.raydev.navigation.Destination
 import com.raydev.navigation.NavHostApp
@@ -42,6 +43,7 @@ fun MainScreen(
         readQuranNavigation()
         bookmarkNavigation()
         dailyDuasNavigation()
+        dzikirPriorityNavigation()
         dzikirNavigation()
         shortDakwahNavigation()
     }

@@ -17,7 +17,10 @@ interface DzikirFirestoreService {
 class DzikirFirestoreServiceImpl : DzikirFirestoreService {
     private val firestore = FirebaseFirestore.getInstance()
     override suspend fun getDzikir(category: String): List<DzikirResponse> {
-        val snapshot = firestore.collection("dzikir").get().await()
+        val snapshot = firestore.collection("dzikir")
+            .whereArrayContains("category", category)
+            .get()
+            .await()
         val response = snapshot.toObjects(DzikirResponse::class.java)
         return response
     }

@@ -44,6 +44,8 @@ internal val dzikirApiModule = module {
 internal val dzikirPresentationModule = module {
     single {
         DzikirPriorityViewModel(get())
+    }
+    single {
         DzikirViewModel(get())
     }
 }

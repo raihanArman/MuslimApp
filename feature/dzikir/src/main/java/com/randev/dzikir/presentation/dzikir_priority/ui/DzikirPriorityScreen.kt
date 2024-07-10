@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,7 +44,7 @@ import org.koin.androidx.compose.getViewModel
  * @author Raihan Arman
  * @date 30/06/24
  */
-fun NavGraphBuilder.dzikirNavigation() = kotlin.run {
+fun NavGraphBuilder.dzikirPriorityNavigation() = kotlin.run {
     composable(Destination.DzikirPriorityScreen) {
         val navigator: AppNavigator = get<AppNavigator>()
         DzikirPriorityScreen(navigator = navigator)
@@ -86,12 +87,26 @@ fun DzikirPriorityScreen(navigator: AppNavigator) {
                                 DzikirCard(
                                     modifier = Modifier.weight(1f),
                                     title = "Pagi",
-                                    iconRes = R.drawable.ic_pagi
+                                    iconRes = R.drawable.ic_pagi,
+                                    onClick = {
+                                        navigator.tryNavigateTo(
+                                            Destination.DzikirScreen(
+                                                category = "pagi"
+                                            )
+                                        )
+                                    }
                                 )
                                 DzikirCard(
                                     modifier = Modifier.weight(1f),
                                     title = "Petang",
                                     iconRes = R.drawable.ic_petang,
+                                    onClick = {
+                                        navigator.tryNavigateTo(
+                                            Destination.DzikirScreen(
+                                                category = "petang"
+                                            )
+                                        )
+                                    }
                                 )
                             }
                         }
@@ -112,7 +127,7 @@ fun DzikirPriorityScreen(navigator: AppNavigator) {
                             ) { dzikir ->
                                 TileDzikirPriority(
                                     content = dzikir.content,
-                                    translate = dzikir.translate
+                                    translate = dzikir.translate,
                                 )
                             }
                         }
@@ -123,10 +138,17 @@ fun DzikirPriorityScreen(navigator: AppNavigator) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RowScope.DzikirCard(modifier: Modifier = Modifier, title: String, iconRes: Int) {
+fun RowScope.DzikirCard(
+    modifier: Modifier = Modifier,
+    title: String,
+    iconRes: Int,
+    onClick: () -> Unit
+) {
     Card(
-        modifier = modifier
+        modifier = modifier,
+        onClick = onClick
     ) {
         Column(
             modifier = Modifier

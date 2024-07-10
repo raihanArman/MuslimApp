@@ -43,7 +43,7 @@ import com.raydev.shared.util.SharedFont
 fun TileDzikirPriority(
     modifier: Modifier = Modifier,
     content: String,
-    translate: String
+    translate: String,
 ) {
     val rotate = remember { Animatable(0f) }
     var isExpanded by remember {
