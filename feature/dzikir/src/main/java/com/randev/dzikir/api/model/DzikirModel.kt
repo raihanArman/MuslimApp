@@ -8,5 +8,6 @@ data class DzikirModel(
     val id: String,
     val title: String,
     val content: String,
-    val translate: String
+    val translate: String,
+    val times: String
 )

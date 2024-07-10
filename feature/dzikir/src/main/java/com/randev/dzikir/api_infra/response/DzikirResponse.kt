@@ -9,4 +9,5 @@ data class DzikirResponse(
     val title: String? = null,
     val content: String? = null,
     val translate: String? = null,
+    val times: String? = null
 )

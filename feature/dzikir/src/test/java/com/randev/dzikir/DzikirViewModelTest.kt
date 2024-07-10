@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.randev.dzikir.domain.model.Dzikir
 import com.randev.dzikir.domain.request.DzikirRequest
 import com.randev.dzikir.domain.usecase.GetDzikirUseCase
-import com.randev.dzikir.presentation.dzikir_priority.viewmodel.DzikirViewModel
+import com.randev.dzikir.presentation.dzikir.viewmodel.DzikirViewModel
 import com.randev.dzikir.util.DzikirCategory
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.Unexpected

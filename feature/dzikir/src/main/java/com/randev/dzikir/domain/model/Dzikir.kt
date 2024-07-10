@@ -9,4 +9,5 @@ data class Dzikir(
     val title: String,
     val content: String,
     val translate: String,
+    val times: String
 )

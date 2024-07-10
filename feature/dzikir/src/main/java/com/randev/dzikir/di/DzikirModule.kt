@@ -10,8 +10,8 @@ import com.randev.dzikir.api_infra.service.DzikirFirestoreService
 import com.randev.dzikir.api_infra.service.DzikirFirestoreServiceImpl
 import com.randev.dzikir.domain.usecase.GetDzikirPriorityUseCase
 import com.randev.dzikir.domain.usecase.GetDzikirUseCase
+import com.randev.dzikir.presentation.dzikir.viewmodel.DzikirViewModel
 import com.randev.dzikir.presentation.dzikir_priority.viewmodel.DzikirPriorityViewModel
-import com.randev.dzikir.presentation.dzikir_priority.viewmodel.DzikirViewModel
 import org.koin.dsl.module
 
 /**
