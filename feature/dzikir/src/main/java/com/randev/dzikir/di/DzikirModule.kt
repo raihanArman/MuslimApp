@@ -3,12 +3,15 @@ package com.randev.dzikir.di
 import com.randev.dzikir.api.client.GetDzikirHttpClient
 import com.randev.dzikir.api.client.GetDzikirPriorityHttpClient
 import com.randev.dzikir.api.usecase.GetDzikirPriorityRemoteUseCase
+import com.randev.dzikir.api.usecase.GetDzikirRemoteUseCase
 import com.randev.dzikir.api_infra.client.GetDzikirFirestoreClient
 import com.randev.dzikir.api_infra.client.GetDzikirPriorityFirestoreClient
 import com.randev.dzikir.api_infra.service.DzikirFirestoreService
 import com.randev.dzikir.api_infra.service.DzikirFirestoreServiceImpl
 import com.randev.dzikir.domain.usecase.GetDzikirPriorityUseCase
+import com.randev.dzikir.domain.usecase.GetDzikirUseCase
 import com.randev.dzikir.presentation.dzikir_priority.viewmodel.DzikirPriorityViewModel
+import com.randev.dzikir.presentation.dzikir_priority.viewmodel.DzikirViewModel
 import org.koin.dsl.module
 
 /**
@@ -33,11 +36,15 @@ internal val dzikirApiModule = module {
     single<GetDzikirPriorityUseCase> {
         GetDzikirPriorityRemoteUseCase(get())
     }
+    single<GetDzikirUseCase> {
+        GetDzikirRemoteUseCase(get())
+    }
 }
 
 internal val dzikirPresentationModule = module {
     single {
         DzikirPriorityViewModel(get())
+        DzikirViewModel(get())
     }
 }
 

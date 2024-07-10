@@ -5,6 +5,7 @@ import com.randev.dzikir.api.model.DzikirModel
 import com.randev.dzikir.api.request.DzikirRequestDto
 import com.randev.dzikir.domain.model.Dzikir
 import com.randev.dzikir.domain.request.DzikirRequest
+import com.randev.dzikir.domain.usecase.GetDzikirUseCase
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.Unexpected
@@ -20,8 +21,8 @@ import kotlinx.coroutines.flow.flow
  */
 class GetDzikirRemoteUseCase(
     private val client: GetDzikirHttpClient
-) {
-    fun load(request: DzikirRequest): Flow<FirestoreDomainResult<List<Dzikir>>> = flow {
+) : GetDzikirUseCase {
+    override fun load(request: DzikirRequest): Flow<FirestoreDomainResult<List<Dzikir>>> = flow {
         client.getDzikir(toDtoRequest(request)).collect { result ->
             when (result) {
                 is FirestoreClientResult.Failure -> {
