@@ -7,6 +7,7 @@ import com.randev.dzikir.domain.usecase.GetDzikirUseCase
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.state.FirestoreDomainResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,7 +24,7 @@ class DzikirViewModel(
     val uiState = _uiState.asStateFlow()
 
     fun load(request: DzikirRequest) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _uiState.update {
                 it.copy(isLoading = true)
             }

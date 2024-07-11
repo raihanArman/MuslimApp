@@ -12,6 +12,7 @@ import com.randev.dzikir.domain.usecase.GetDzikirPriorityUseCase
 import com.randev.dzikir.domain.usecase.GetDzikirUseCase
 import com.randev.dzikir.presentation.dzikir.viewmodel.DzikirViewModel
 import com.randev.dzikir.presentation.dzikir_priority.viewmodel.DzikirPriorityViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 /**
@@ -42,10 +43,10 @@ internal val dzikirApiModule = module {
 }
 
 internal val dzikirPresentationModule = module {
-    single {
+    viewModel {
         DzikirPriorityViewModel(get())
     }
-    single {
+    viewModel {
         DzikirViewModel(get())
     }
 }

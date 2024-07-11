@@ -103,7 +103,7 @@ fun DzikirPriorityScreen(navigator: AppNavigator) {
                                     onClick = {
                                         navigator.tryNavigateTo(
                                             Destination.DzikirScreen(
-                                                category = "petang"
+                                                category = "petang",
                                             )
                                         )
                                     }

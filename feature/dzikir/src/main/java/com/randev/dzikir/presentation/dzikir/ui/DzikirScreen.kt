@@ -50,7 +50,7 @@ fun DzikirScreen(navigator: AppNavigator, backStackEntry: NavBackStackEntry) {
 
     Scaffold(
         topBar = {
-            AppBarCustom(title = "Dzikir Pagi", onBack = {
+            AppBarCustom(title = "Dzikir $category", onBack = {
                 navigator.tryNavigateBack()
             })
         },
