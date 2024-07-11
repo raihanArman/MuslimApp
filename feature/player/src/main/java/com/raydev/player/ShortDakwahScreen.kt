@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -17,9 +21,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
 import com.raydev.navigation.composable
 import com.raydev.player.model.VideoModel
+import org.koin.androidx.compose.get
 
 /**
  * @author Raihan Arman
@@ -47,14 +53,14 @@ val listMovie = listOf(
 
 fun NavGraphBuilder.shortDakwahNavigation() = kotlin.run {
     composable(Destination.ShortDakwahScreen) {
-//        val navigator: AppNavigator = get<AppNavigator>()
-        ShortDakwahScreen()
+        val navigator: AppNavigator = get<AppNavigator>()
+        ShortDakwahScreen(navigator)
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ShortDakwahScreen(modifier: Modifier = Modifier) {
+fun ShortDakwahScreen(navigator: AppNavigator) {
     val pagerState = rememberPagerState(initialPage = 1 ?: 0)
     val coroutineScope = rememberCoroutineScope()
     val localDensity = LocalDensity.current
@@ -79,18 +85,25 @@ fun ShortDakwahScreen(modifier: Modifier = Modifier) {
             state = pagerState,
             flingBehavior = fling,
             beyondBoundsPageCount = 1,
-            modifier = modifier
+            modifier = Modifier.fillMaxSize()
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                VideoPlayer(
-                    videoModel = listMovie[it],
-                    pagerState = pagerState,
-                    pageIndex = it,
-                    onSingleTap = {},
-                    onDoubleTap = { it, data ->
-                    }
-                )
-            }
+            ShortItem(
+                video = listMovie[it],
+                pageIndex = it,
+                pagerState = pagerState,
+                onShare = {
+                }
+            )
+        }
+
+        IconButton(onClick = {
+            navigator.tryNavigateBack()
+        }) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = null,
+                tint = Color.White
+            )
         }
     }
 }

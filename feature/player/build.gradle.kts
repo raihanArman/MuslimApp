@@ -51,6 +51,9 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.player)
 
+    // Koin
+    implementation(libs.bundles.koin)
+    implementation(libs.bundles.koin.compose)
 
     // Core Module
     implementation(project(":core:ui"))
