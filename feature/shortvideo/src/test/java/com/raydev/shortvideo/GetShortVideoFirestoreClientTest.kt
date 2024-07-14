@@ -4,13 +4,13 @@ import app.cash.turbine.test
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
+import com.raydev.shortvideo.api_infra.GetShortVideoFirestoreClient
+import com.raydev.shortvideo.api_infra.ShortVideoService
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -20,41 +20,6 @@ import java.io.IOException
  * @author Raihan Arman
  * @date 14/07/24
  */
-interface ShortVideoService {
-    fun getShortVideo(): List<ShortVideoResponse>
-}
-
-class GetShortVideoFirestoreClient(
-    private val service: ShortVideoService
-) {
-    fun getShortVideo(): Flow<FirestoreClientResult<List<ShortVideoModel>>> = flow {
-        try {
-            val result = service.getShortVideo()
-            emit(
-                FirestoreClientResult.Success(
-                    result.map { toModel(it) }
-                )
-            )
-        } catch (e: Exception) {
-            when (e) {
-                is IOException -> {
-                    emit(FirestoreClientResult.Failure(ConnectivityException()))
-                }
-                else -> {
-                    emit(FirestoreClientResult.Failure(UnexpectedException()))
-                }
-            }
-        }
-    }
-
-    private fun toModel(model: ShortVideoResponse?) = ShortVideoModel(
-        id = model?.id.orEmpty(),
-        title = model?.title.orEmpty(),
-        url = model?.url.orEmpty(),
-        description = model?.description.orEmpty()
-    )
-}
-
 class GetShortVideoFirestoreClientTest {
     private val service = mockk<ShortVideoService>()
     private lateinit var sut: GetShortVideoFirestoreClient
