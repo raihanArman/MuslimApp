@@ -54,39 +54,42 @@ class GetShortVideoFirestoreClientTest {
 
     @Test
     fun testGetFailsOnConnectivity() = runBlocking {
-        coEvery {
-            service.getShortVideo()
-        } throws IOException()
-
-        sut.getShortVideo().test {
-            when (val received = awaitItem()) {
-                is FirestoreClientResult.Failure -> {
-                    assertEquals(ConnectivityException()::class.java, received.exception::class.java)
-                }
-                is FirestoreClientResult.Success -> {
-                }
-            }
-
-            awaitComplete()
-        }
-
-        coVerify {
-            service.getShortVideo()
-        }
-
-        confirmVerified(service)
+        expect(
+            sut = sut,
+            expectedResult = ConnectivityException()
+        )
     }
 
     @Test
     fun testGetFailsUnExpected() = runBlocking {
-        coEvery {
-            service.getShortVideo()
-        } throws Exception()
+        expect(
+            sut = sut,
+            expectedResult = UnexpectedException()
+        )
+    }
+
+    private fun expect(
+        sut: GetShortVideoFirestoreClient,
+        receivedResult: Any? = null,
+        expectedResult: Any
+    ) = runBlocking {
+        when {
+            expectedResult is ConnectivityException -> {
+                coEvery {
+                    service.getShortVideo()
+                } throws IOException()
+            }
+            else -> {
+                coEvery {
+                    service.getShortVideo()
+                } throws Exception()
+            }
+        }
 
         sut.getShortVideo().test {
             when (val received = awaitItem()) {
                 is FirestoreClientResult.Failure -> {
-                    assertEquals(UnexpectedException()::class.java, received.exception::class.java)
+                    assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 is FirestoreClientResult.Success -> {
                 }
