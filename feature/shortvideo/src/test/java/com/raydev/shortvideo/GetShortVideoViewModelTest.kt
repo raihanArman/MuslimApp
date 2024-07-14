@@ -95,4 +95,20 @@ class GetShortVideoViewModelTest {
 
         confirmVerified(useCase)
     }
+
+    @Test
+    fun testLoadTwiceRequestData() {
+        every {
+            useCase.getShortVideo()
+        } returns flowOf()
+
+        sut.load()
+        sut.load()
+
+        verify(exactly = 2) {
+            useCase.getShortVideo()
+        }
+
+        confirmVerified(useCase)
+    }
 }
