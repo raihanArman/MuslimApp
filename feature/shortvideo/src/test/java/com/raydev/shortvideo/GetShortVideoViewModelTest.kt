@@ -80,7 +80,15 @@ class GetShortVideoViewModel(
                             }
                         }
                     }
-                    is FirestoreDomainResult.Success -> TODO()
+                    is FirestoreDomainResult.Success -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                data = result.data,
+                                errorMessage = null
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -186,6 +194,32 @@ class GetShortVideoViewModelTest {
             result = FirestoreDomainResult.Failure(Unexpected()),
             expectedFailed = "Tidak ditemukan",
             expectedLoading = false
+        )
+    }
+
+    @Test
+    fun testLoadShowsData() {
+        val domainModel = listOf(
+            ShortVideo(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            ),
+            ShortVideo(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Success(domainModel),
+            expectedFailed = null,
+            expectedLoading = false,
+            expectedData = domainModel
         )
     }
 
