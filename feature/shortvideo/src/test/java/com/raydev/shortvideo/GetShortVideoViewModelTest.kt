@@ -161,18 +161,34 @@ class GetShortVideoViewModelTest {
     }
 
     @Test
-    fun testLoadFailedConnectivityShowsConnectivityError() = runBlocking {
+    fun testLoadFailedConnectivityShowsConnectivityError() {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Failure(Connectivity()),
+            expectedFailed = "Tidak ada internet",
+            expectedLoading = false
+        )
+    }
+
+    private fun expect(
+        sut: GetShortVideoViewModel,
+        result: FirestoreDomainResult<List<ShortVideo>>,
+        expectedLoading: Boolean,
+        expectedFailed: String?,
+        expectedData: List<ShortVideo>? = null
+    ) = runBlocking {
         every {
             useCase.getShortVideo()
-        } returns flowOf(FirestoreDomainResult.Failure(Connectivity()))
+        } returns flowOf(result)
 
         sut.load()
 
         sut.uiState.take(count = 1).test {
             val received = awaitItem()
 
-            assertEquals(false, received.isLoading)
-            assertEquals("Tidak ada internet", received.errorMessage)
+            assertEquals(expectedLoading, received.isLoading)
+            assertEquals(expectedFailed, received.errorMessage)
+            assertEquals(expectedData, received.data)
             awaitComplete()
         }
 
