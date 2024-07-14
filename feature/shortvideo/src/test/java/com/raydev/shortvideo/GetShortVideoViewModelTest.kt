@@ -223,6 +223,17 @@ class GetShortVideoViewModelTest {
         )
     }
 
+    @Test
+    fun testLoadShowsWithEmptyData() = runBlocking {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Success(emptyList()),
+            expectedFailed = null,
+            expectedLoading = false,
+            expectedData = emptyList()
+        )
+    }
+
     private fun expect(
         sut: GetShortVideoViewModel,
         result: FirestoreDomainResult<List<ShortVideo>>,
