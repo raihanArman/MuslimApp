@@ -9,6 +9,8 @@ import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.anabstract.state.FirestoreDomainResult
 import com.raydev.shortvideo.api.GetShortVideoClient
 import com.raydev.shortvideo.api.GetShortVideoRemoteUseCase
+import com.raydev.shortvideo.api.ShortVideoModel
+import com.raydev.shortvideo.domain.ShortVideo
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk

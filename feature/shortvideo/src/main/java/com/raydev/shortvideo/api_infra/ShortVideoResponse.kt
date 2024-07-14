@@ -1,4 +1,4 @@
-package com.raydev.shortvideo
+package com.raydev.shortvideo.api_infra
 
 /**
  * @author Raihan Arman

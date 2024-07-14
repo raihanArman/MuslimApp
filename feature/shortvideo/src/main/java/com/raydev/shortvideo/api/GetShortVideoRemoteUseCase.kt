@@ -6,8 +6,7 @@ import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.anabstract.state.FirestoreDomainResult
-import com.raydev.shortvideo.ShortVideo
-import com.raydev.shortvideo.ShortVideoModel
+import com.raydev.shortvideo.domain.ShortVideo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

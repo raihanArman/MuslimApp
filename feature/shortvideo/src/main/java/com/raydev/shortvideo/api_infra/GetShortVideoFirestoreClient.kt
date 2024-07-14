@@ -3,9 +3,8 @@ package com.raydev.shortvideo.api_infra
 import com.raydev.anabstract.exception.ConnectivityException
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
-import com.raydev.shortvideo.ShortVideoModel
-import com.raydev.shortvideo.ShortVideoResponse
 import com.raydev.shortvideo.api.GetShortVideoClient
+import com.raydev.shortvideo.api.ShortVideoModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException

@@ -1,10 +1,10 @@
-package com.raydev.shortvideo
+package com.raydev.shortvideo.api
 
 /**
  * @author Raihan Arman
  * @date 14/07/24
  */
-data class ShortVideo(
+data class ShortVideoModel(
     val id: String,
     val title: String,
     val url: String,

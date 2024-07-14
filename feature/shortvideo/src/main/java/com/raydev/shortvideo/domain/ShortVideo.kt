@@ -1,10 +1,10 @@
-package com.raydev.shortvideo
+package com.raydev.shortvideo.domain
 
 /**
  * @author Raihan Arman
  * @date 14/07/24
  */
-data class ShortVideoModel(
+data class ShortVideo(
     val id: String,
     val title: String,
     val url: String,
