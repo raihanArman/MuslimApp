@@ -64,4 +64,25 @@ class GetShortVideoRemoteUseCaseTest {
 
         confirmVerified()
     }
+
+    @Test
+    fun testLoadTwiceRequestData() = runBlocking {
+        every {
+            client.getShortVideo()
+        } returns flowOf()
+
+        sut.getShortVideo().test {
+            awaitComplete()
+        }
+
+        sut.getShortVideo().test {
+            awaitComplete()
+        }
+
+        verify(exactly = 2) {
+            client.getShortVideo()
+        }
+
+        confirmVerified(client)
+    }
 }
