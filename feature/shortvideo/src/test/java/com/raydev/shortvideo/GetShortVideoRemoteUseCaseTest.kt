@@ -3,6 +3,8 @@ package com.raydev.shortvideo
 import app.cash.turbine.test
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.exception.Unexpected
+import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.anabstract.state.FirestoreDomainResult
 import io.mockk.confirmVerified
@@ -35,6 +37,9 @@ class GetShortVideoRemoteUseCase(
                     when (result.exception) {
                         is ConnectivityException -> {
                             emit(FirestoreDomainResult.Failure(Connectivity()))
+                        }
+                        is UnexpectedException -> {
+                            emit(FirestoreDomainResult.Failure(Unexpected()))
                         }
                     }
                 }
@@ -124,5 +129,30 @@ class GetShortVideoRemoteUseCaseTest {
         }
 
         confirmVerified()
+    }
+
+    @Test
+    fun testLoadDeliversUnexpectedError() = runBlocking {
+        every {
+            client.getShortVideo()
+        } returns flowOf(FirestoreClientResult.Failure(UnexpectedException()))
+
+        sut.getShortVideo().test {
+            when (val received = awaitItem()) {
+                is FirestoreDomainResult.Failure -> {
+                    assertEquals(Unexpected()::class.java, received.exception::class.java)
+                }
+                is FirestoreDomainResult.Success -> {
+                }
+            }
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.getShortVideo()
+        }
+
+        confirmVerified(client)
     }
 }
