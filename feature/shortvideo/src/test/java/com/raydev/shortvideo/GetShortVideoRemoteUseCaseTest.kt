@@ -44,10 +44,22 @@ class GetShortVideoRemoteUseCase(
                     }
                 }
                 is FirestoreClientResult.Success -> {
+                    val domainModel = result.data.map {
+                        toDomainModel(it)
+                    }
+
+                    emit(FirestoreDomainResult.Success(domainModel))
                 }
             }
         }
     }
+
+    private fun toDomainModel(model: ShortVideoModel?) = ShortVideo(
+        id = model?.id.orEmpty(),
+        title = model?.title.orEmpty(),
+        url = model?.url.orEmpty(),
+        description = model?.description.orEmpty()
+    )
 }
 
 class GetShortVideoRemoteUseCaseTest {
@@ -126,6 +138,46 @@ class GetShortVideoRemoteUseCaseTest {
         )
     }
 
+    @Test
+    fun testLoadDeliversSuccess() = runBlocking {
+        val models = listOf(
+            ShortVideoModel(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            ),
+            ShortVideoModel(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            )
+        )
+
+        val domainModel = listOf(
+            ShortVideo(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            ),
+            ShortVideo(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Success(models),
+            expectedResult = domainModel,
+            exactly = 1
+        )
+    }
+
     fun expect(
         sut: GetShortVideoRemoteUseCase,
         receivedResult: FirestoreClientResult<List<ShortVideoModel>>,
@@ -142,6 +194,7 @@ class GetShortVideoRemoteUseCaseTest {
                     assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 is FirestoreDomainResult.Success -> {
+                    assertEquals(expectedResult, received.data)
                 }
             }
 
