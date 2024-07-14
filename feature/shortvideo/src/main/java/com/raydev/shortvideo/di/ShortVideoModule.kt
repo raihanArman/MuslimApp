@@ -14,7 +14,7 @@ import org.koin.dsl.module
  * @author Raihan Arman
  * @date 14/07/24
  */
-val shortVideoApiInfraModule = module {
+private val shortVideoApiInfraModule = module {
     single<ShortVideoService> {
         ShortVideoServiceImpl()
     }
@@ -24,13 +24,13 @@ val shortVideoApiInfraModule = module {
     }
 }
 
-val shortVideoApiModule = module {
+private val shortVideoApiModule = module {
     single<GetShortVideoUseCase> {
         GetShortVideoRemoteUseCase(get())
     }
 }
 
-val shortVideoPresentationModule = module {
+private val shortVideoPresentationModule = module {
     viewModel {
         GetShortVideoViewModel(get())
     }

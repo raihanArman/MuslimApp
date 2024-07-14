@@ -5,8 +5,8 @@ package com.raydev.shortvideo.api_infra
  * @date 14/07/24
  */
 data class ShortVideoResponse(
-    val id: String?,
-    val title: String?,
-    val url: String?,
-    val description: String?,
+    val id: String? = null,
+    val title: String? = null,
+    val url: String? = null,
+    val description: String? = null,
 )
