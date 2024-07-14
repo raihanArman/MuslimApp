@@ -119,6 +119,15 @@ class GetShortVideoFirestoreClientTest {
         )
     }
 
+    @Test
+    fun testGetsSuccessWithEmptyResponse() {
+        expect(
+            sut = sut,
+            receivedResult = emptyList<ShortVideoResponse>(),
+            expectedResult = FirestoreClientResult.Success(emptyList<ShortVideoModel>()),
+        )
+    }
+
     private fun expect(
         sut: GetShortVideoFirestoreClient,
         receivedResult: Any? = null,
