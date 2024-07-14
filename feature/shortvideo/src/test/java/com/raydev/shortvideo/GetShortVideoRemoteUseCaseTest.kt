@@ -107,40 +107,39 @@ class GetShortVideoRemoteUseCaseTest {
     }
 
     @Test
-    fun testLoadDeliversConnectivityError() = runBlocking {
-        every {
-            client.getShortVideo()
-        } returns flowOf(FirestoreClientResult.Failure(ConnectivityException()))
-
-        sut.getShortVideo().test {
-            when (val received = awaitItem()) {
-                is FirestoreDomainResult.Failure -> {
-                    assertEquals(Connectivity()::class.java, received.exception::class.java)
-                }
-                is FirestoreDomainResult.Success -> {
-                }
-            }
-
-            awaitComplete()
-        }
-
-        verify(exactly = 1) {
-            client.getShortVideo()
-        }
-
-        confirmVerified()
+    fun testLoadDeliversConnectivityError() {
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Failure(ConnectivityException()),
+            expectedResult = Connectivity(),
+            exactly = 1
+        )
     }
 
     @Test
-    fun testLoadDeliversUnexpectedError() = runBlocking {
+    fun testLoadDeliversUnexpectedError() {
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Failure(UnexpectedException()),
+            expectedResult = Unexpected(),
+            exactly = 1
+        )
+    }
+
+    fun expect(
+        sut: GetShortVideoRemoteUseCase,
+        receivedResult: FirestoreClientResult<List<ShortVideoModel>>,
+        expectedResult: Any,
+        exactly: Int = -1
+    ) = runBlocking {
         every {
             client.getShortVideo()
-        } returns flowOf(FirestoreClientResult.Failure(UnexpectedException()))
+        } returns flowOf(receivedResult)
 
         sut.getShortVideo().test {
             when (val received = awaitItem()) {
                 is FirestoreDomainResult.Failure -> {
-                    assertEquals(Unexpected()::class.java, received.exception::class.java)
+                    assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 is FirestoreDomainResult.Success -> {
                 }
@@ -149,7 +148,7 @@ class GetShortVideoRemoteUseCaseTest {
             awaitComplete()
         }
 
-        verify(exactly = 1) {
+        verify(exactly = exactly) {
             client.getShortVideo()
         }
 
