@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
 import com.raydev.anabstract.exception.Connectivity
+import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.state.FirestoreDomainResult
 import com.raydev.shortvideo.domain.ShortVideo
 import io.mockk.MockKAnnotations
@@ -66,6 +67,14 @@ class GetShortVideoViewModel(
                                     it.copy(
                                         isLoading = false,
                                         errorMessage = "Tidak ada internet"
+                                    )
+                                }
+                            }
+                            is Unexpected -> {
+                                _uiState.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = "Tidak ditemukan"
                                     )
                                 }
                             }
@@ -166,6 +175,16 @@ class GetShortVideoViewModelTest {
             sut = sut,
             result = FirestoreDomainResult.Failure(Connectivity()),
             expectedFailed = "Tidak ada internet",
+            expectedLoading = false
+        )
+    }
+
+    @Test
+    fun testLoadFailedUnexpectedShowsUnexpectedError() {
+        expect(
+            sut = sut,
+            result = FirestoreDomainResult.Failure(Unexpected()),
+            expectedFailed = "Tidak ditemukan",
             expectedLoading = false
         )
     }
