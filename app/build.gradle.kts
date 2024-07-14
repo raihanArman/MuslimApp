@@ -133,6 +133,7 @@ dependencies {
     implementation(project(":feature:qibla"))
     implementation(project(":feature:dailyduas"))
     implementation(project(":feature:dzikir"))
+    implementation(project(":feature:shortvideo"))
 
 //    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
 

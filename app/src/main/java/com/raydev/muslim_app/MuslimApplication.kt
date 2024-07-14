@@ -22,6 +22,7 @@ import com.raydev.network.di.networkModule
 import com.raydev.prayer.di.prayerModule
 import com.raydev.quran.di.quranModule
 import com.raydev.shared_preference.sharedPrefModule
+import com.raydev.shortvideo.di.shortVideoApiModule
 import com.raydev.workmanager.di.workerModule
 import com.rctiplus.main.mainModule
 import org.koin.android.ext.koin.androidContext
@@ -59,7 +60,7 @@ class MuslimApplication : Application() {
                     quranModule,
                     readQuranModule,
                     bookmarkModule,
-                ) + dailyDuasModule + dzikirModule
+                ) + dailyDuasModule + dzikirModule + shortVideoApiModule
             )
         }
     }

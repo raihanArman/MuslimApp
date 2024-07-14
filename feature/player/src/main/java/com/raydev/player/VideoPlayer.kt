@@ -30,7 +30,6 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
-import com.raydev.player.model.VideoModel
 
 /**
  * @author Raihan Arman
@@ -42,7 +41,7 @@ import com.raydev.player.model.VideoModel
 @Composable
 fun VideoPlayer(
     modifier: Modifier = Modifier,
-    videoModel: VideoModel,
+    url: String,
     pagerState: PagerState,
     pageIndex: Int,
     onSingleTap: (exoPlayer: ExoPlayer) -> Unit,
@@ -61,7 +60,7 @@ fun VideoPlayer(
             ExoPlayer.Builder(context).build().apply {
                 videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
                 repeatMode = Player.REPEAT_MODE_ONE
-                setMediaItem(MediaItem.fromUri(Uri.parse(videoModel.videoUrl)))
+                setMediaItem(MediaItem.fromUri(Uri.parse(url)))
                 playWhenReady = true
                 prepare()
                 addListener(object : Player.Listener {

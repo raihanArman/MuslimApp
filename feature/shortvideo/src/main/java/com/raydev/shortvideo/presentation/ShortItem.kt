@@ -1,4 +1,4 @@
-package com.raydev.player
+package com.raydev.shortvideo.presentation
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -30,7 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.raydev.player.VideoPlayer
 import com.raydev.player.model.VideoModel
+import com.raydev.shortvideo.domain.ShortVideo
 
 /**
  * @author Raihan Arman
@@ -40,18 +42,18 @@ import com.raydev.player.model.VideoModel
 @Composable
 fun ShortItem(
     modifier: Modifier = Modifier,
-    video: VideoModel,
+    video: ShortVideo,
     pageIndex: Int,
     pagerState: PagerState,
-    onShare: (VideoModel) -> Unit
+    onShare: (ShortVideo) -> Unit
 ) {
     var isExpanded by remember {
         mutableStateOf(false)
     }
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
             VideoPlayer(
-                videoModel = video,
+                url = video.url,
                 pagerState = pagerState,
                 pageIndex = pageIndex,
                 onSingleTap = {},

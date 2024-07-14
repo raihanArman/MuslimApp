@@ -1,4 +1,4 @@
-package com.raydev.player
+package com.raydev.shortvideo.presentation
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -14,18 +14,19 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
 import com.raydev.navigation.composable
-import com.raydev.player.model.VideoModel
 import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
 
 /**
  * @author Raihan Arman
@@ -34,22 +35,6 @@ import org.koin.androidx.compose.get
 
 val DarkBlue = Color(0XFF141721)
 val DarkPink = Color(0XFF2C121B)
-
-val listMovie = listOf(
-    VideoModel(
-        videoUrl = "https://firebasestorage.googleapis.com/v0/b/muslim-app-a1ea8.appspot.com/o/videoplayback%20(1).mp4?alt=media&token=37599e8e-de1e-412b-ae56-60c2b9617a33"
-    ),
-    VideoModel(
-        videoUrl = "https://firebasestorage.googleapis.com/v0/b/muslim-app-a1ea8.appspot.com/o/videoplayback%20(2).mp4?alt=media&token=97c17d21-d420-4b48-b775-9336b92e6a68"
-    ),
-    VideoModel(
-        videoUrl = "https://firebasestorage.googleapis.com/v0/b/muslim-app-a1ea8.appspot.com/o/videoplayback%20(3).mp4?alt=media&token=2d43bde4-479c-4f70-b3eb-57a4239a9a83"
-    ),
-    VideoModel(
-        videoUrl = "https://firebasestorage.googleapis.com/v0/b/muslim-app-a1ea8.appspot.com/o/videoplayback.mp4?alt=media&token=44aebd6c-48d9-439a-b40e-e0722e4669ec"
-    ),
-
-)
 
 fun NavGraphBuilder.shortDakwahNavigation() = kotlin.run {
     composable(Destination.ShortDakwahScreen) {
@@ -61,6 +46,9 @@ fun NavGraphBuilder.shortDakwahNavigation() = kotlin.run {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ShortDakwahScreen(navigator: AppNavigator) {
+    val viewModel: GetShortVideoViewModel = getViewModel()
+    val state by viewModel.uiState.collectAsState()
+
     val pagerState = rememberPagerState(initialPage = 1 ?: 0)
     val coroutineScope = rememberCoroutineScope()
     val localDensity = LocalDensity.current
@@ -80,30 +68,32 @@ fun ShortDakwahScreen(navigator: AppNavigator) {
                 )
             )
     ) {
-        VerticalPager(
-            pageCount = listMovie.size,
-            state = pagerState,
-            flingBehavior = fling,
-            beyondBoundsPageCount = 1,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            ShortItem(
-                video = listMovie[it],
-                pageIndex = it,
-                pagerState = pagerState,
-                onShare = {
-                }
-            )
-        }
+        state.data?.let { data ->
+            VerticalPager(
+                pageCount = data.size,
+                state = pagerState,
+                flingBehavior = fling,
+                beyondBoundsPageCount = 1,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                ShortItem(
+                    video = data[it],
+                    pageIndex = it,
+                    pagerState = pagerState,
+                    onShare = {
+                    }
+                )
+            }
 
-        IconButton(onClick = {
-            navigator.tryNavigateBack()
-        }) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = Color.White
-            )
+            IconButton(onClick = {
+                navigator.tryNavigateBack()
+            }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+            }
         }
     }
 }

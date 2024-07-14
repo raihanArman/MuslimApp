@@ -15,7 +15,7 @@ import com.raydev.dailyduas.presentation.dailyDuasNavigation
 import com.raydev.navigation.Destination
 import com.raydev.navigation.NavHostApp
 import com.raydev.navigation.NavigationIntent
-import com.raydev.player.shortDakwahNavigation
+import com.raydev.shortvideo.presentation.shortDakwahNavigation
 import com.rctiplus.main.dashboard.dashboardNavigation
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
