@@ -7,13 +7,13 @@ import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.anabstract.state.FirestoreDomainResult
+import com.raydev.shortvideo.api.GetShortVideoClient
+import com.raydev.shortvideo.api.GetShortVideoRemoteUseCase
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -23,45 +23,6 @@ import org.junit.Test
  * @author Raihan Arman
  * @date 14/07/24
  */
-interface GetShortVideoClient {
-    fun getShortVideo(): Flow<FirestoreClientResult<List<ShortVideoModel>>>
-}
-
-class GetShortVideoRemoteUseCase(
-    private val client: GetShortVideoClient
-) {
-    fun getShortVideo(): Flow<FirestoreDomainResult<List<ShortVideo>>> = flow {
-        client.getShortVideo().collect { result ->
-            when (result) {
-                is FirestoreClientResult.Failure -> {
-                    when (result.exception) {
-                        is ConnectivityException -> {
-                            emit(FirestoreDomainResult.Failure(Connectivity()))
-                        }
-                        is UnexpectedException -> {
-                            emit(FirestoreDomainResult.Failure(Unexpected()))
-                        }
-                    }
-                }
-                is FirestoreClientResult.Success -> {
-                    val domainModel = result.data.map {
-                        toDomainModel(it)
-                    }
-
-                    emit(FirestoreDomainResult.Success(domainModel))
-                }
-            }
-        }
-    }
-
-    private fun toDomainModel(model: ShortVideoModel?) = ShortVideo(
-        id = model?.id.orEmpty(),
-        title = model?.title.orEmpty(),
-        url = model?.url.orEmpty(),
-        description = model?.description.orEmpty()
-    )
-}
-
 class GetShortVideoRemoteUseCaseTest {
     private val client = mockk<GetShortVideoClient>()
     private lateinit var sut: GetShortVideoRemoteUseCase
