@@ -178,7 +178,17 @@ class GetShortVideoRemoteUseCaseTest {
         )
     }
 
-    fun expect(
+    @Test
+    fun testLoadDeliversSuccessWithEmptyData() {
+        expect(
+            sut = sut,
+            receivedResult = FirestoreClientResult.Success(emptyList()),
+            expectedResult = emptyList<ShortVideo>(),
+            exactly = 1
+        )
+    }
+
+    private fun expect(
         sut: GetShortVideoRemoteUseCase,
         receivedResult: FirestoreClientResult<List<ShortVideoModel>>,
         expectedResult: Any,
