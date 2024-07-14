@@ -1,10 +1,12 @@
 package com.raydev.shortvideo
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.raydev.anabstract.state.FirestoreDomainResult
 import com.raydev.shortvideo.domain.ShortVideo
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.TestCase.assertFalse
@@ -15,6 +17,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
@@ -34,9 +38,17 @@ data class GetShortVideoState(
     val data: List<ShortVideo> ? = null,
 )
 
-class GetShortVideoViewModel : ViewModel() {
+class GetShortVideoViewModel(
+    private val useCase: GetShortVideoUseCase
+) : ViewModel() {
     private val _uiState: MutableStateFlow<GetShortVideoState> = MutableStateFlow(GetShortVideoState())
     val uiState: StateFlow<GetShortVideoState> = _uiState.asStateFlow()
+
+    fun load() {
+        viewModelScope.launch {
+            useCase.getShortVideo()
+        }
+    }
 }
 
 class GetShortVideoViewModelTest {
@@ -47,7 +59,7 @@ class GetShortVideoViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
-        sut = GetShortVideoViewModel()
+        sut = GetShortVideoViewModel(useCase)
         Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 
@@ -63,6 +75,21 @@ class GetShortVideoViewModelTest {
     @Test
     fun testInitDoesNotLoad() {
         verify(exactly = 0) {
+            useCase.getShortVideo()
+        }
+
+        confirmVerified(useCase)
+    }
+
+    @Test
+    fun testLoadRequestData() {
+        every {
+            useCase.getShortVideo()
+        } returns flowOf()
+
+        sut.load()
+
+        verify(exactly = 1) {
             useCase.getShortVideo()
         }
 
