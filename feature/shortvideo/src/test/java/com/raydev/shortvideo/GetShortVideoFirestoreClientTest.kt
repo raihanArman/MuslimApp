@@ -30,6 +30,11 @@ class GetShortVideoFirestoreClient(
     fun getShortVideo(): Flow<FirestoreClientResult<List<ShortVideoModel>>> = flow {
         try {
             val result = service.getShortVideo()
+            emit(
+                FirestoreClientResult.Success(
+                    result.map { toModel(it) }
+                )
+            )
         } catch (e: Exception) {
             when (e) {
                 is IOException -> {
@@ -41,6 +46,13 @@ class GetShortVideoFirestoreClient(
             }
         }
     }
+
+    private fun toModel(model: ShortVideoResponse?) = ShortVideoModel(
+        id = model?.id.orEmpty(),
+        title = model?.title.orEmpty(),
+        url = model?.url.orEmpty(),
+        description = model?.description.orEmpty()
+    )
 }
 
 class GetShortVideoFirestoreClientTest {
@@ -68,6 +80,45 @@ class GetShortVideoFirestoreClientTest {
         )
     }
 
+    @Test
+    fun testGetSuccessResponse() {
+        val models = listOf(
+            ShortVideoModel(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            ),
+            ShortVideoModel(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            )
+        )
+
+        val response = listOf(
+            ShortVideoResponse(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            ),
+            ShortVideoResponse(
+                id = "1",
+                title = "test",
+                url = "test",
+                description = "test"
+            )
+        )
+
+        expect(
+            sut = sut,
+            receivedResult = response,
+            expectedResult = FirestoreClientResult.Success(models),
+        )
+    }
+
     private fun expect(
         sut: GetShortVideoFirestoreClient,
         receivedResult: Any? = null,
@@ -79,6 +130,13 @@ class GetShortVideoFirestoreClientTest {
                     service.getShortVideo()
                 } throws IOException()
             }
+
+            expectedResult is FirestoreClientResult.Success<*> -> {
+                coEvery {
+                    service.getShortVideo()
+                } returns receivedResult as List<ShortVideoResponse>
+            }
+
             else -> {
                 coEvery {
                     service.getShortVideo()
@@ -92,6 +150,7 @@ class GetShortVideoFirestoreClientTest {
                     assertEquals(expectedResult::class.java, received.exception::class.java)
                 }
                 is FirestoreClientResult.Success -> {
+                    assertEquals(expectedResult, received)
                 }
             }
 
