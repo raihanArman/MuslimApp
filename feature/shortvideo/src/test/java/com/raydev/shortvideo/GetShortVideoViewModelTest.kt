@@ -3,6 +3,7 @@ package com.raydev.shortvideo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
+import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.state.FirestoreDomainResult
 import com.raydev.shortvideo.domain.ShortVideo
 import io.mockk.MockKAnnotations
@@ -10,6 +11,7 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
@@ -55,7 +57,23 @@ class GetShortVideoViewModel(
                     isLoading = true
                 )
             }
-            useCase.getShortVideo()
+            useCase.getShortVideo().collect { result ->
+                when (result) {
+                    is FirestoreDomainResult.Failure -> {
+                        when (result.exception) {
+                            is Connectivity -> {
+                                _uiState.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = "Tidak ada internet"
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    is FirestoreDomainResult.Success -> TODO()
+                }
+            }
         }
     }
 }
@@ -132,6 +150,29 @@ class GetShortVideoViewModelTest {
         sut.uiState.take(count = 1).test {
             val received = awaitItem()
             assertTrue(received.isLoading)
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            useCase.getShortVideo()
+        }
+
+        confirmVerified(useCase)
+    }
+
+    @Test
+    fun testLoadFailedConnectivityShowsConnectivityError() = runBlocking {
+        every {
+            useCase.getShortVideo()
+        } returns flowOf(FirestoreDomainResult.Failure(Connectivity()))
+
+        sut.load()
+
+        sut.uiState.take(count = 1).test {
+            val received = awaitItem()
+
+            assertEquals(false, received.isLoading)
+            assertEquals("Tidak ada internet", received.errorMessage)
             awaitComplete()
         }
 
