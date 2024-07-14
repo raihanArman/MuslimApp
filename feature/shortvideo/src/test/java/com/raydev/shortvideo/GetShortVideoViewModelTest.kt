@@ -1,13 +1,17 @@
 package com.raydev.shortvideo
 
 import androidx.lifecycle.ViewModel
+import com.raydev.anabstract.state.FirestoreDomainResult
 import com.raydev.shortvideo.domain.ShortVideo
 import io.mockk.MockKAnnotations
+import io.mockk.confirmVerified
 import io.mockk.mockk
+import io.mockk.verify
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +24,9 @@ import org.junit.Test
  * @author Raihan Arman
  * @date 14/07/24
  */
-interface GetShortVideoUseCase
+interface GetShortVideoUseCase {
+    fun getShortVideo(): Flow<FirestoreDomainResult<List<ShortVideo>>>
+}
 
 data class GetShortVideoState(
     val isLoading: Boolean = false,
@@ -52,5 +58,14 @@ class GetShortVideoViewModelTest {
         assertFalse(uiState.isLoading)
         assertTrue(uiState.data == null)
         assert(uiState.errorMessage == null)
+    }
+
+    @Test
+    fun testInitDoesNotLoad() {
+        verify(exactly = 0) {
+            useCase.getShortVideo()
+        }
+
+        confirmVerified(useCase)
     }
 }
