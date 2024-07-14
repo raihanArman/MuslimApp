@@ -2,6 +2,7 @@ package com.raydev.shortvideo
 
 import app.cash.turbine.test
 import com.raydev.anabstract.exception.ConnectivityException
+import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -34,6 +35,9 @@ class GetShortVideoFirestoreClient(
                 is IOException -> {
                     emit(FirestoreClientResult.Failure(ConnectivityException()))
                 }
+                else -> {
+                    emit(FirestoreClientResult.Failure(UnexpectedException()))
+                }
             }
         }
     }
@@ -58,6 +62,31 @@ class GetShortVideoFirestoreClientTest {
             when (val received = awaitItem()) {
                 is FirestoreClientResult.Failure -> {
                     assertEquals(ConnectivityException()::class.java, received.exception::class.java)
+                }
+                is FirestoreClientResult.Success -> {
+                }
+            }
+
+            awaitComplete()
+        }
+
+        coVerify {
+            service.getShortVideo()
+        }
+
+        confirmVerified(service)
+    }
+
+    @Test
+    fun testGetFailsUnExpected() = runBlocking {
+        coEvery {
+            service.getShortVideo()
+        } throws Exception()
+
+        sut.getShortVideo().test {
+            when (val received = awaitItem()) {
+                is FirestoreClientResult.Failure -> {
+                    assertEquals(UnexpectedException()::class.java, received.exception::class.java)
                 }
                 is FirestoreClientResult.Success -> {
                 }
