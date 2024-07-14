@@ -6,6 +6,7 @@ import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.exception.UnexpectedException
 import com.raydev.anabstract.state.FirestoreClientResult
 import com.raydev.anabstract.state.FirestoreDomainResult
+import com.raydev.shortvideo.domain.GetShortVideoUseCase
 import com.raydev.shortvideo.domain.ShortVideo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,8 +18,8 @@ import kotlinx.coroutines.flow.flow
 
 class GetShortVideoRemoteUseCase(
     private val client: GetShortVideoClient
-) {
-    fun getShortVideo(): Flow<FirestoreDomainResult<List<ShortVideo>>> = flow {
+) : GetShortVideoUseCase {
+    override fun getShortVideo(): Flow<FirestoreDomainResult<List<ShortVideo>>> = flow {
         client.getShortVideo().collect { result ->
             when (result) {
                 is FirestoreClientResult.Failure -> {

@@ -1,12 +1,12 @@
 package com.raydev.shortvideo
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import app.cash.turbine.test
 import com.raydev.anabstract.exception.Connectivity
 import com.raydev.anabstract.exception.Unexpected
 import com.raydev.anabstract.state.FirestoreDomainResult
+import com.raydev.shortvideo.domain.GetShortVideoUseCase
 import com.raydev.shortvideo.domain.ShortVideo
+import com.raydev.shortvideo.presentation.GetShortVideoViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -17,14 +17,8 @@ import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
@@ -35,66 +29,6 @@ import org.junit.Test
  * @author Raihan Arman
  * @date 14/07/24
  */
-interface GetShortVideoUseCase {
-    fun getShortVideo(): Flow<FirestoreDomainResult<List<ShortVideo>>>
-}
-
-data class GetShortVideoState(
-    val isLoading: Boolean = false,
-    val errorMessage: String ? = null,
-    val data: List<ShortVideo> ? = null,
-)
-
-class GetShortVideoViewModel(
-    private val useCase: GetShortVideoUseCase
-) : ViewModel() {
-    private val _uiState: MutableStateFlow<GetShortVideoState> = MutableStateFlow(GetShortVideoState())
-    val uiState: StateFlow<GetShortVideoState> = _uiState.asStateFlow()
-
-    fun load() {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isLoading = true
-                )
-            }
-            useCase.getShortVideo().collect { result ->
-                when (result) {
-                    is FirestoreDomainResult.Failure -> {
-                        when (result.exception) {
-                            is Connectivity -> {
-                                _uiState.update {
-                                    it.copy(
-                                        isLoading = false,
-                                        errorMessage = "Tidak ada internet"
-                                    )
-                                }
-                            }
-                            is Unexpected -> {
-                                _uiState.update {
-                                    it.copy(
-                                        isLoading = false,
-                                        errorMessage = "Tidak ditemukan"
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    is FirestoreDomainResult.Success -> {
-                        _uiState.update {
-                            it.copy(
-                                isLoading = false,
-                                data = result.data,
-                                errorMessage = null
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 class GetShortVideoViewModelTest {
     private val useCase = mockk<GetShortVideoUseCase>()
     private lateinit var sut: GetShortVideoViewModel
