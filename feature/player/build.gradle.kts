@@ -49,7 +49,7 @@ dependencies {
 
     implementation(libs.coil)
     implementation(libs.bundles.compose)
-    implementation(libs.bundles.player)
+    api(libs.bundles.player)
 
     // Koin
     implementation(libs.bundles.koin)
