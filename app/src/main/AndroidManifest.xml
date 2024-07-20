@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name=".MuslimApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,6 +23,17 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.MyApplication">
+        
+        <provider
+            android:authorities="${applicationId}.androidx-startup"
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.raydev.muslim_app.AppInitializer"
+                android:value="androidx.startup" />
+        </provider>
+        
     </application>
 
 </manifest>

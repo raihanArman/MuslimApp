@@ -118,7 +118,6 @@ dependencies {
     implementation(project(":libraries:cache"))
     implementation(project(":libraries:location"))
     implementation(project(":libraries:here-api"))
-    implementation(project(":libraries:workmanager"))
     implementation(project(":core:navigation"))
     implementation(project(":data"))
     implementation(project(":domain"))
@@ -142,6 +141,7 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.accompanist)
     implementation(libs.bundles.koin.compose)
+    implementation(libs.androidx.work.manager)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
@@ -151,6 +151,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation("androidx.startup:startup-runtime:1.1.1")
+
     implementation(project(":shared"))
     testImplementation("junit:junit:4.+")
     testImplementation(project(":libraries:abstract"))

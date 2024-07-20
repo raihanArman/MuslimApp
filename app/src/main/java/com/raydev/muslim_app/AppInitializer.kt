@@ -1,7 +1,8 @@
 package com.raydev.muslim_app
 
-import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.startup.Initializer
 import com.raihanarman.bookmark.di.bookmarkModule
 import com.raihanarman.here_api.hereNetworkModule
 import com.raihanarman.location.di.locationModule
@@ -23,26 +24,27 @@ import com.raydev.prayer.di.prayerModule
 import com.raydev.quran.di.quranModule
 import com.raydev.shared_preference.sharedPrefModule
 import com.raydev.shortvideo.di.shortVideoModule
-import com.raydev.workmanager.di.workerModule
 import com.rctiplus.main.mainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
-class MuslimApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
+/**
+ * @author Raihan Arman
+ * @date 20/07/24
+ */
+class AppInitializer: Initializer<Unit> {
+    override fun create(context: Context) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         startKoin {
             androidLogger(Level.NONE)
-            androidContext(this@MuslimApplication)
+            androidContext(context)
             modules(
                 listOf(
                     networkModule,
                     databaseModule,
-                    workerModule,
                     sharedPrefModule,
                     locationModule,
                     hereNetworkModule(BuildConfig.HERE_API_KEY),
@@ -63,5 +65,9 @@ class MuslimApplication : Application() {
                 ) + dailyDuasModule + dzikirModule + shortVideoModule
             )
         }
+    }
+
+    override fun dependencies(): MutableList<Class<out Initializer<*>>> {
+        return mutableListOf()
     }
 }
