@@ -29,7 +29,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.manager)
-    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6")
+    implementation(libs.kotlinx.collections.immutable)
 //    kapt(libs.androidx.room.compiler)
     implementation(project(":domain"))
     implementation(project(":libraries:abstract"))

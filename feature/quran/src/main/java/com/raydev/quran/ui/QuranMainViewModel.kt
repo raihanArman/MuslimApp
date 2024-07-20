@@ -4,6 +4,7 @@ import com.raydev.anabstract.base.BaseViewModel
 import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -34,7 +35,7 @@ class QuranMainViewModel(
             useCase.invoke().collect {
                 _uiState.update { state ->
                     println("Surah surah -> $it")
-                    state.copy(listSurah = it)
+                    state.copy(listSurah = it.toImmutableList())
                 }
             }
         }
