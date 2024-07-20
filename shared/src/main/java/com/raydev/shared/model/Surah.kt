@@ -1,7 +1,9 @@
 package com.raydev.shared.model
 
+import androidx.compose.runtime.Immutable
 import com.raydev.shared.database.entity.LanguageString
 
+@Immutable
 data class Surah(
     val id: Int,
     val revelation: String,

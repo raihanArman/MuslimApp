@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 23
@@ -29,6 +29,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.manager)
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6")
 //    kapt(libs.androidx.room.compiler)
     implementation(project(":domain"))
     implementation(project(":libraries:abstract"))

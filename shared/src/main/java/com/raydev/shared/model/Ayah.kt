@@ -1,7 +1,9 @@
 package com.raydev.shared.model
 
+import androidx.compose.runtime.Immutable
 import com.raydev.shared.database.entity.LanguageString
 
+@Immutable
 data class Ayah(
     val id: Int,
     val verseNumber: Int,
