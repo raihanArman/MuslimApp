@@ -45,8 +45,9 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.startService(Intent(context, AlarmService::class.java))
 
-        val message = intent?.getStringExtra(ALARM_MESSAGE) ?: "Waktu shalat telah tiba!"
-        sendNotification(context, message)
+        intent?.getStringExtra(ALARM_MESSAGE)?.let { message ->
+            sendNotification(context, message)
+        }
     }
 
     private fun sendNotification(context: Context?, message: String) {
