@@ -9,6 +9,7 @@ import com.raydev.domain.usecase.quran.GetSurahUseCase
 import com.raydev.navigation.AppNavigator
 import com.raydev.navigation.Destination
 import com.raydev.shared.model.BookmarkQuran
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -87,7 +88,7 @@ class ReadQuranViewModel(
         launch {
             surahUseCase.invoke().collect {
                 _state.update { state ->
-                    state.copy(listSurah = it)
+                    state.copy(listSurah = it.toImmutableList())
                 }
             }
         }
