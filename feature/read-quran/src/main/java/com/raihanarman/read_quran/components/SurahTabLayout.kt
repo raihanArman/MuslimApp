@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.raydev.shared.model.Surah
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 
 /**
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SurahTabLayout(
     pagerState: PagerState,
-    listSurah: List<Surah>,
+    listSurah: ImmutableList<Surah>,
     pageSelected: Int,
     onClick: (Int) -> Unit,
 ) {
