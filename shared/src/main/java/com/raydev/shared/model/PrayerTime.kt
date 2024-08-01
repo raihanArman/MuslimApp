@@ -1,9 +1,12 @@
 package com.raydev.shared.model
 
+import androidx.compose.runtime.Immutable
+
 /**
  * @author Raihan Arman
  * @date 13/08/23
  */
+@Immutable
 data class PrayerTime(
     var address: String? = null,
     var fajr: String? = "",
