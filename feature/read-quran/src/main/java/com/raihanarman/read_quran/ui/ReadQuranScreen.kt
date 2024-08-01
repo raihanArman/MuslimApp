@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,11 +61,11 @@ fun ReadQuranScreen(
     val coroutineScope = rememberCoroutineScope()
     var isDataShow by remember { mutableStateOf(false) }
 
-    val doneScrollingTab by remember {
-        derivedStateOf {
-            !pagerState.isScrollInProgress
-        }
-    }
+//    val doneScrollingTab by remember {
+//        derivedStateOf {
+//            !pagerState.isScrollInProgress
+//        }
+//    }
 
     LaunchedEffect(key1 = state.indexBookmark) {
         if (state.indexBookmark != null && isDataShow) {
@@ -116,7 +115,7 @@ fun ReadQuranScreen(
                                     isDataShow = true
                                     onEvent(ReadQuranEvent.OnScrollToBookmark)
                                 },
-                                isDoneScrollingTab = doneScrollingTab
+//                                isDoneScrollingTab = doneScrollingTab
                             )
                         }
                     }
