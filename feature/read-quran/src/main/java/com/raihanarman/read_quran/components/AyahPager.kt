@@ -32,10 +32,10 @@ fun AyahPager(
     surahSelected: Surah,
     onEvent: (ReadQuranEvent) -> Unit,
     onDataShow: () -> Unit,
-    isDoneScrollingTab: Boolean
+//    isDoneScrollingTab: Boolean
 ) {
-    LaunchedEffect(key1 = isDoneScrollingTab) {
-        println("isDoneScrollingTab $isDoneScrollingTab")
+    LaunchedEffect(key1 = Unit) {
+//        println("isDoneScrollingTab $isDoneScrollingTab")
         snapshotFlow { pagerState.currentPage }.collect { page ->
             onEvent(ReadQuranEvent.OnClickTabSurah(page + 1))
         }

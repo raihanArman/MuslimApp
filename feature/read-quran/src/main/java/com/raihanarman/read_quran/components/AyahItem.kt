@@ -4,6 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -61,24 +62,10 @@ fun AyahItem(
                         .animateContentSize()
                 ) {
                     Text(text = number, color = Color.Black, fontSize = 14.sp)
-                    if (ayah.isBookmark) {
-                        Spacer(modifier = Modifier.height(5.dp))
-                        Icon(
-                            painter = painterResource(id = SharedDrawable.baseline_bookmarks_24),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(13.dp)
-                        )
-                    }
-                    if (ayah.isLastRead) {
-                        Spacer(modifier = Modifier.height(5.dp))
-                        Icon(
-                            painter = painterResource(id = SharedDrawable.outline_attachment_24),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(13.dp)
-                        )
-                    }
+                    SideAyahItem(
+                        isBookmark = ayah.isBookmark,
+                        isLastRead = ayah.isLastRead
+                    )
                 }
                 Spacer(modifier = Modifier.width(15.dp))
                 Column(
@@ -108,5 +95,30 @@ fun AyahItem(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ColumnScope.SideAyahItem(
+    isBookmark: Boolean,
+    isLastRead: Boolean
+) {
+    if (isBookmark) {
+        Spacer(modifier = Modifier.height(5.dp))
+        Icon(
+            painter = painterResource(id = SharedDrawable.baseline_bookmarks_24),
+            contentDescription = null,
+            modifier = Modifier
+                .size(13.dp)
+        )
+    }
+    if (isLastRead) {
+        Spacer(modifier = Modifier.height(5.dp))
+        Icon(
+            painter = painterResource(id = SharedDrawable.outline_attachment_24),
+            contentDescription = null,
+            modifier = Modifier
+                .size(13.dp)
+        )
     }
 }
