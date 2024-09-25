@@ -63,7 +63,7 @@ fun TileDzikir(
             ) {
                 DzikirContent(
                     title = title,
-                    content = content
+                    content = "$content $times"
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 //                Text(
